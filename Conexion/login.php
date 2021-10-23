@@ -1,6 +1,6 @@
 <?php 
-	define('DATABASE','db_finca');
-	define('HOSTNAME','localhost');
-	define('USERNAME','root');
-	define('PASSWORD','');
+	define("HOSTNAME", "localhost");
+	define("DATABASE", "db_finca");	
+	define("USERNAME", "root");
+	define("PASSWORD", "");
 ?>

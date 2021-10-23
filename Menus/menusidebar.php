@@ -375,7 +375,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_empleados.php" class="nav-link">
                                             <p>Empleados</p>
                                         </a>
                                     </li>
@@ -387,6 +387,11 @@
                                     <li class="nav-item">
                                         <a href="" class="nav-link">
                                             <p>Proveedores</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                            <p>Usuarios</p>
                                         </a>
                                     </li>
                                 </ul>

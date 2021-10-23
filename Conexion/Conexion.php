@@ -1,5 +1,3 @@
-
-
 <?php
 /**
  * Clase que envuelve una instancia de la clase PDO
@@ -86,4 +84,3 @@ class Conexion
 }
 
 ?>
-

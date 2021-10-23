@@ -79,8 +79,7 @@
 		                                                        <option>Ticket</option>
 		                                                        <option>Crédito Fiscal</option>
 		                                                    </select>
-		                                                </div>
-		                                                
+		                                                </div>		                                                
 		                                            </div>
 		                                            <div class="col-3">
 		                                            	<div class="form-group">
