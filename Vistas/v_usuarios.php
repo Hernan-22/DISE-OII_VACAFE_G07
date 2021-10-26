@@ -3,7 +3,7 @@
     <head>        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Usuarios | Registro</title>
+        <title>Empleados | Registro</title>
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
@@ -55,9 +55,9 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header bg-success">
-                            <h3 class="card-title ">Usuarios</h3>
+                            <h3 class="card-title ">Empleados</h3>
                             <div class="card-tools">
-                                <a class="btn btn-success " href="#modalAddCliente" data-toggle="modal">
+                                <a class="btn btn-success " href="#md_registrar_empleado" data-toggle="modal">
                                     <i class="fas fa-plus-circle"></i>
                                     Nuevo
                                 </a>
@@ -72,8 +72,8 @@
                         <div class="col-xs-1"></div>
                     </div>
 
-                        <!-- TABLA CLIENTES -->
-                        <div class="card-body p-0" id="tablaCl"> 
+                        <!-- TABLA EMPLEADOS -->
+                        <div class="card-body p-0" id="datos_tabla"> 
                         </div>
                         
                         <!-- /.card-body -->
@@ -84,12 +84,12 @@
             </div>
 
             <!-- MODAL GUARDAR -->
-            <div class="modal fade" id="modalAddCliente">
+            <div class="modal fade" id="md_registrar_empleado">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <form method="POST" name="addCliente" id="addCliente">
+                        <form method="POST" name="formulario_registro" id="formulario_registro">
                             <div class="modal-header bg-success">
-                                <h4 class="modal-title">Usuarios | Nuevo</h4>
+                                <h4 class="modal-title">Empleados | Nuevo</h4>
                                 <button
                                     type="button"
                                     class="close"
@@ -100,10 +100,10 @@
                                 </button>
                             </div>
                             <div class="modal-body">                               
-                                <input type="hidden" name="almacenar_datos" value="datonuevo">
+                                <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="datonuevo">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="dui_cliente">Dui</label>
+                                            <label for="dui_empleado">Dui</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -111,9 +111,9 @@
                                                     </span>
                                                 </div>
                                                 <input type="text" class="form-control" placeholder="12345678-9"
-                                                id="dui_cliente" name="dui_cliente" required="required"  class="form-control" data-inputmask='"mask": "99999999-9"' data-mask>
+                                                id="dui_empleado" name="dui_empleado" required="required"  class="form-control" data-inputmask='"mask": "99999999-9"' data-mask>
                                             </div>
-                                            <label for="nombre_Cliente">Nombres</label>
+                                            <label for="nombre_empleado">Nombres</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -121,27 +121,47 @@
                                                     </span>
                                                 </div>
                                                 <input type="text" class="form-control" placeholder="Juan..."
-                                                id="nombre_Cliente" name="nombre_Cliente" required="required">
+                                                id="nombre_empleado" name="nombre_empleado" required="required">
                                             </div>
-                                            <label for="direc_cliente">Dirección</label>
+                                            <label>Fecha de nacimiento</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                        <i class="fas fa-map-marked"></i>
+                                                        <i class="fas fa-user"></i>
                                                     </span>
                                                 </div>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    placeholder="Santo Domingo..."
-                                                    id="direc_cliente" name="direc_cliente" required="required"
-                                                >
+                                                <input type="date" class="form-control" id="fecha_naci_empleado" name="fecha_naci_empleado">
                                             </div>
+                                            <label>Cargo</label>
+                                            <div class="input-group mb-3">
+                                                 <span class="input-group-text">
+                                                        <i class="fas fa-user"></i>
+                                                    </span>
+                                                <select class="form-control" id="cargo_empleado" name="cargo_empleado">
+                                                </select>
+                                            </div>
+                                           <label for="estado_empleado">Estado</label>  
+                                            <div class="input-group mb-3">         
+                                                <div class="form-group clearfix">
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="activo" id="radio_activo" name="estado_empleado" checked disabled>
+                                                        <label for="radio_activo">
+                                                                        Activo
+                                                        </label>
+                                                    </div>
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="inactivo" id="radio_inactivo" name="estado_empleado" disabled>
+                                                         <label for="radio_inactivo">
+                                                            Inactivo
+                                                         </label>
+                                                    </div>                                              
+                                                </div>
+                                            </div> 
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="telefono_Cliente">Teléfono</label>
+                                                <label for="telefono_empleado">Teléfono</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
@@ -152,10 +172,10 @@
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="1234-5678"
-                                                        id="telefono_Cliente" name="telefono_Cliente" required="required" data-inputmask='"mask": "9999-9999"' data-mask
+                                                        id="telefono_empleado" name="telefono_empleado" required="required" data-inputmask='"mask": "9999-9999"' data-mask
                                                     >
                                                 </div>
-                                                <label for="apellido_Cliente">Apellidos</label>
+                                                <label for="apellido_empleado">Apellidos</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
@@ -166,27 +186,33 @@
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="Mejía..."
-                                                        id="apellido_Cliente" name="apellido_Cliente" required="required"
+                                                        id="apellido_empleado" name="apellido_empleado" required="required"
                                                     >
                                                 </div>
-                                                
-                                                <label for="estado_Cliente">Estado</label>  
-                                                <div class="input-group mb-3">         
-                                                    <div class="form-group clearfix">
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="radio" value="activo" id="radio_activo" name="estado_cliente" checked disabled>
-                                                            <label for="radio_activo">
-                                                                Activo
-                                                            </label>
-                                                        </div>
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="radio" value="inactivo" id="radio_inactivo" name="estado_cliente" disabled>
-                                                            <label for="radio_inactivo">
-                                                                Inactivo
-                                                            </label>
-                                                        </div>                                              
+                                                <label for="direc_empleado">Dirección</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fas fa-map-marked"></i>
+                                                        </span>
                                                     </div>
-                                                </div>                                                                                      
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="Santo Domingo..."
+                                                        id="direc_empleado" name="direc_empleado" required="required"
+                                                    >
+                                                </div>
+                                                <label for="salario_empleado">Salario</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fas fa-dollar-sign"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" class="form-control" placeholder="$ 250"
+                                                    id="salario_empleado" name="salario_empleado" required="required" autocomplete="off">
+                                                </div>                                                           
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +234,7 @@
                     <div class="modal-content">
                          <form method="POST" name="editClientes" id="editClientes">
                                 <div class="modal-header bg-success">
-                                    <h4 class="modal-title">Clientes | Editar</h4>
+                                    <h4 class="modal-title">Empleados | Editar</h4>
                                     <button
                                         type="button"
                                         class="close"
@@ -396,7 +422,7 @@
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>  
-        <script src="../Scripts/clientes.js"></script>      
+        <script src="../Scripts/empleados.js"></script>      
             
         <script>
                 $(function () {

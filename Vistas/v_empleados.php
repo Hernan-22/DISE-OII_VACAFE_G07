@@ -100,10 +100,10 @@
                                 </button>
                             </div>
                             <div class="modal-body">                               
-                                <input type="hidden" name="almacenar_datos" value="datonuevo">
+                                <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="datonuevo">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="dui_cliente">Dui</label>
+                                            <label for="dui_empleado">Dui</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -111,9 +111,9 @@
                                                     </span>
                                                 </div>
                                                 <input type="text" class="form-control" placeholder="12345678-9"
-                                                id="dui_cliente" name="dui_cliente" required="required"  class="form-control" data-inputmask='"mask": "99999999-9"' data-mask>
+                                                id="dui_empleado" name="dui_empleado" required="required"  class="form-control" data-inputmask='"mask": "99999999-9"' data-mask>
                                             </div>
-                                            <label for="nombre_Cliente">Nombres</label>
+                                            <label for="nombre_empleado">Nombres</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -121,7 +121,7 @@
                                                     </span>
                                                 </div>
                                                 <input type="text" class="form-control" placeholder="Juan..."
-                                                id="nombre_Cliente" name="nombre_Cliente" required="required">
+                                                id="nombre_empleado" name="nombre_empleado" required="required">
                                             </div>
                                             <label>Fecha de nacimiento</label>
                                             <div class="input-group mb-3">
@@ -130,19 +130,38 @@
                                                         <i class="fas fa-user"></i>
                                                     </span>
                                                 </div>
-                                                <input type="date" class="form-control" id="fecha_naci" name="fecha_naci">
+                                                <input type="date" class="form-control" id="fecha_naci_empleado" name="fecha_naci_empleado">
                                             </div>
-                                             <label>Cargo</label>
-                                                <div class="input-group mb-3">
-                                                    <select class="form-control" id="cargo_empleado" name="cargo_empleado">
-                                                        
-                                                    </select>
+                                            <label>Cargo</label>
+                                            <div class="input-group mb-3">
+                                                 <span class="input-group-text">
+                                                        <i class="fas fa-user"></i>
+                                                    </span>
+                                                <select class="form-control" id="cargo_empleado" name="cargo_empleado">
+                                                </select>
+                                            </div>
+                                            <label for="estado_empleado">Estado</label>  
+                                            <div class="input-group mb-3">         
+                                                <div class="form-group clearfix">
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="activo" id="radio_activo" name="estado_empleado" checked disabled>
+                                                        <label for="radio_activo">
+                                                                        Activo
+                                                        </label>
+                                                    </div>
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="inactivo" id="radio_inactivo" name="estado_empleado" disabled>
+                                                         <label for="radio_inactivo">
+                                                            Inactivo
+                                                         </label>
+                                                    </div>                                              
                                                 </div>
+                                            </div> 
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="telefono_Cliente">Teléfono</label>
+                                                <label for="telefono_empleado">Teléfono</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
@@ -153,10 +172,10 @@
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="1234-5678"
-                                                        id="telefono_Cliente" name="telefono_Cliente" required="required" data-inputmask='"mask": "9999-9999"' data-mask
+                                                        id="telefono_empleado" name="telefono_empleado" required="required" data-inputmask='"mask": "9999-9999"' data-mask
                                                     >
                                                 </div>
-                                                <label for="apellido_Cliente">Apellidos</label>
+                                                <label for="apellido_empleado">Apellidos</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
@@ -167,10 +186,10 @@
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="Mejía..."
-                                                        id="apellido_Cliente" name="apellido_Cliente" required="required"
+                                                        id="apellido_empleado" name="apellido_empleado" required="required"
                                                     >
                                                 </div>
-                                                <label for="direc_cliente">Dirección</label>
+                                                <label for="direc_empleado">Dirección</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
@@ -181,26 +200,36 @@
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="Santo Domingo..."
-                                                        id="direc_cliente" name="direc_cliente" required="required"
+                                                        id="direc_empleado" name="direc_empleado" required="required"
                                                     >
-                                                </div> 
-                                                <label for="estado_Cliente">Estado</label>  
-                                                <div class="input-group mb-3">         
-                                                    <div class="form-group clearfix">
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="radio" value="activo" id="radio_activo" name="estado_cliente" checked disabled>
-                                                            <label for="radio_activo">
-                                                                    Activo
-                                                            </label>
-                                                        </div>
-                                                        <div class="icheck-primary d-inline">
-                                                            <input type="radio" value="inactivo" id="radio_inactivo" name="estado_cliente" disabled>
-                                                            <label for="radio_inactivo">
-                                                                    Inactivo
-                                                            </label>
-                                                        </div>                                              
+                                                </div>
+                                                <label for="salario_empleado">Salario</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fas fa-dollar-sign"></i>
+                                                        </span>
                                                     </div>
-                                                </div>                                                
+                                                    <input type="number" class="form-control" placeholder="$ 250"
+                                                    id="salario_empleado" name="salario_empleado" required="required" autocomplete="off">
+                                                </div>
+                                                <label for="sexo_empleado">Sexo</label>  
+                                            <div class="input-group mb-3">         
+                                                <div class="form-group clearfix">
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="Masculino" id="radio_masculino" name="sexo_empleado" checked >
+                                                        <label for="radio_masculino">
+                                                             Masculino
+                                                        </label>
+                                                    </div>
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="Femenino" id="radio_femenino" name="sexo_empleado" >
+                                                         <label for="radio_femenino">
+                                                            Femenino
+                                                         </label>
+                                                    </div>                                              
+                                                </div>
+                                            </div>                                                            
                                             </div>
                                         </div>
                                     </div>

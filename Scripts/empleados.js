@@ -185,7 +185,7 @@ $(function (){
 		e.preventDefault();
 		var datos = $("#formulario_registro").serialize();
 		console.log("Imprimiendo datos: ",datos);
-		mostrar_mensaje("Almacenando información","Por favor no recargue la página");
+		//mostrar_mensaje("Almacenando información","Por favor no recargue la página");
 		$.ajax({
             dataType: "json",
             method: "POST",
@@ -193,15 +193,9 @@ $(function (){
             data : datos,
         }).done(function(json) {
         	console.log("EL GUARDAR",json);
-        	$('#md_registrar_usuario').modal('hide');
-        	if (json[0]=="Exito") {
-        		if ($("#imagen_persona").val()!="") { 
-        			subir_archivo($("#imagen_persona"),json[1]);
-        		}
-        		cargar_datos();
-        	}else{
-        		cargar_datos();
-        	}
+        	$('#md_registrar_empleado').modal('hide');
+	        	
+        	cargar_datos();
         	
         }).fail(function(){
 
@@ -213,6 +207,26 @@ $(function (){
 	});
 });
 
+function cargar_datos(){
+	//mostrar_mensaje("Consultando datos");
+	var datos = {"consultar_info":"si_consultala"}
+	$.ajax({
+        dataType: "json",
+        method: "POST",
+        url:'../Controladores/empleados_controlador.php',
+        data : datos,
+    }).done(function(json) {
+    	console.log("EL consultar",json);
+    	$("#datos_tabla").empty().html(json[1]); 
+    	$('#md_registrar_empleado').modal('hide');
+    	$("#cargo_empleado").empty().html(json[3][0]);
+    }).fail(function(){
+
+    }).always(function(){
+    	Swal.close();
+    });
+}
+/*
 function subir_archivo(archivo,id_persona){
 
 	Swal.fire({
@@ -273,26 +287,6 @@ function subir_archivo(archivo,id_persona){
 }
 
 
-function cargar_datos(){
-	//mostrar_mensaje("Consultando datos");
-	var datos = {"consultar_info":"si_consultala"}
-	$.ajax({
-        dataType: "json",
-        method: "POST",
-        url:'../Controladores/empleados_controlador.php',
-        data : datos,
-    }).done(function(json) {
-    	console.log("EL consultar",json);
-    	$("#datos_tabla").empty().html(json[1]); 
-    	$('#md_registrar_empleado').modal('hide');
-
-    	$("#cargo_empleado").empty().html(json[3][0]);
-    }).fail(function(){
-
-    }).always(function(){
-    	Swal.close();
-    });
-}
 
 function mostrar_mensaje(titulo,mensaje=""){
 	Swal.fire({
@@ -355,4 +349,4 @@ function validar_archivo(file){
 
 
 
-}
+}*/

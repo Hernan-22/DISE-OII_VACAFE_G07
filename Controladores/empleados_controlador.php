@@ -164,37 +164,27 @@
 
 
 
-	}else if (isset($_POST['ingreso_datos']) && $_POST['ingreso_datos']=="si_registro") {
-		$_POST['direccion']="sna vicente";
-		$id_insertar = $modelo->retonrar_id_insertar("tb_persona"); 
+	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="datonuevo") {		
+		$id_insertar = $modelo->retonrar_id_insertar("tb_empleado");
+		$estado_empleado = "Activo" ;
         $array_insertar = array(
-            "table" => "tb_persona",
-            "id"=>$id_insertar,
-            "nombre" => $_POST['nombre'],
-            "email" => $_POST['email'],
-            "direccion" => $_POST['direccion'],
-            "dui" => $_POST['dui'],
-            "telefono" => $_POST['telefono'],
-            "estado" => 1,
-            "fecha_nacimiento" => $modelo->formatear_fecha($_POST['fecha']),
-            "fecha_registro" => date("Y-m-d G:i:s"),
-            "tipo_persona" => $_POST['tipo_persona']
+            "table" => "tb_empleado",
+            "int_idempleado"=>$id_insertar,
+            "nva_dui_empledao" => $_POST['dui_empleado'],
+            "nva_nom_empleado" => $_POST['nombre_empleado'],
+            "nva_ape_empleado" => $_POST['apellido_empleado'],
+            "txt_direc_empleado" => $_POST['direc_empleado'],
+            "dat_fechanaci_empleado" => $_POST['fecha_naci_empleado'],
+            "dou_salario_empleado" => $_POST['salario_empleado'],
+            "nva_telefono_empleado" => $_POST['telefono_empleado'],
+            "int_idcargo" => $_POST['cargo_empleado'],
+            "nva_estado_empleado" => $estado_empleado,
+            "nva_sexo_empleado" => $_POST['sexo_empleado']
         );
         $result = $modelo->insertar_generica($array_insertar);
         if($result[0]=='1'){
 
-        	/*Si la persona se creo procedo a registrar su usuario*/
-        	$id_usuario = $modelo->retonrar_id_insertar("tb_usuario"); 
-	        $array_usuario = array(
-	            "table" => "tb_usuario",
-	            "id"=>$id_usuario,
-	            "id_persona" => $id_insertar,
-	            "usuario" => $_POST['usuario'],
-	            "contrasena" => $modelo->encriptarlas_contrasenas($_POST['contrasenia'])
-	        );
-	        $result_usuario = $modelo->insertar_generica($array_usuario);
-
-        	print json_encode(array("Exito",$id_insertar,$_POST,$result,$result_usuario));
+        	print json_encode(array("Exito",$id_insertar,$_POST,$result));
 			exit();
 
         }else {
@@ -216,24 +206,42 @@
 
 		$htmltr = $html="";
 		$cuantos = 0;
-		$sql = "SELECT * FROM tb_empleado WHERE int_idcargo != 1;";
+		$sql = "SELECT
+					int_idempleado, 
+					nva_dui_empledao, 
+					nva_nom_empleado, 
+					nva_ape_empleado, 
+					txt_direc_empleado, 
+					dat_fechanaci_empleado, 
+					dou_salario_empleado, 
+					nva_telefono_empleado, 
+					nva_email_empleado, 
+					nva_estado_empleado, 
+					nva_sexo_empleado, 
+					nva_nom_cargo
+				FROM
+					tb_empleado
+					INNER JOIN
+					tb_cargo
+					ON 
+						tb_empleado.int_idcargo = tb_cargo.idcargo WHERE int_idcargo != 202109352;";
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
-	                            <td>'.$row['nva_dui_empledao'].'</td>
-	                            <td>'.$row['nva_nom_empleado'].'</td>
-	                            <td>'.$row['nva_ape_empleado'].'</td>
-	                            <td>'.$modelo->formatear_fecha($row['dat_edad_empleado']).'</td>
-	                            <td>'.$row['int_idcargo'].'</td>	                            
+	                            <td class="text-center">'.$row['nva_dui_empledao'].'</td>
+	                            <td class="text-center">'.$row['nva_nom_empleado'].'</td>
+	                            <td class="text-center">'.$row['nva_ape_empleado'].'</td>
+	                            <td class="text-center">'.$modelo->formatear_fecha($row['dat_fechanaci_empleado']).'</td>
+	                            <td class="text-center">'.$row['nva_nom_cargo'].'</td>	                            
 	                            <td class="text-center project-actions">
 			                        <button class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#modalClienteEdit" data-toggle="tooltip" 
 			                        	data-idempleado='.$row['int_idempleado'].'>
 			                            <i class="fas fa-pencil-alt"></i>
 			                        </button>
 			                        <button class="btn btn-danger btn-sm" href="#modalBajaCliente" data-toggle="modal" 
-			                            data-idcltbaja='.$row['int_idcliente'].'>
+			                            data-idcltbaja='.$row['int_idempleado'].'>
 			                            <i class="fas fa-trash"></i>
 			                        </button>
 			                    </td>
@@ -242,12 +250,12 @@
 			$html.='<table class="table table-striped projects" width="100%">
                     <thead>
                         <tr>
-                            <th>DUI</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Edad</th>
-                            <th>Cargo</th>
-                            <th>Acciones</th>
+                            <th class="text-center">DUI</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Apellido</th>
+                            <th class="text-center">Edad</th>
+                            <th class="text-center">Cargo</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>';

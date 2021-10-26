@@ -390,7 +390,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_usuarios.php" class="nav-link">
                                             <p>Usuarios</p>
                                         </a>
                                     </li>
