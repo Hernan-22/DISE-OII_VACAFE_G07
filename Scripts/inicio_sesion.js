@@ -127,7 +127,7 @@ $(function(){
 	    	 	
 				Toast.fire({
             	icon: 'success',
-            	title: 'Bienvenido Al Sitema.'
+            	title: 'Bienvenido Al Sistema!.'
        			}); 
 				var timer = setInterval(function(){
 					$(location).attr('href','../Vistas/v_principal.php');
@@ -136,7 +136,7 @@ $(function(){
 	    	 }else if (json[0]=="Error" && json[1]=="La contraseña no coincide"){
 	    	 	Toast.fire({
 		            icon: 'error',
-		            title: 'La contraseña no coincide!'
+		            title: 'Contraseña Incorrecta!'
 		        });
 	    	 	
 	    	 }else{

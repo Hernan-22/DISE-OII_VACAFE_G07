@@ -14,52 +14,58 @@
       <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     </head>
 
-    <body class="hold-transition lockscreen ">
-
-    <!-- DIEÑO DE LOGIN -->
-    <div class="login-box lockscreen-wrapper">
+<body class="hold-transition login-page">
+    <div class="login-box">
+      <!-- /.login-logo -->
       <div class="card card-outline card-success">
         <div class="card-header text-center">
           <a class="h1"><b>La Vaca</b> Café</a>
         </div>
-        <div class="lockscreen-wrapper"> 
+        <div class="card-body">
+         <div class="col-12 text-center">
+            <img src="../dist/img/logo-n.png" alt="user-avatar" class="img-circle img-fluid">
+          </div>
+          <br>
+          <p class="login-box-msg">Iniciar Sesión</p>
 
-          <!-- User name -->
-          <div class="lockscreen-name">Administrador</div>
-
-          <!-- START LOCK SCREEN ITEM -->
-          <div class="lockscreen-item">
-            <!-- lockscreen image -->
-            <div class="lockscreen-image">
-              <img src="../dist/img/user-icon.png" alt="User Image">
-            </div>
-            <!-- /.lockscreen-image -->
-
-            <!-- lockscreen credentials (contains the form) -->
-            <form id="formulario_login" class="lockscreen-credentials">
-                <div class="input-group">
-                  <input type="hidden" name="iniciar_sesion" value="si_nueva">
-                  <input type="password" class="form-control" placeholder="Contraseña" id="contrasena" name="contrasena" required="true">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn">
-                      <i class="fas fa-arrow-right text-muted"></i>
-                    </button>
-                  </div>
+           <form id="formulario_login" method="post">
+             <input type="hidden" name="iniciar_sesion" value="si_nueva">
+             <label for="email_login">Usuario o Correo</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Email" id="email_login" name="email_login">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
                 </div>
-                <br>
-                <p class="mb-1">
-                  <a href="v_recupera_contra.php">No Recuerdo mi Contraseña</a>
-                </p>
-            </form>    
+              </div>
+            </div>
+            <label for="contra_login">Contraseña</label>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="Password" id="contra_login" name="contra_login">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-key"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                  <p class="mb-1">
+                    <a href="v_recupera_contra.php">No Recuerdo mi Contraseña</a>
+                  </p>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-success btn-block">Entrar</button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+
+         
         </div>
       </div>
-      <div class="lockscreen-footer text-center">
-        <strong>UES &copy; 2021</strong> Todos los Derechos Reservados
-      </div>
     </div>
-
-
-   
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>

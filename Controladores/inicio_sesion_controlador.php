@@ -66,22 +66,16 @@
 	}else if (isset($_POST['iniciar_sesion']) && $_POST['iniciar_sesion']=="si_nueva") {
 		
 
-		$sql = "SELECT
-					*,
-					tb_usuario.nva_nom_usuario
-				FROM
-					tb_empleado
-					INNER JOIN
-					tb_usuario
-					ON 
-						tb_empleado.int_idempleado = tb_usuario.int_idempleado
-				WHERE
-					tb_usuario.nva_contraseña_usuario = '$_POST[contrasena]'";
+		$sql = "SELECT 
+					*FROM tb_empleado AS te
+				JOIN tb_usuario as tu 
+				ON tu.int_idempleado = te.int_idempleado
+				WHERE (te.nva_email_empleado='$_POST[email_login]' OR tu.nva_nom_usuario = '$_POST[email_login]')";
 
 
 		$resultado = $modelo->get_query($sql);
 		if ($resultado[0]==1 && $resultado[4]==1) {
-			$verificacion = $modelo->desencrilas_contrasena($_POST['contrasena'],$resultado[2][0]['contrasena']);
+			$verificacion = $modelo->desencrilas_contrasena($_POST['contra_login'],$resultado[2][0]['nva_contraseña_usuario']);
 			if ($verificacion[0]===1) {
 				
 				$_SESSION['logueado']="si";

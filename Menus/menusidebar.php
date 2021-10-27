@@ -1,3 +1,22 @@
+ <?php 
+    @session_start(); 
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/bloqueo.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    }
+
+    
+?>           
+
+
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">    
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
@@ -38,7 +57,7 @@
                                     <i class="fas fa-lock mr-2"></i> Bloquear                               
                                 </a>
                               <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
+                                <a href="../Vistas/destruir_sesion.php" class="dropdown-item">
                                     <i class="fas fa-sign-out-alt mr-2"></i> Salir                           
                                 </a>                              
                             </div>

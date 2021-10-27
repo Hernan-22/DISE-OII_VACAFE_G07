@@ -56,8 +56,8 @@
                     <div class="card">
                         <div class="card-header bg-success">
                             <h3 class="card-title ">Producto</h3>
-                            <div class="card-tools">
-                                <a class="btn btn-success " href="#modalAddProducto" data-toggle="modal">
+                            <div class="card-tools" id="registrar_producto">
+                                <a class="btn btn-success " href="javascript:void(0)" id="btn_nuevo_producto" data-toggle="modal">
                                     <i class="fas fa-plus-circle"></i>
                                     Nuevo
                                 </a>
@@ -80,16 +80,13 @@
                     </div>
                     <!-- /.card -->
                 </section>
-                <!-- /.content -->
-            </div>
-
-            <!-- MODAL GUARDAR -->
-            <div class="modal fade" id="modalAddProducto">
+                <!-- MODAL GUARDAR s-->
+            <div class="modal fade" id="mod_add_producto">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <form method="POST" name="addProducto" id="addProducto">
                             <div class="modal-header bg-success">
-                                <h4 class="modal-title">Producto | Nuevo</h4>
+                                <h4 class="modal-title">Productos | Nuevo</h4>
                                 <button
                                     type="button"
                                     class="close"
@@ -100,8 +97,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">                               
-                                <input type="hidden" name="almacenar_datos" value="datonuevo">
-                                    <div class="row">
+                                <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="datonuevo">
+                                <div class="row">
                                         <div class="col-md-6">
                                             <label for="nombre_Producto">Nombre</label>
                                             <div class="input-group mb-3">
@@ -132,7 +129,7 @@
                                                     </span>
                                                 </div>
                                                 <input
-                                                    type="datetime-local"
+                                                    type="date"
                                                     class="form-control"
                                                     id="fechav_Producto" name="fechav_Producto" required="required"
                                                 >
@@ -170,12 +167,7 @@
                                                         required="required"
                                                     >
                                                 </div>
-                                                
-                                                <?php
-                                                    $usuario = 'root';
-                                                    $password = '';
-                                                    $db = new PDO('mysql:host=localhost;dbname=db_finca', $usuario, $password);
-                                                    ?>
+                                                   
                                                 <label for="categoria_Producto">Categoría</label>
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">
@@ -184,17 +176,8 @@
                                                     <select class="form-control"
                                                       name="categoria_Producto" id="categoria_Producto">
                                                         <option value="">Seleccione</option>
-                                                    <?php
-                                                    $query = $db->prepare("SELECT * FROM tb_categoria");
-                                                    $query->execute();
-                                                    $data = $query->fetchAll();
-
-                                                    foreach ($data as $valores):
-                                                    echo '<option value="'.$valores["int_idcategoria"].'">'.$valores["nva_nom_categoria"].'</option>';
-                                                    endforeach;
-                                                    ?>
                                                     </select>
-                                                </div>
+                                                </div>                                                                   
                                                 <label for="estado_Producto">Estado</label>  
                                                 <div class="input-group mb-3">         
                                                     <div class="form-group clearfix">
@@ -211,23 +194,17 @@
                                                             </label>
                                                         </div>                                              
                                                     </div>
-                                                </div>                                                                                      
-                                            </div>
-
-                                            </div>                                                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                        
-                                        </div>                                     
-                                    <div>  
-                            
+                                </div>
 
-                                    <div>
-                                        <button id="limpiar" name="limpiar" type="reset" class="btn bg-success ">
-                                            <i class="fas fa-trash"></i> Limpiar</button>
+                                <div>
+                                    <button id="limpiar" name="limpiar" type="reset" class="btn bg-success ">
+                                        <i class="fas fa-trash"></i> Limpiar</button>
 
                                         <button type="submit" class="btn bg-success"><i class="fa fa-save"></i> Guardar</button>
-                                    </div>
+                                </div>
                             </div>    
                         </form>
                     </div>
@@ -254,7 +231,7 @@
 
                                 <div class="modal-body">
                                         <input type="hidden" name="editar_datos" value="datoeditar">
-                                        <input type="hidden" name="id_productp_edit" id="id_producto_edit">
+                                        <input type="hidden" name="id_producto_edit" id="id_producto_edit">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="nombre_Producto_edit">Nombre</label>
@@ -335,19 +312,33 @@
                                                     <select class="form-control"
                                                       name="categoria_Producto_edit" id="categoria_Producto_edit">
                                                         <option value="">Seleccione</option>
-                                            <?php
-                                            $query = $db->prepare("SELECT * FROM tb_categoria");
-                                            $query->execute();
-                                            $data = $query->fetchAll();
-
-                                            foreach ($data as $valores):
-                                            echo '<option value="'.$valores["int_idcategoria"].'">'.$valores["nva_nom_categoria"].'</option>';
-                                            endforeach;
-                                            ?>
+                                           
                                                     </select>
                                                 </div> 
+
+                                                <label for="estado_Producto">Estado</label>  
+                                                    <div class="form-group clearfix">
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="radio" value="activo" id="radio_activo_edit" name="estado_producto_edit" checked>
+                                                            <label for="radio_activo_edit">
+                                                                Activo
+                                                            </label>
+                                                        </div>
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="radio" value="inactivo" id="radio_inactivo_edit" name="estado_producto_edit" >
+                                                            <label for="radio_inactivo_edit">
+                                                                Inactivo
+                                                            </label>
+                                                        </div>                                              
+                                                    </div> 
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="modal-footer float-right">
+                                            <button type="submit" class="btn bg-success" >
+                                                <i class="fa fa-check"></i>Listo
+                                            </button>
                                         </div>
                                         <div>
                                    
@@ -393,6 +384,10 @@
                  </div>
             </div>
 
+                <!-- /.content -->
+            </div>
+
+            
             <footer class="main-footer">
               <div class="float-right d-none d-sm-block">
               </div>
@@ -435,7 +430,7 @@
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>  
-        <script src="../Scripts/producto.js"></script>      
+        <script src="../Scripts/funciones_productos.js"></script>      
             
         <script>
                 $(function () {
