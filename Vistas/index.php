@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
       <!-- Theme style -->
       <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+      <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     </head>
 
     <body class="hold-transition lockscreen ">
@@ -37,7 +38,8 @@
             <!-- lockscreen credentials (contains the form) -->
             <form id="formulario_login" class="lockscreen-credentials">
                 <div class="input-group">
-                  <input type="password" class="form-control" placeholder="Contraseña">
+                  <input type="hidden" name="iniciar_sesion" value="si_nueva">
+                  <input type="password" class="form-control" placeholder="Contraseña" id="contrasena" name="contrasena" required="true">
                   <div class="input-group-append">
                     <button type="submit" class="btn">
                       <i class="fas fa-arrow-right text-muted"></i>
@@ -45,11 +47,9 @@
                   </div>
                 </div>
                 <br>
-               
-              
-              <p class="mb-1">
-                <a href="v_recupera_contra.php">No Recuerdo mi Contraseña</a>
-              </p>
+                <p class="mb-1">
+                  <a href="v_recupera_contra.php">No Recuerdo mi Contraseña</a>
+                </p>
             </form>    
         </div>
       </div>
@@ -65,6 +65,7 @@
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../Scripts/inicio_sesion.js" type="text/javascript" charset="utf-8" async defer></script>
   </body>
 </html>

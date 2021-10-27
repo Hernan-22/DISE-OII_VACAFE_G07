@@ -3,7 +3,7 @@
     <head>        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Empleados | Registro</title>
+        <title>Usuarios | Registro</title>
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
@@ -48,16 +48,15 @@
                         <div class="row mb-2">
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
+                  
                 </section>
                 <!-- Main content -->
                 <section class="content">
-                    <!-- Default box -->
                     <div class="card">
                         <div class="card-header bg-success">
-                            <h3 class="card-title ">Empleados</h3>
+                            <h3 class="card-title ">Usuarios</h3>
                             <div class="card-tools">
-                                <a class="btn btn-success " href="#md_registrar_empleado" data-toggle="modal">
+                                <a class="btn btn-success " href="#md_registrar_usuario" data-toggle="modal">
                                     <i class="fas fa-plus-circle"></i>
                                     Nuevo
                                 </a>
@@ -75,21 +74,17 @@
                         <!-- TABLA EMPLEADOS -->
                         <div class="card-body p-0" id="datos_tabla"> 
                         </div>
-                        
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </section>
-                <!-- /.content -->
+                    </div>                   
+                </section>               
             </div>
 
             <!-- MODAL GUARDAR -->
-            <div class="modal fade" id="md_registrar_empleado">
-                <div class="modal-dialog modal-xl">
+            <div class="modal fade" id="md_registrar_usuario">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="POST" name="formulario_registro" id="formulario_registro">
                             <div class="modal-header bg-success">
-                                <h4 class="modal-title">Empleados | Nuevo</h4>
+                                <h4 class="modal-title">Usuarios | Nuevo</h4>
                                 <button
                                     type="button"
                                     class="close"
@@ -103,116 +98,76 @@
                                 <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="datonuevo">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="dui_empleado">Dui</label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-newspaper"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="12345678-9"
-                                                id="dui_empleado" name="dui_empleado" required="required"  class="form-control" data-inputmask='"mask": "99999999-9"' data-mask>
-                                            </div>
-                                            <label for="nombre_empleado">Nombres</label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-user"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" placeholder="Juan..."
-                                                id="nombre_empleado" name="nombre_empleado" required="required">
-                                            </div>
-                                            <label>Fecha de nacimiento</label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-user"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="date" class="form-control" id="fecha_naci_empleado" name="fecha_naci_empleado">
-                                            </div>
-                                            <label>Cargo</label>
+                                            <label>Empleado</label>
                                             <div class="input-group mb-3">
                                                  <span class="input-group-text">
                                                         <i class="fas fa-user"></i>
                                                     </span>
-                                                <select class="form-control" id="cargo_empleado" name="cargo_empleado">
+                                                <select class="form-control" id="empleado_usuario" name="empleado_usuario">
                                                 </select>
                                             </div>
-                                           <label for="estado_empleado">Estado</label>  
-                                            <div class="input-group mb-3">         
-                                                <div class="form-group clearfix">
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" value="activo" id="radio_activo" name="estado_empleado" checked disabled>
-                                                        <label for="radio_activo">
-                                                                        Activo
-                                                        </label>
+                                            <label for="contrasena_usuario">Contraseña</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fas fa-key"></i>
+                                                        </span>
                                                     </div>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" value="inactivo" id="radio_inactivo" name="estado_empleado" disabled>
-                                                         <label for="radio_inactivo">
-                                                            Inactivo
-                                                         </label>
-                                                    </div>                                              
+                                                    <input type="password" class="form-control"
+                                                    id="contrasena_usuario" name="contrasena_usuario" required="required">
                                                 </div>
-                                            </div> 
+                                            <label for="recontrasena_usuario">Repita su Contraseña</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fas fa-key"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" class="form-control"
+                                                    id="recontrasena_usuario" name="recontrasena_usuario" required="required">
+                                                </div>                                             
+                                            
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="telefono_empleado">Teléfono</label>
+                                                <label for="nombre_usuario">Nombre</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            <i class="fas fa-phone-alt"></i>
+                                                            <i class="fas fa-user-tie"></i>
                                                         </span>
                                                     </div>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="1234-5678"
-                                                        id="telefono_empleado" name="telefono_empleado" required="required" data-inputmask='"mask": "9999-9999"' data-mask
-                                                    >
-                                                </div>
-                                                <label for="apellido_empleado">Apellidos</label>
+                                                    <input type="text" class="form-control" placeholder="juan"
+                                                    id="nombre_usuario" name="nombre_usuario" required="required">
+                                                </div>  
+                                                <label for="correo_usuario">Correo</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            <i class="fas fa-user"></i>
+                                                            <i class="fas fa-envelope"></i>
                                                         </span>
                                                     </div>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Mejía..."
-                                                        id="apellido_empleado" name="apellido_empleado" required="required"
-                                                    >
-                                                </div>
-                                                <label for="direc_empleado">Dirección</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-map-marked"></i>
-                                                        </span>
+                                                    <input type="email" class="form-control" placeholder="juan@gmail.com"
+                                                    id="correo_usuario" name="correo_usuario" required="required">
+                                                </div>   
+                                                <label for="estado_empleado">Estado</label>  
+                                                <div class="input-group mb-3">         
+                                                    <div class="form-group clearfix">
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="radio" value="activo" id="radio_activo" name="estado_empleado" checked disabled>
+                                                            <label for="radio_activo">
+                                                                            Activo
+                                                            </label>
+                                                        </div>
+                                                        <div class="icheck-primary d-inline">
+                                                            <input type="radio" value="inactivo" id="radio_inactivo" name="estado_empleado" disabled>
+                                                             <label for="radio_inactivo">
+                                                                Inactivo
+                                                             </label>
+                                                        </div>                                              
                                                     </div>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Santo Domingo..."
-                                                        id="direc_empleado" name="direc_empleado" required="required"
-                                                    >
-                                                </div>
-                                                <label for="salario_empleado">Salario</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="fas fa-dollar-sign"></i>
-                                                        </span>
-                                                    </div>
-                                                    <input type="number" class="form-control" placeholder="$ 250"
-                                                    id="salario_empleado" name="salario_empleado" required="required" autocomplete="off">
-                                                </div>                                                           
+                                                </div>                                      
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +183,7 @@
                 </div>
             </div>
 
-            <!-- MODAL EDITAR -->
+            <!-- MODAL EDITAR 
             <div class="modal fade" id="modalClienteEdit">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -285,7 +240,7 @@
                                                     >
                                                 </div>
                                             </div>
-                                            <!-- /.col -->
+                                           
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >Teléfono</label>
@@ -345,40 +300,7 @@
                     </form>
                     </div>
                 </div>
-            </div>
-
-
-          <!-- MODAL ADVERTENCIA -->          
-            <div class="modal fade" id="modalBajaCliente"> 
-                <div class="modal-dialog">
-                    <div class="modal-content "> 
-                        <form method="POST" name="confirmaBaja" id="confirmaBaja">
-                            <input type="hidden" name="baja_datos" value="datobaja">
-                            <div class="modal-header bg-success " >
-                                <h4 class="modal-title ">ADVERTENCIA!</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-center">Este Cliente no se puede eliminar por que está relacionado con información valiosa&hellip;</p>
-                                 <p class="text-center">¿Está seguro de realizar esta acción?</p> 
-                                 <input type="hidden" name="id_baja" id="id_baja">    
-                                
-                            </div> 
-                            <div class="form-group  text-center">
-                                    <button type="submit" class="btn bg-success">
-                                        Si
-                                    </button>
-                                    <a class="btn bg-success" data-toggle="modal" data-target="" data-dismiss="modal">
-                                                No
-                                    </a>                                    
-                                </div>    
-                        </form>                         
-                        </div>
-                    </div>
-                 </div>
-            </div>
+            </div>-->
 
             <footer class="main-footer">
               <div class="float-right d-none d-sm-block">
@@ -422,89 +344,6 @@
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>  
-        <script src="../Scripts/empleados.js"></script>      
-            
-        <script>
-                $(function () {
-                    //Initialize Select2 Elements
-                    $('.select2').select2()
-
-                    //Initialize Select2 Elements
-                    $('.select2bs4').select2({
-                    theme: 'bootstrap4'
-                    })
-
-                    //Datemask dd/mm/yyyy
-                    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-                    //Datemask2 mm/dd/yyyy
-                    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-                    //Money Euro
-                    $('[data-mask]').inputmask()
-
-                    //Date picker
-                    $('#reservationdate').datetimepicker({
-                        format: 'L'
-                    });
-
-                    //Date and time picker
-                    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
-
-                    //Date range picker
-                    $('#reservation').daterangepicker()
-                    //Date range picker with time picker
-                    $('#reservationtime').daterangepicker({
-                    timePicker: true,
-                    timePickerIncrement: 30,
-                    locale: {
-                        format: 'MM/DD/YYYY hh:mm A'
-                    }
-                    })
-                    //Date range as a button
-                    $('#daterange-btn').daterangepicker(
-                    {
-                        ranges   : {
-                        'Today'       : [moment(), moment()],
-                        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                        },
-                        startDate: moment().subtract(29, 'days'),
-                        endDate  : moment()
-                    },
-                    function (start, end) {
-                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-                    }
-                    )
-
-                    //Timepicker
-                    $('#timepicker').datetimepicker({
-                    format: 'LT'
-                    })
-
-                    //Bootstrap Duallistbox
-                    $('.duallistbox').bootstrapDualListbox()
-
-                    //Colorpicker
-                    $('.my-colorpicker1').colorpicker()
-                    //color picker with addon
-                    $('.my-colorpicker2').colorpicker()
-
-                    $('.my-colorpicker2').on('colorpickerChange', function(event) {
-                    $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-                    })
-
-                    $("input[data-bootstrap-switch]").each(function(){
-                    $(this).bootstrapSwitch('state', $(this).prop('checked'));
-                    })
-
-                })
-                // BS-Stepper Init
-               
-
-        </script>
-
-  
+        <script src="../Scripts/usuarios.js"></script> 
     </body>
 </html>
