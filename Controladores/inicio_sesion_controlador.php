@@ -4,16 +4,16 @@
 	$modelo = new Modelo();
 	if (isset($_POST['desbloquear']) && $_POST['desbloquear']=="si_con_contrasena") {
 		$sql = "SELECT 
-					*FROM tb_persona AS tp
+					*FROM tb_empleado AS te
 				JOIN tb_usuario as tu 
-				ON tu.id_persona = tp.id
-				WHERE (tp.email='$_SESSION[usuario]' OR tu.usuario = '$_SESSION[usuario]')
+				ON tu.int_idempleado = te.int_idempleado
+				WHERE (te.nva_email_empleado='$_SESSION[usuario]' OR tu.nva_nom_usuario = '$_SESSION[usuario]')
 				";
 		$resultado = $modelo->get_query($sql);
 		if ($resultado[0]==1 && $resultado[4]==1) {
-			$verificacion = $modelo->desencrilas_contrasena($_POST['contrasena'],$resultado[2][0]['contrasena']);
+			$verificacion = $modelo->desencrilas_contrasena($_POST['contra_desbloqueo'],$resultado[2][0]['nva_contraseña_usuario']);
 			if ($verificacion[0]===1) {
-				$array = array("Exito","Bienvenido nuevamente ".$resultado[2][0]['nombre'],$resultado);
+				$array = array("Exito","Bienvenido nuevamente ".$resultado[2][0]['nva_contraseña_usuario'],$resultado);
 				$_SESSION['logueado']="si";
 				$_SESSION['bloquear_pantalla']="no";
 				print json_encode($array);

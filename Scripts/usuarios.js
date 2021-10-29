@@ -119,67 +119,40 @@ $(function (){
 	$(document).on("click",".btn_editar",function(e){
 
 		e.preventDefault(); 
-		mostrar_mensaje("Consultando datos");
-		var id = $(this).attr("data-id");
+		//mostrar_mensaje("Consultando datos");
+		var id = $(this).attr("data-idusuario");		
+		var email_empleado = $(this).attr("data-email_empleado");
 		console.log("El id es: ",id);
-		var datos = {"consultar_info":"si_condui_especifico","id":id}
+		console.log("El id emil es: ",email_empleado);
+		var datos = {"consultar_info":"si_coneste_id","id":id,"correo_emp":email_empleado}
+
 		$.ajax({
 	        dataType: "json",
 	        method: "POST",
-	        url:'json_usuarios.php',
+	        url:'../Controladores/usuarios_controlador.php',
 	        data : datos,
 	    }).done(function(json) {
 	    	console.log("EL consultar especifico",json);
-	    	if (json[0]=="Exito") {
-	    		var fecHA_string = json[2]['fecha_nacimiento'];
-				var porciones = fecHA_string.split('-');
-				var fecha = porciones[2]+"/"+porciones[1]+"/"+porciones[0]
+	    	if (json[0]=="Exito") {	    		
 
 	    		$('#llave_persona').val(id);
 	    		$('#ingreso_datos').val("si_actualizalo");
-	    		$('#nombre').val(json[2]['nombre']);
-	    		$('#email').val(json[2]['email']);
-	    		$('#dui').val(json[2]['dui']);
-	    		$('#telefono').val(json[2]['telefono']);
-	    		$('#fecha').val(fecha);
-	    		$('#tipo_persona').val(json[2]['tipo_persona']);
-
-	    		$("#usuario").removeAttr("required");
-	    		$("#contrasenia").removeAttr("required");
+	    		$('#empleado_usuario_editar').val(json[3]['nva_nom_empleado']);
+	    		$('#nombre_usuario').val(json[2]['nva_nom_usuario']);
+	    		$('#contrasena_usuario').val(json[2]['nva_contraseña_usuario']);
+	    		$('#correo_usuario').val(email_empleado);	    		
+	    		$('#md_edit_usuario').modal('show');
 	    		
-				
-	    		$('#md_registrar_usuario').modal('show');
 	    	}
 	    	 
 	    }).fail(function(){
 
 	    }).always(function(){
-	    	Swal.close();
+	    	//Swal.close();
 	    });
 
 
 	});
-
-
-
-	$(document).on("click","#registrar_usuario",function(e){
-		e.preventDefault();
-		console.log("Capturando evento");
-		//$('#myModal').modal('show'); para abrir modal
-		//$('#myModal').modal('hide'); para cerrar modal
-		$('#md_registrar_usuario').modal('show');
-
-		$(".select2").select2({
-	    }).on("select2:opening", 
-	        function(){
-	            $(".modal").removeAttr("tabindex", "-1");
-	    }).on("select2:close", 
-	        function(){ 
-	            $(".modal").attr("tabindex", "-1");
-	    });
-    
-	});
-
 
 	$(document).on("submit","#formulario_registro",function(e){
 		e.preventDefault();
@@ -219,8 +192,7 @@ function cargar_datos(){
     }).done(function(json) {
     	console.log("EL consultar",json);
     	$("#datos_tabla").empty().html(json[1]); 
-    	$('#md_registrar_usuario').modal('hide');
-    	$("#empleado_usuario").empty().html(json[3][0]);
+    	$('#md_registrar_usuario').modal('hide');    	
     }).fail(function(){
 
     }).always(function(){

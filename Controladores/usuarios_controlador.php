@@ -71,58 +71,6 @@
 		}
 
 
-	}else if (isset($_POST['enviar_contra']) && $_POST['enviar_contra']=="si_enviala") {
-        
-        $nueva_contra = $modelo->generarpass();
-        $array_update = array(
-            "table" => "tb_usuario",
-            "id_persona" => $_POST['id'],
-            "contrasena" => $modelo->encriptarlas_contrasenas($nueva_contra)
-        );
-        $resultado = $modelo->actualizar_generica($array_update);
-
-        if($resultado[0]=='1' && $resultado[4]>0){
-
-            $mensaje = $modelo->plantilla($nueva_contra);
-            $titulo="Recuperación de contraseña";
-            $para = $_POST['email'];
-            $resultado = $modelo->envio_correo($para,$titulo,$mensaje);
-            if ($resultado[0]==1) {
-                print json_encode(array("Exito",$_POST,$resultado));
-                exit();
-            }else{
-                print json_encode(array("Error",$_POST,$resultado));
-                exit();
-            }
-            
-
-        }else {
-            print json_encode(array("Error",$_POST,$resultado));
-            exit();
-        }
-
-
-        print json_encode($_POST);
-
-
-    }else if (isset($_POST['eliminar_persona']) && $_POST['eliminar_persona']=="si_eliminala") {
-		$array_eliminar = array(
-			"table"=>"tb_persona",
-			"id"=>$_POST['id']
-
-		);
-		$resultado = $modelo->eliminar_generica($array_eliminar);
-		if($resultado[0]=='1' && $resultado[4]>0){
-        	print json_encode(array("Exito",$_POST,$resultado));
-			exit();
-
-        }else {
-        	print json_encode(array("Error",$_POST,$resultado));
-			exit();
-        }
-		
-
-
 	}else if (isset($_POST['ingreso_datos']) && $_POST['ingreso_datos']=="si_actualizalo") {
 		$_POST['direccion'] = "Sin direccion";
 		$array_update = array(
@@ -148,13 +96,16 @@
         }
 
 
-	}else if (isset($_POST['consultar_info']) && $_POST['consultar_info']=="si_condui_especifico") {
+	}else if (isset($_POST['consultar_info']) && $_POST['consultar_info']=="si_coneste_id") {
 
 
 		
-		$resultado = $modelo->get_todos("tb_persona","WHERE id = '".$_POST['id']."'");
-		if($resultado[0]=='1'){
-        	print json_encode(array("Exito",$_POST,$resultado[2][0]));
+		$resultado = $modelo->get_todos("tb_usuario","WHERE int_idusuario = '".$_POST['id']."'");
+		$result= $modelo->get_todos("tb_empleado","WHERE nva_email_empleado = '".$_POST['correo_emp']."'");
+		
+		if($resultado[0]=='1' && $result[0]=='1'){
+
+			print json_encode(array("Exito",$_POST,$resultado[2][0],$result[2][0]));
 			exit();
 
         }else {
@@ -192,23 +143,14 @@
         }
     
 		 
-	}else{
-
-		$array_select = array(
-			"table"=>"tb_empleado",
-			"int_idempleado"=>"nva_nom_empleado"
-
-		);
-		 
-		$result_select = $modelo->crear_select($array_select);
-
+	}else{		
 
 		$htmltr = $html="";
 		$cuantos = 0;
 		$sql = "SELECT
 					int_idusuario,
 					nva_nom_usuario,
-					nva_nom_empleado, 
+					nva_nom_empleado,					 
 					nva_email_empleado 
 				FROM
 					tb_usuario
@@ -225,8 +167,8 @@
 	                            <td class="text-center">'.$row['nva_nom_empleado'].'</td>
 	                            <td class="text-center">'.$row['nva_email_empleado'].'</td>
 	                            <td class="text-center project-actions">
-			                        <button class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#modalClienteEdit" data-toggle="tooltip" 
-			                        	data-idempleado='.$row['int_idusuario'].'>
+			                        <button class="btn btn-info btn-sm btn_editar"
+			                        	data-idusuario='.$row['int_idusuario'].' data-email_empleado='.$row['nva_email_empleado'].'>
 			                            <i class="fas fa-pencil-alt"></i>
 			                        </button>
 			                    </td>
@@ -247,7 +189,7 @@
                     	</table>';
 
 
-        	print json_encode(array("Exito",$html,$cuantos,$result_select,$_POST,$result));
+        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result));
 			exit();
 
         }else {

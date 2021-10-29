@@ -5,30 +5,36 @@ $(function(){
 	$(document).on("submit","#formulario_desbloqueo1",function(event){
 		event.preventDefault();
 		var datos = $("#formulario_desbloqueo1").serialize();
+		var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 5000
+    	});
 		console.log("formulario desbloqueo",datos);
 		$.ajax({
 	        dataType: "json",
 	        method: "POST",
-	        url:'json_ingreso.php',
+	        url:'../Controladores/inicio_sesion_controlador.php',
 	        data : datos,
 	    }).done(function(json) {
 	    	console.log(" desbloqueo",json);
 	    	if (json[0]=="Exito") {
 	    	 	
-				Swal.fire({
-				  icon: 'success',
-				  title: json[1]
-				});
+				Toast.fire({
+            	icon: 'success',
+            	title: 'Desbloqueado!.'
+       			}); 
 				var timer = setInterval(function(){
-					$(location).attr('href','../home/index.php?modulo=Home');
+					$(location).attr('href','../Vistas/v_principal.php');
 					clearTimeout(timer); 
 				},3500)
-	    	 }else{
-	    	 	Swal.fire({
-				  icon: 'error',
-				  title: json[1]
-				});
-	    	 }
+	    	}else{
+	    	 	Toast.fire({
+		            icon: 'error',
+		            title: 'Contraseña Incorrecta!'
+		        });;
+	    	}
 
 	    });
 	});

@@ -143,6 +143,31 @@
 				return array(-1,"error",$e->getMessage(),$sql);
 			}
 		}
+		public static function get_nombre_relacionado($tabla,$where="",$nombre=""){
+
+
+			$sql="SELECT	 
+						$nombre
+					FROM
+						$tabla
+						INNER JOIN
+						tb_empleado
+						ON 
+							tb_usuario.int_idempleado = tb_empleado.int_idempleado $where";
+
+
+
+			//$sql="SELECT * FROM $tabla $where";
+			try{
+				$comando=Conexion::getInstance()->getDb()->prepare($sql);
+				$comando->execute();
+				$result=$comando->fetchAll(PDO::FETCH_ASSOC);
+				$cuantos = $comando->rowCount();
+				return array(1,"exito",$result,"",$cuantos);
+			}catch(Exception $e){
+				return array(-1,"error",$e->getMessage(),$sql);
+			}
+		}
 		public static function get_query($query,$tipo=""){
 			$sql=$query;
 			try{

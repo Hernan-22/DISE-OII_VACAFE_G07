@@ -6,7 +6,7 @@
             
         }else{
              
-            header("Location: ../Vistas/bloqueo.php");
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
              
         }
     }else{
@@ -53,7 +53,7 @@
                                 <a href="#" class="dropdown-item">
                                     <i class="fas fa-user mr-2"></i> Perfil                            
                                 </a>
-                                <a href="#" class="dropdown-item">
+                                <a href="../Vistas/v_bloquear_pantalla.php" class="dropdown-item">
                                     <i class="fas fa-lock mr-2"></i> Bloquear                               
                                 </a>
                               <div class="dropdown-divider"></div>
