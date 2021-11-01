@@ -34,7 +34,6 @@
 		}
 
 
-
 	}else if (isset($_GET['subir_imagen']) && $_GET['subir_imagen']=="subir_imagen_ajax") {
 
 		$file_path = "archivos_usuario/".basename($_FILES['file-0']['name']);
@@ -50,69 +49,56 @@
 		}
 		
 
+	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="si_actualizar_usuario") {
 
-		 
-
-	}else if (isset($_POST['consultar_municipios']) && $_POST['consultar_municipios']=="si_pordeptos") {
-
-		$array_select = array(
-			"table"=>"tb_municipios",
-			"ID"=>"MunName" 
-
-		);
-		$where = "WHERE DEPSV_ID='".$_POST['depto']."'";
-		$result_select = $modelo->crear_select($array_select,$where);
-		if ($result_select[0]!=0) {
-			print json_encode(array("Exito",$result_select));
-			exit();
-		}else{
-			print json_encode(array("Error",$result_select));
-			exit();
-		}
-
-
-	}else if (isset($_POST['ingreso_datos']) && $_POST['ingreso_datos']=="si_actualizalo") {
-		$_POST['direccion'] = "Sin direccion";
 		$array_update = array(
-            "table" => "tb_persona",
-            "id" => $_POST['llave_persona'],
-            "dui"=>$_POST['dui'],
-            "nombre" => $_POST['nombre'],
-            "email" => $_POST['email'],
-            "direccion" => $_POST['direccion'], 
-            "telefono" => $_POST['telefono'],
-            "fecha_nacimiento" => $modelo->formatear_fecha($_POST['fecha']), 
-            "tipo_persona" => $_POST['tipo_persona']
+            "table" => "tb_usuario",
+            "int_idusuario"=>$_POST['llave_usuario'] ,
+            "nva_nom_usuario" => $_POST['nombre_usuario'],
+            "nva_contraseña_usuario" => $modelo->encriptarlas_contrasenas($_POST['contrasena_usuario']),
+            "int_idempleado" => $_POST['empleado_usuario']            
         );
 		$resultado = $modelo->actualizar_generica($array_update);
 
 		if($resultado[0]=='1' && $resultado[4]>0){
-        	print json_encode(array("Exito",$_POST,$resultado));
+			$array_update = array(
+            "table" => "tb_empleado",
+            "int_idempleado" => $_POST['empleado_usuario'],
+            "nva_email_empleado"=>$_POST['correo_usuario']           
+	        );
+			$resultado_Empleado = $modelo->actualizar_generica($array_update);
+
+        	print json_encode(array("Exito",$_POST,$resultado,$resultado_Empleado));
 			exit();
 
         }else {
-        	print json_encode(array("Error",$_POST,$resultado));
+        	print json_encode(array("Error",$_POST,$resultado,$resultado_Empleado));
 			exit();
         }
 
 
 	}else if (isset($_POST['consultar_info']) && $_POST['consultar_info']=="si_coneste_id") {
 
+		$array_select = array(
+			"table"=>"tb_empleado",
+			"int_idempleado"=>"nva_nom_empleado" 
 
+		);
+		$where = "WHERE nva_email_empleado='".$_POST['correo_emp']."'";
+		$result_select = $modelo->crear_select($array_select,$where);
 		
 		$resultado = $modelo->get_todos("tb_usuario","WHERE int_idusuario = '".$_POST['id']."'");
-		$result= $modelo->get_todos("tb_empleado","WHERE nva_email_empleado = '".$_POST['correo_emp']."'");
+	
 		
-		if($resultado[0]=='1' && $result[0]=='1'){
+		if($resultado[0]=='1'){
 
-			print json_encode(array("Exito",$_POST,$resultado[2][0],$result[2][0]));
+			print json_encode(array("Exito",$_POST,$resultado[2][0],$result_select));
 			exit();
 
         }else {
         	print json_encode(array("Error",$_POST,$resultado));
 			exit();
         }
-
 
 
 	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="datonuevo") {		

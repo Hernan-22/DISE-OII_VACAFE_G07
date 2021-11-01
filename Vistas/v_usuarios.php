@@ -71,7 +71,7 @@
                         <div class="modal-content">
                             <form method="POST" name="formulario_registro" id="formulario_registro">
                                 <div class="modal-header bg-success">
-                                    <h4 class="modal-title">Usuarios | Nuevo</h4>
+                                    <h4 class="modal-title">Usuarios | Editar</h4>
                                     <button
                                         type="button"
                                         class="close"
@@ -82,17 +82,24 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">                               
-                                    <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="datonuevo">
+                                    <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="si_actualizar_usuario">
+                                    <input type="hidden" id="llave_usuario" name="llave_usuario" value="si_registro">
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <span>
+                                                    *
+                                                </span>
                                                 <label>Empleado</label>
                                                 <div class="input-group mb-3">
                                                      <span class="input-group-text">
                                                             <i class="fas fa-user"></i>
                                                         </span>
-                                                    <select class="form-control" id="empleado_usuario_editar" name="empleado_usuario_editar">
+                                                    <select class="form-control" id="empleado_usuario" name="empleado_usuario">
                                                     </select>
                                                 </div>
+                                                <span>
+                                                    *
+                                                </span>
                                                 <label for="contrasena_usuario">Contraseña</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -100,9 +107,12 @@
                                                                 <i class="fas fa-key"></i>
                                                             </span>
                                                         </div>
-                                                        <input type="password" class="form-control"
-                                                        id="contrasena_usuario" name="contrasena_usuario_edit" required="required">
+                                                        <input type="password" class="form-control" autocomplete="off"
+                                                        id="contrasena_usuario" name="contrasena_usuario" required minlength="5">
                                                     </div>
+                                                <span>
+                                                    *
+                                                </span>
                                                 <label for="recontrasena_usuario">Repita su Contraseña</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -110,14 +120,17 @@
                                                                 <i class="fas fa-key"></i>
                                                             </span>
                                                         </div>
-                                                        <input type="password" class="form-control"
-                                                        id="recontrasena_usuario" name="recontrasena_usuario" required="required">
+                                                        <input type="password" class="form-control" autocomplete="off"
+                                                        id="recontrasena_usuario" name="recontrasena_usuario" required minlength="5">
                                                     </div>                                             
                                                 
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <span>
+                                                       *
+                                                    </span>
                                                     <label for="nombre_usuario">Nombre Usuario</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -125,9 +138,12 @@
                                                                 <i class="fas fa-user-tie"></i>
                                                             </span>
                                                         </div>
-                                                        <input type="text" class="form-control" placeholder="juan"
-                                                        id="nombre_usuario" name="nombre_usuario" required="required">
+                                                        <input type="text" class="form-control" placeholder="juan" autocomplete="off"
+                                                        id="nombre_usuario" name="nombre_usuario" required>
                                                     </div>  
+                                                    <span>
+                                                       *
+                                                    </span>
                                                     <label for="correo_usuario">Correo</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
@@ -135,8 +151,8 @@
                                                                 <i class="fas fa-envelope"></i>
                                                             </span>
                                                         </div>
-                                                        <input type="email" class="form-control" placeholder="juan@gmail.com"
-                                                        id="correo_usuario" name="correo_usuario" required="required">
+                                                        <input type="email" class="form-control" placeholder="juan@gmail.com" autocomplete="off"  required
+                                                        id="correo_usuario" name="correo_usuario" >
                                                     </div>                                    
                                                 </div>
                                             </div>
@@ -146,6 +162,9 @@
                                             <i class="fas fa-trash"></i> Limpiar</button>
 
                                         <button type="submit" class="btn bg-success"><i class="fa fa-save"></i> Guardar</button>
+                                        <span>
+                                           * Campo Requerido
+                                        </span>
                                     </div>
                                 </div>    
                             </form>
@@ -194,8 +213,12 @@
         <!-- dropzonejs -->
         <script src="../plugins/dropzone/min/dropzone.min.js"></script>
         <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+        <!-- jquery-validation -->
+        <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+        <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
         <!-- Toastr -->
         <script src="../plugins/toastr/toastr.min.js"></script>
+
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->

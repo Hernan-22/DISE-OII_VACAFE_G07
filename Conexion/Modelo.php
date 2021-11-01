@@ -554,7 +554,7 @@
 			    	if($row[$campo1]==$igual){
 			    		$selected = "selected";
 			    	}
-			        $option_devolver .="<option value='".$row[$campo1]."' $selected>".$nombre."</option>";
+			        $option_devolver .="<option value='".$row[$campo1]."' selected>".$nombre."</option>";
 			    }
 			    $option_retornar =($option_devolver !="") ? $option_devolver : "<option value='-1'>No existen datos registrados</option>";
 			    

@@ -30,18 +30,24 @@
 
            <form id="formulario_login" method="post">
              <input type="hidden" name="iniciar_sesion" value="si_nueva">
+              <span>
+                *
+              </span>
              <label for="email_login">Usuario o Correo</label>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Email" id="email_login" name="email_login">
+              <input type="text" class="form-control" placeholder="Email" id="email_login" name="email_login" autocomplete="off" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
                 </div>
               </div>
             </div>
+            <span>
+              *
+            </span>
             <label for="contra_login">Contraseña</label>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Password" id="contra_login" name="contra_login">
+              <input type="password" class="form-control" placeholder="Password" id="contra_login" name="contra_login" autocomplete="off" required>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-key"></span>
@@ -58,6 +64,10 @@
               <div class="col-4">
                 <button type="submit" class="btn btn-success btn-block">Entrar</button>
               </div>
+
+              <span>
+                <small>* Campo Requerido</small>
+              </span>
               <!-- /.col -->
             </div>
           </form>
@@ -69,6 +79,9 @@
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- jquery-validation -->
+    <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>

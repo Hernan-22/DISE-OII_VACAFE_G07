@@ -1,6 +1,44 @@
 $(function(){
 	console.log("todo esta integrado");
 	//$("#dui").mask("99999999-9");
+
+	$('#envio_correo').validate({
+	    rules: {
+	      email: {
+	        required: true,
+	        email: true,
+	      },
+	      password: {
+	        required: true,
+	        minlength: 5
+	      },
+	      terms: {
+	        required: true
+	      },
+	    },
+	    messages: {
+	      email: {
+	        required: "Por favor ingresa un email",
+	        email: "Por favor ingresa un email valido"
+	      },
+	      password: {
+	        required: "Please provide a password",
+	        minlength: "Your password must be at least 5 characters long"
+	      },
+	      terms: "Please accept our terms"
+	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
  	
 	
 	$(document).on("submit","#actualizar_pass",function(event){

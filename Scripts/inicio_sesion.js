@@ -2,42 +2,49 @@ $(function(){
 	console.log("todo esta integrado");
 	//$("#dui").mask("99999999-9");
  
-	$(document).on("submit","#formulario_desbloqueo1",function(event){
-		event.preventDefault();
-		var datos = $("#formulario_desbloqueo1").serialize();
-		var Toast = Swal.mixin({
-	        toast: true,
-	        position: 'top-end',
-	        showConfirmButton: false,
-	        timer: 5000
-    	});
-		console.log("formulario desbloqueo",datos);
-		$.ajax({
-	        dataType: "json",
-	        method: "POST",
-	        url:'../Controladores/inicio_sesion_controlador.php',
-	        data : datos,
-	    }).done(function(json) {
-	    	console.log(" desbloqueo",json);
-	    	if (json[0]=="Exito") {
-	    	 	
-				Toast.fire({
-            	icon: 'success',
-            	title: 'Desbloqueado!.'
-       			}); 
-				var timer = setInterval(function(){
-					$(location).attr('href','../Vistas/v_principal.php');
-					clearTimeout(timer); 
-				},3500)
-	    	}else{
-	    	 	Toast.fire({
-		            icon: 'error',
-		            title: 'Contraseña Incorrecta!'
-		        });;
-	    	}
+	
+	
 
-	    });
+	$('#formulario_login').validate({
+	    rules: {
+	      email: {
+	        required: true,
+	        email: true,
+	      },
+	      password: {
+	        required: true,
+	        minlength: 5
+	      },
+	      terms: {
+	        required: true
+	      },
+	    },
+	    messages: {
+	      email: {
+	        required: "Por favor ingresa un email",
+	        email: "Por favor ingresa un email valido"
+	      },
+	      password: {
+	        required: "Please provide a password",
+	        minlength: "Your password must be at least 5 characters long"
+	      },
+	      terms: "Please accept our terms"
+	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
 	});
+
+
+
 	$(document).on("submit","#actualizar_pass",function(event){
 		event.preventDefault();
 		if ($("#contrasena").val() != $("#recontrasena").val()) {
@@ -128,8 +135,8 @@ $(function(){
 	        url:'../Controladores/inicio_sesion_controlador.php',
 	        data : datos,
 	    }).done(function(json) {
-	    	 console.log("el login: ",json);
-	    	 if (json[0]=="Exito") {
+	    	console.log("el login: ",json);
+	    	if (json[0]=="Exito") {
 	    	 	
 				Toast.fire({
             	icon: 'success',
@@ -139,18 +146,18 @@ $(function(){
 					$(location).attr('href','../Vistas/v_principal.php');
 					clearTimeout(timer);
 				},3500)
-	    	 }else if (json[0]=="Error" && json[1]=="La contraseña no coincide"){
+	    	}else if (json[0]=="Error" && json[1]=="La contraseña no coincide"){
 	    	 	Toast.fire({
 		            icon: 'error',
 		            title: 'Contraseña Incorrecta!'
 		        });
 	    	 	
-	    	 }else{
+	    	}else{
 	    	 	Toast.fire({
 		            icon: 'info',
 		            title: 'No existe este Usuario!'
 		        });
-	    	 }
+	    	}
 
 	    });
 

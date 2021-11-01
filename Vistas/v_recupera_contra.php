@@ -25,9 +25,12 @@
       <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
       <form id="envio_correo" name="envio_correo" method="post">
         <input type="hidden" id="enviar_contra" name="enviar_contra" value="si_enviala">
+        <span>
+          *
+        </span>
         <label for="contrasena">Correo</label>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="E-mail" id="email_enviar" name="email_enviar">
+          <input type="email" class="form-control" placeholder="E-mail" id="email_enviar" name="email_enviar" required> 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -44,6 +47,9 @@
       <p class="mt-3 mb-1">
         <a href="index.php">Login</a>
       </p>
+      <span>
+        <small>* Campo Requerido</small>
+      </span>
     </div>
     <!-- /.login-card-body -->
   </div>
@@ -54,6 +60,9 @@
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jquery-validation -->
+<script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
 <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>

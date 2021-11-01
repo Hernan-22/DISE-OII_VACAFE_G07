@@ -35,11 +35,10 @@
           <br>
           <p class="login-box-msg">Pantalla Bloqueada</p>
 
-           <form id="formulario_desbloqueo1" name="formulario_desbloqueo1" method="post">
+           <form id="formulario_desbloqueo" method="post">
             <input type="hidden" name="desbloquear" value="si_con_contrasena">  
             <div class="input-group mb-3">
-              <input type="password" class="form-control" placeholder="Contraseña" id="contra_desbloqueo" name="contra_desbloqueo"
-              required>
+              <input type="password" class="form-control" placeholder="Contraseña" id="contra_desbloqueo" name="contra_desbloqueo" required autocomplete="off">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-key"></span>
@@ -59,94 +58,18 @@
         </div>
       </div>
     </div>
-
+    
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
-    <script src="../Scripts/inicio_sesion.js" type="text/javascript" charset="utf-8" async defer></script>
+   
+    <script type="text/javascript" src="../plugins2/parsleyjs/parsley.min.js"></script>
+    <script src="../Scripts/pantalla_bloqueo.js" type="text/javascript" charset="utf-8" async defer></script>
     <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- jquery-validation -->
+    <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bloqueo | Administrador</title>
-
- 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
- 
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-  
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-</head>
-<body class="hold-transition lockscreen">
-
-<div class="card-body">
-  <div class="lockscreen-wrapper">
-    <div class="lockscreen-logo">
-      <a href="../index2.html"><b>La Vaca</b> Café</a>
-    </div>
- User name
-    <div class="lockscreen-name">Kathy</div>
-
-    
-        <div class="lockscreen-item">
-          lockscreen image 
-          <div class="lockscreen-image">
-            <img src="../dist/img/user-icon.png" alt="User Image">
-          </div>
-        
-
-        
-          <form class="lockscreen-credentials">
-            <div class="input-group">
-              <input type="password" class="form-control" placeholder="password">
-
-              <div class="input-group-append">
-                <button type="button" class="btn">
-                  <i class="fas fa-arrow-right text-muted"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        
-
-        </div>
- 
-    <div class="help-block text-center">
-      Ingrese su contraseña para desbloquear la pantalla
-    </div>  
-    <div class="lockscreen-footer text-center">
-     <strong>UES &copy; 2021</strong>
-                  Todos los Derechos Reservados
-    </div>
-  </div>
-</div>
-
-<script src="../plugins/jquery/jquery.min.js"></script>
-
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>-->
