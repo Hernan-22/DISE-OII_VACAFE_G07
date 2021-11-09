@@ -16,8 +16,10 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
+
       <!-- /.login-logo -->
       <div class="card card-outline card-success">
+        
         <div class="card-header text-center">
           <a class="h1"><b>La Vaca</b> Café</a>
         </div>
@@ -30,9 +32,7 @@
 
            <form id="formulario_login" method="post">
              <input type="hidden" name="iniciar_sesion" value="si_nueva">
-              <span>
-                *
-              </span>
+             
              <label for="email_login">Usuario o Correo</label>
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Email" id="email_login" name="email_login" autocomplete="off" required>
@@ -42,9 +42,7 @@
                 </div>
               </div>
             </div>
-            <span>
-              *
-            </span>
+           
             <label for="contra_login">Contraseña</label>
             <div class="input-group mb-3">
               <input type="password" class="form-control" placeholder="Password" id="contra_login" name="contra_login" autocomplete="off" required>
@@ -65,9 +63,7 @@
                 <button type="submit" class="btn btn-success btn-block">Entrar</button>
               </div>
 
-              <span>
-                <small>* Campo Requerido</small>
-              </span>
+              
               <!-- /.col -->
             </div>
           </form>

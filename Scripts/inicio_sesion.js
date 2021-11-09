@@ -1,9 +1,7 @@
 $(function(){
 	console.log("todo esta integrado");
 	//$("#dui").mask("99999999-9");
- 
-	
-	
+
 
 	$('#formulario_login').validate({
 	    rules: {
@@ -130,7 +128,7 @@ $(function(){
     	});
 		console.log("evento submit",datos); 
 		$.ajax({
-	        dataType: "json",
+	        dataType: "json", 
 	        method: "POST",
 	        url:'../Controladores/inicio_sesion_controlador.php',
 	        data : datos,

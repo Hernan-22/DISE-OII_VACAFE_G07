@@ -6,7 +6,7 @@ $instancia = new Conexion();
 $conexion = $instancia->obtener_conexion();
 
 if (isset($_POST['idProducto']) != "") {
-    $sql ="SELECT nva_nom_producto, dou_costo_producto FROM tb_producto WHERE int_idproducto = ?;";
+                $sql ="SELECT nva_nom_producto, dou_costo_producto FROM tb_producto WHERE int_idproducto = ?;";
                 $statement = $conexion->prepare($sql); 
                 $statement->execute(array($_POST['idProducto']));
                 $datos = $statement->fetchAll();
@@ -35,7 +35,7 @@ if (isset($_POST['idProducto']) != "") {
                       <thead>
                         <tr>
                             <th style="width: 300px">Producto</th>
-                            <th style="width: 10px">Precio Unitario</th>
+                            <th style="width: 10px">Costo Unitario</th>
                             <th style="width: 10px">Cantidad</th>
                            <th style="width: 50px">Acción</th>
                         </tr>

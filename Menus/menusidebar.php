@@ -71,7 +71,7 @@
                 <a href="../index3.html" class="brand-link">
                     <img
                         src="../dist/img/logito.png"
-                        alt="AdminLTE Logo"
+                        alt="La Vaca Café"
                         class="brand-image img-circle elevation-3"
                         style="opacity: .8"
                     >
@@ -121,14 +121,21 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="../Vistas/v_nueva_compra.php" class="nav-link">
-                                            <p>Nueva compra</p>
+                                        <a href="../Vistas/v_nueva_compra_bovinos.php" class="nav-link">
+                                            <p>Bovinos</p>
                                         </a>
                                     </li>
                                 </ul>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_nueva_compra_insumosmedi.php" class="nav-link">
+                                            <p>Medicamentos e Insumos</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="../Vistas/v_registro_compras.php" class="nav-link">
                                             <p>Registro</p>
                                         </a>
                                     </li>

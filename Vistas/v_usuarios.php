@@ -39,6 +39,10 @@
             <?php
                 require_once ('../Menus/menusidebar.php');
             ?>
+            <?php
+                require_once ('../Menus/loader.php');
+            ?>
+
 
             <!-- CCONTENIDO DE LA PÁGINA -->
             <div class="content-wrapper">

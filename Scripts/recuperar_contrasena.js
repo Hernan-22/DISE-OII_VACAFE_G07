@@ -1,6 +1,5 @@
 $(function(){
 	console.log("todo esta integrado");
-	//$("#dui").mask("99999999-9");
 
 	$('#envio_correo').validate({
 	    rules: {
@@ -118,22 +117,3 @@ $(function(){
 	
 })
 
-
-function mostrar_mensaje(titulo,mensaje=""){
-	Swal.fire({
-	  title: titulo,
-	  html: mensaje,
-	  allowOutsideClick: false,
-	  timerProgressBar: true,
-	  didOpen: () => {
-	    Swal.showLoading()
-	     
-	  },
-	  willClose: () => {
-	     
-	  }
-	}).then((result) => {
-	  
-	   
-	})
-}

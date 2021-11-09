@@ -33,6 +33,9 @@
 
             <?php
                require_once ('../Menus/menusidebar.php');
+            ?>
+            <?php
+                require_once ('../Menus/loader.php');
             ?>         
         <div class="content-wrapper ">           
                 <div class="card card-default">

@@ -50,7 +50,6 @@ $(function (){
 	$(document).on("click",".btn_editar",function(e){
 
 		e.preventDefault(); 
-		mostrar_mensaje("Consultando información","Por favor no recargue la página");
 		var id = $(this).attr("data-idusuario");		
 		var email_empleado = $(this).attr("data-email_empleado");
 		console.log("El id es: ",id);

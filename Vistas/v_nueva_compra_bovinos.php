@@ -34,6 +34,9 @@
             <?php
                 require_once ('../Menus/menusidebar.php');
             ?>
+            <?php
+                require_once ('../Menus/loader.php');
+            ?>
             <!-- CONTENIDO DE LA PAGINA -->
             <div class="content-wrapper">               
                 <section class="content-header">
@@ -56,7 +59,7 @@
                                             <div class="col-md-10
                                                 offset-md-1">
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-3">
 		                                                <div class="form-group">
 		                                                    <label>Proveedor</label>
 		                                                    <div class="input-group
@@ -71,6 +74,18 @@
 		                                                    </div>
 		                                                </div>
 		                                            </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label>Cliente</label>
+                                                            <div class="input-group
+                                                            mb-3">
+                                                                <select class="form-control">
+                                                                    <option selected="selected">Todos</option>
+                                                                    <option>Cliente Frecuente</option>            
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 		                                            <div class="col-3">
 		                                            	<div class="form-group">
 		                                                    <label>Tipo Documento</label>
