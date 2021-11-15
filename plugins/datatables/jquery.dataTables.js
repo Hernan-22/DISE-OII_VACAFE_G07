@@ -11569,7 +11569,7 @@
 			 * to the information (`info`) to give an idea of how strong the filtering
 			 * is. The variable _MAX_ is dynamically updated.
 			 *  @type string
-			 *  @default (filtered from _MAX_ total registros)
+			 *  @default (filtrado de _MAX_ total de registros)
 			 *
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.infoFiltered
@@ -11583,7 +11583,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total registros)",
+			"sInfoFiltered": "(filtrado de _MAX_ total de registros)",
 	
 	
 			/**
@@ -11701,7 +11701,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Show _MENU_ registros",
+			"sLengthMenu": "Mostrar _MENU_ registros",
 	
 	
 			/**
@@ -11825,7 +11825,7 @@
 			 * displayed after filtering. `emptyTable` is shown when there is simply no
 			 * information in the table at all (regardless of filtering).
 			 *  @type string
-			 *  @default No matching records found
+			 *  @default No hay registros
 			 *
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.zeroRecords
@@ -11839,7 +11839,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "No hay registros"
 		},
 	
 	

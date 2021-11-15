@@ -30,14 +30,14 @@
     }
 }(this, function(moment, $) {
     var DateRangePicker = function(element, options, cb) {
-
+        var fecha_hoy = new Date(); 
         //default settings for options
         this.parentEl = 'body';
         this.element = $(element);
         this.startDate = moment().startOf('day');
-        this.endDate = moment().endOf('day');
+        this.endDate = fecha_hoy;
         this.minDate = false;
-        this.maxDate = false;
+        this.maxDate = true;
         this.maxSpan = false;
         this.autoApply = false;
         this.singleDatePicker = false;
@@ -47,10 +47,10 @@
         this.showWeekNumbers = false;
         this.showISOWeekNumbers = false;
         this.showCustomRangeLabel = true;
-        this.timePicker = false;
-        this.timePicker24Hour = false;
+        this.timePicker = true;
+        this.timePicker24Hour = true;
         this.timePickerIncrement = 1;
-        this.timePickerSeconds = false;
+        this.timePickerSeconds = true;
         this.linkedCalendars = true;
         this.autoUpdateInput = true;
         this.alwaysShowCalendars = false;
@@ -75,6 +75,7 @@
             applyLabel: 'Apply',
             cancelLabel: 'Cancel',
             weekLabel: 'W',
+            endDate: fecha_hoy,
             customRangeLabel: 'Custom Range',
             daysOfWeek: moment.weekdaysMin(),
             monthNames: moment.monthsShort(),
@@ -580,13 +581,7 @@
                         minute = parseInt(this.container.find('.left .minuteselect option:last').val(), 10);
                     }
                     second = this.timePickerSeconds ? parseInt(this.container.find('.left .secondselect').val(), 10) : 0;
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.left .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
+                   
                 } else {
                     hour = parseInt(this.container.find('.right .hourselect').val(), 10);
                     minute = parseInt(this.container.find('.right .minuteselect').val(), 10);
@@ -594,13 +589,7 @@
                         minute = parseInt(this.container.find('.right .minuteselect option:last').val(), 10);
                     }
                     second = this.timePickerSeconds ? parseInt(this.container.find('.right .secondselect').val(), 10) : 0;
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.right .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
+                    
                 }
                 this.leftCalendar.month.hour(hour).minute(minute).second(second);
                 this.rightCalendar.month.hour(hour).minute(minute).second(second);
@@ -876,13 +865,7 @@
                     selected.minute(!isNaN(selected.minute()) ? selected.minute() : timeSelector.find('.minuteselect option:selected').val());
                     selected.second(!isNaN(selected.second()) ? selected.second() : timeSelector.find('.secondselect option:selected').val());
 
-                    if (!this.timePicker24Hour) {
-                        var ampm = timeSelector.find('.ampmselect option:selected').val();
-                        if (ampm === 'PM' && selected.hour() < 12)
-                            selected.hour(selected.hour() + 12);
-                        if (ampm === 'AM' && selected.hour() === 12)
-                            selected.hour(0);
-                    }
+                    
 
                 }
 
@@ -986,26 +969,7 @@
             // AM/PM
             //
 
-            if (!this.timePicker24Hour) {
-                html += '<select class="ampmselect">';
-
-                var am_html = '';
-                var pm_html = '';
-
-                if (minDate && selected.clone().hour(12).minute(0).second(0).isBefore(minDate))
-                    am_html = ' disabled="disabled" class="disabled"';
-
-                if (maxDate && selected.clone().hour(0).minute(0).second(0).isAfter(maxDate))
-                    pm_html = ' disabled="disabled" class="disabled"';
-
-                if (selected.hour() >= 12) {
-                    html += '<option value="AM"' + am_html + '>AM</option><option value="PM" selected="selected"' + pm_html + '>PM</option>';
-                } else {
-                    html += '<option value="AM" selected="selected"' + am_html + '>AM</option><option value="PM"' + pm_html + '>PM</option>';
-                }
-
-                html += '</select>';
-            }
+            
 
             this.container.find('.drp-calendar.' + side + ' .calendar-time').html(html);
 
@@ -1307,14 +1271,7 @@
 
             if (this.endDate || date.isBefore(this.startDate, 'day')) { //picking start
                 if (this.timePicker) {
-                    var hour = parseInt(this.container.find('.left .hourselect').val(), 10);
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.left .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
+                  
                     var minute = parseInt(this.container.find('.left .minuteselect').val(), 10);
                     if (isNaN(minute)) {
                         minute = parseInt(this.container.find('.left .minuteselect option:last').val(), 10);
@@ -1330,14 +1287,7 @@
                 this.setEndDate(this.startDate.clone());
             } else { // picking end
                 if (this.timePicker) {
-                    var hour = parseInt(this.container.find('.right .hourselect').val(), 10);
-                    if (!this.timePicker24Hour) {
-                        var ampm = this.container.find('.right .ampmselect').val();
-                        if (ampm === 'PM' && hour < 12)
-                            hour += 12;
-                        if (ampm === 'AM' && hour === 12)
-                            hour = 0;
-                    }
+                   
                     var minute = parseInt(this.container.find('.right .minuteselect').val(), 10);
                     if (isNaN(minute)) {
                         minute = parseInt(this.container.find('.right .minuteselect option:last').val(), 10);
@@ -1463,13 +1413,7 @@
             }
             var second = this.timePickerSeconds ? parseInt(cal.find('.secondselect').val(), 10) : 0;
 
-            if (!this.timePicker24Hour) {
-                var ampm = cal.find('.ampmselect').val();
-                if (ampm === 'PM' && hour < 12)
-                    hour += 12;
-                if (ampm === 'AM' && hour === 12)
-                    hour = 0;
-            }
+           
 
             if (isLeft) {
                 var start = this.startDate.clone();

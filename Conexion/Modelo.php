@@ -252,7 +252,7 @@
 			$gsent = Conexion::getInstance()->getDb()->prepare("SELECT COUNT(*) FROM $tabla");
 			$gsent->execute();
 			$resultado = $gsent->fetchAll(PDO::FETCH_COLUMN, 0);
-			return date("Yis").''.($resultado[0]+1);
+			return ($resultado[0]+1);
 		}
 		public static function retornar_id_insertar($tabla){
 			$gsent = Conexion::getInstance()->getDb()->prepare("SELECT COUNT(*) FROM $tabla");
@@ -574,11 +574,21 @@
 	        return $fecha1;
 		}
 
+		public static function formatear_fecha_hora($fecha3){
+			
+			$separacion= explode(" ",$fecha3);
+			$hora = $separacion[1];
+			$fecha = $separacion[0];			
+			$pos = strpos($fecha, "/");
+			if ($pos === false) $fecha = explode("-",$fecha);
+			else $fecha = explode("/",$fecha);
+			$dia1 = (strlen($fecha[0])==1) ? '0'.$fecha[0] : $fecha[0];
+			$fecha1 = $fecha[2].'-'.$fecha[1].'-'.$dia1.' '.$hora;
+			return $fecha1;
+			
+		}
 
 	 
-	
-
-
 
 		/***encripto password*/
 		public static function encriptarlas_contrasenas($contra){
