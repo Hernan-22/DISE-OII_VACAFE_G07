@@ -1,9 +1,9 @@
- <?php 
+<!DOCTYPE html>
+<?php 
     date_default_timezone_set('America/El_Salvador');
     @session_start(); 
-?>    
-<!DOCTYPE html>
-<html lang="en">
+?>
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,8 +22,6 @@
         <link rel="stylesheet" href="../plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
 
         <link rel="stylesheet" href="../plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css">
-            
-        <!--<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">  -->
 
         <link rel="stylesheet" href="../plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
         <!-- iCheck for checkboxes and radio inputs -->
@@ -46,7 +44,6 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     </head>
-   
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
             <!-- Navbar -->
@@ -64,96 +61,82 @@
                 </section>
 
 
-                <!-- FROMULARIO COMPRA --> 
-                <form method="POST" name="formulario_registro_compra" id="formulario_registro_compra">
+                <!-- FROMULARIO VENTA --> 
+                <form method="POST" name="formulario_registro_venta_b" id="formulario_registro_venta_b">
+                    
                     <section class="content">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 col-sm-12">
                                     <div class="card">
                                         <div class="card-header bg-success">
-                                            <h3 class="card-title">Compras</h3>
+                                            <h3 class="card-title">Ventas | Derivados</h3>
                                         </div>
-                                        <input type="hidden" id="almacenar_compra" name="almacenar_compra" value="nueva_compra">
-                                        <input type="hidden" id="validando_detalle" name="validando_detalle" value="0">
-                                        <input type="hidden" id="empleado_compra" name="empleado_compra" <?php print 'value ="'.$_SESSION['idempleado'].'"'?>>
+                                        <input type="hidden" id="almacenar_venta_b" name="almacenar_venta_b" value="nueva_venta_b">
+                                        <input type="hidden" id="empleado_venta_b" name="empleado_venta_b" <?php print 'value ="'.$_SESSION['idempleado'].'"'?>>
                                         <div class="row">
                                             <div class="col-md-10 offset-md-1">
                                                 <div class="row">
-                                                    <div class="col-4">
-        		                                        <div class="form-group">
-        		                                            <label>Proveedor</label>
-        		                                            <div class="input-group mb-3">
-        		                                                <select class="form-control" id="proveedor_compra" name="proveedor_compra" required>
-        		                                                    <option selected="selected">Todos</option>
-        		                                                    <option value="1">Salinera Turcios</option>
-        		                                                    <option value="2">Agroservicio El Frutal</option>
-        		                                                    <option value="3">Agua El Manantial</option>
-        		                                                    <option value="4">Finca Cuscatlán</option>
-        		                                                 </select>
-        		                                            </div>
-        		                                        </div>
-        		                                    </div>
-                                                           
-        		                                    <div class="col-4">
-        		                                        <div class="form-group">
-        		                                            <label>Tipo Documento</label>
-        		                                            <select class="form-control" id="tipo_doc_compra" name="tipo_doc_compra" required>
-        		                                                <option selected="selected">Factura</option>
-        		                                                <option>Ticket</option>
-        		                                                <option>Crédito Fiscal</option>
-        		                                            </select>
-        		                                        </div>		                                                
-        		                                    </div>
-        		                                    <div class="col-4">
-        		                                        <div class="form-group">
-        		                                            <label>No. Documento</label>
-        		                                            <input type="text" class="form-control validcion_solo_numeros_fact" id="num_doc_compra" name="num_doc_compra" placeholder="123456" maxlength="6" required autocomplete="off">
-        		                                        </div>
-        		                                    </div>
-        		                                            
-        		                                    <div class="col-6">
-        		                                        <div class="form-group">
-        										            <label for="">Descripción</label>
-        										            <input type="text" class="form-control" id="descrip_compra" name="descrip_compra" placeholder="Nueva Compra"  required autocomplete="off">
-        										        </div>
-        								            </div>
-        									        <div class="col-3">
-        		                                        <div class="form-group">
-        		                                            <label>Fecha Compra</label>
-        		                                            <div class="form-group mb-3">
-        		                                                <input size="16" type="text" placeholder="12-12-2021 12:00" readonly class="form_datetime form-control" id="fecha_compra" name="fecha_compra" required>
-        		                                            </div>
-        		                                        </div>
-        		                                    </div>
-        		                                    <div class="col-3">
-        		                                        <div class="form-group">
-        		                                            <label>Fecha Sistema</label>
-        		                                            <div class="input-group mb-3">
-        		                                                <input type="text"  name="fecha_sistema_compra" id="fecha_sistema_compra" class="form-control" value="<?php echo date('d-m-Y G:i:s');?>" readonly="true">
-        		                                            </div>
-        		                                        </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label>Cliente</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                         <i class="fas fa-user"></i>
+                                                                    </span>
+                                                                </div>  
+                                                                <select id="cliente_venta_b" name="cliente_venta_b" class="form-control">
+                                                                </select>   
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                        
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label>Fecha</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <i class="fas fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" id="fecha_venta_b" name="fecha_venta_b" class="form-control form_datetime" placeholder="12-12-2021 12:00" readonly required >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label>Vendedor</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <i class="fas fa-user"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <input type="text" id="vendedor_b" name="vendedor_b" class="form-control" <?php print 'value ="'.$_SESSION['empleado'].'"'?> readonly required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group text-center">
-                                                        <a class="btn bg-success" data-toggle="modal" data-target="#md_agregar_producto">
+                                                        <a class="btn bg-success" data-toggle="modal" data-target="#md_seleccion_bovinos">
                                                             <i class="fas fa-shopping-cart"></i>
-                                                                Agregar
-                                                                Producto
+                                                            Agregar
+                                                            Bovino
                                                         </a>
-                                                        <a class="btn bg-success">
+                                                        <a class="btn bg-success btn_limpiar_b">
                                                             <i class="fa fa-trash"></i>
-                                                                Limpiar
+                                                            Limpiar
                                                         </a>
                                                     </div>
-                                                </div>
-                                            </div>                                    
+                                                </div>                                                
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
+
                     <!-- DETALLTE DE LA VENTA (TABLA) -->
                     <section class="content">
                         <div class="container-fluid">
@@ -161,44 +144,46 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="col-12 table-responsive">
-                                            <div class="col-12 table-responsive">
-                                                <table id="tablaDetalleDerivados" class="table table-striped projects" width="100%">
-                                                   <thead>
-                                                    <th >Producto</th>
-                                                    <th class="text-center col-2" >Costo Unitario $</th>
-                                                    <th class="text-center col-2" >Cantidad</th>
-                                                    <th class="text-center col-2" >Sub Total $</th>
-                                                    <th class="text-center col-2" >Acción</th>
-                                                   </thead>
-                                                    <tbody>
+                                            <table id="tablaDetalleVentaB" class="table table-striped projects" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Producto</th>
+                                                        <th class="text-center col-2">Fotografía</th>
+                                                        <th class="text-center col-2">Raza</th>
+                                                        <th class="text-center col-2">Precio $</th>
+                                                        <th class="text-center col-2">Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 
 
-                                                   </tbody>
-                                                 </table>        
-                                            </div>
+                                                </tbody>
+                                            </table>
+                                            <div class="form-group float-sm-right">
                                                 <div class="col-2 float-sm-right">
-                                                    <label>Total</label>                            
-                                                     <input id="total_compra_vista" name="total_compra_vista" type="text" class="form-control" placeholder="$00.00" readonly="true">
-                                                     <input type="hidden" name="total_compra_guardar" id="total_compra_guardar">
+                                                    <label>Total</label>
+                                                    <input type="text" id="total_v_venta_b" name="total_v_venta_b" class="form-control" placeholder="$00.00" readonly>
+                                                     <input type="hidden" id="total_g_venta_b" name="total_g_venta_b">
                                                 </div>
                                                 <div class="col-2 float-sm-right">
                                                     <label>Iva</label>
-                                                    <input id="Iva_compra_vista" name="Iva_compra_vista" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                    <input type="hidden" name="iva_guardar" id="iva_guardar">
+                                                    <input type="text" id="iva_v_venta_b" name="iva_v_venta_b" class="form-control" placeholder="$00.00" readonly>
+                                                     <input type="hidden" id="iva_g_venta_b" name="iva_g_venta_b" >
                                                 </div>
                                                 <div class="col-2 float-sm-right">
                                                     <label>SubTotal</label>
-                                                    <input id="Subtotal_compra_vista" name="Subtotal_compra_vista"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                    <input type="hidden" name="subtotal_guardar" id="subtotal_guardar">
+                                                    <input type="text" id="subtotal_v_venta_b" name="subtotal_v_venta_b" class="form-control" placeholder="$00.00" readonly >
+                                                     <input type="hidden" id="subtotal_g_venta_b" name="subtotal_g_venta_b">
                                                 </div>
+                                            </div>
                                             <br>
                                             <br>
                                             <br>
                                             <br>
-
                                             <div class="form-group float-sm-right">
-                                                <button class="btn bg-success" type="submit">
+                                                <button type="submit" class="btn bg-success">
                                                     <i class="fas fa-check"></i>
-                                                    Comprar
+                                                    Vender
                                                 </button>
                                             </div>
                                         </div>
@@ -209,13 +194,13 @@
                     </section>
                 </form>
 
-                <!--MODAL DE BUSQUEDA PARA PRODUCTO-->
-                <div class="modal fade" id="md_agregar_producto"> 
-                    <form  method="POST" name="formulario_buscaProducto" id="formulario_buscaProducto">               
+                <!--MODAL DE SLECCIONE-->
+                <div class="modal fade" id="md_seleccion_bovinos"> 
+                    <form  method="POST" name="formulario_busca_bovinos" id="formulario_busca_bovinos">              
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header bg-success">
-                                    <h4 class="modal-title">Añadir Producto</h4>
+                                    <h4 class="modal-title">Añadir Bovinos</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -223,22 +208,22 @@
                                 <div class="modal-body">
                                     <div class="card">
                                         <!-- TABLA QUE MUESTRA LOS PRODUCTOS -->
-                                        <div class="card-body p-0" id="tb_seleccion_productos">                                        
+                                        <div class="card-body p-0" id="tb_seleccion_bovinos">                                       
                                         </div>
-                                        <!-- /.card-body -->
+                                            <!-- /.card-body -->
                                     </div>
                                 </div>
                                 <div class="modal-footer float-right">
-                                    <a class="btn bg-success btn_listo" data-dismiss="modal" >
+                                    <a class="btn bg-success btn_listo_b" data-dismiss="modal" >
                                         <i class="fa fa-check"></i>Listo
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    </form>   
-                </div>
+                    </form>       
+                </div>              
             </div>
-
+              
             
            
             <footer class="main-footer">
@@ -308,7 +293,8 @@
 
         <script src="../dist/js/demo.js"></script> 
 
-        <script src="../Scripts/compra_insumos_medi.js"></script>
-    
+        <script src="../Scripts/venta_bovinos.js"></script>       
+
+      
     </body>
 </html>

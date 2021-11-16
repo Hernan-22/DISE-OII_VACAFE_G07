@@ -90,7 +90,7 @@
                             data-accordion="false"
                         >
                             <!-- PAGINAS -->
-                            <li class="nav-item menu-open">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-dollar-sign"></i>
                                     <p>
@@ -100,8 +100,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="../Vistas/v_venta.php" class="nav-link">
-                                            <p>Nueva Venta</p>
+                                        <a href="../Vistas/v_venta_bovinos.php" class="nav-link">
+                                            <p>Bovinos</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="../Vistas/v_venta_derivados.php" class="nav-link">
+                                            <p>Leche y Derivados</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">

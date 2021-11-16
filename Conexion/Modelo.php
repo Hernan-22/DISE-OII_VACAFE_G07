@@ -547,15 +547,29 @@
 			   	//$option_devolver ="<option value=''></option>";//chosen select
 			   	$option_devolver = ($el_seleccione!="") ? "<option value='-1'>Seleccione</option>":"<option>Seleccione</option>";//select 2
 			    $data_selected = "";
-			    foreach ($resultado as $row) {
-			    	$as++;
-			    	$nombre = mb_strtoupper($row[$campo2], 'UTF-8');
-			    	$selected = "";
-			    	if($row[$campo1]==$igual){
-			    		$selected = "selected";
-			    	}
-			        $option_devolver .="<option value='".$row[$campo1]."' selected>".$nombre."</option>";
+			    if (count($resultado) == 1) {
+				    foreach ($resultado as $row) {
+				    	$as++;
+				    	$nombre = mb_strtoupper($row[$campo2], 'UTF-8');
+				    	$selected = "";
+				    	if($row[$campo1]==$igual){
+				    		$selected = "selected";
+				    	}
+				        $option_devolver .="<option value='".$row[$campo1]."' selected>".$nombre."</option>";
+				    }
+			    }else{
+			    	 foreach ($resultado as $row) {
+				    	$as++;
+				    	$nombre = mb_strtoupper($row[$campo2], 'UTF-8');
+				    	$selected = "";
+				    	if($row[$campo1]==$igual){
+				    		$selected = "selected";
+				    	}
+				        $option_devolver .="<option value='".$row[$campo1]."'>".$nombre."</option>";
+				    }
 			    }
+
+			    
 			    $option_retornar =($option_devolver !="") ? $option_devolver : "<option value='-1'>No existen datos registrados</option>";
 			    
 	       		return array($option_retornar,$data_selected,$sql,$option_devolver,$resultado);

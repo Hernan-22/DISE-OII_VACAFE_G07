@@ -11,7 +11,7 @@
  Target Server Version : 100421
  File Encoding         : 65001
 
- Date: 15/11/2021 10:22:37
+ Date: 16/11/2021 02:30:24
 */
 
 SET NAMES utf8mb4;
@@ -291,20 +291,25 @@ DROP TABLE IF EXISTS `tb_detalle_venta`;
 CREATE TABLE `tb_detalle_venta`  (
   `int_iddventa` int NOT NULL AUTO_INCREMENT,
   `int_cantidad_vender` int NULL DEFAULT NULL,
-  `dou_precio_venta` double NULL DEFAULT NULL,
-  `int_idventa` int NULL DEFAULT NULL,
+  `dou_precio_venta` double(8, 2) NULL DEFAULT NULL,
+  `dou_subtotal_item_vender` double(8, 2) NULL DEFAULT NULL,
   `int_idproducto` int NULL DEFAULT NULL,
   `int_idexpediente` int NULL DEFAULT NULL,
+  `int_idventa` int NULL DEFAULT NULL,
   PRIMARY KEY (`int_iddventa`) USING BTREE,
   INDEX `idventa`(`int_idventa`) USING BTREE,
   INDEX `idproducto`(`int_idproducto`) USING BTREE,
   INDEX `idexpediente`(`int_idexpediente`) USING BTREE,
   CONSTRAINT `tb_detalle_venta_ibfk_1` FOREIGN KEY (`int_idventa`) REFERENCES `tb_venta` (`int_idventa`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tb_detalle_venta
 -- ----------------------------
+INSERT INTO `tb_detalle_venta` VALUES (1, 2, 60.00, 120.00, 5, NULL, 4);
+INSERT INTO `tb_detalle_venta` VALUES (2, 1, 600.00, 600.00, 14, NULL, 5);
+INSERT INTO `tb_detalle_venta` VALUES (3, 1, 600.00, 600.00, 14, NULL, 6);
+INSERT INTO `tb_detalle_venta` VALUES (4, 1, 450.00, 450.00, NULL, 2, 7);
 
 -- ----------------------------
 -- Table structure for tb_empleado
@@ -351,19 +356,19 @@ CREATE TABLE `tb_expediente`  (
   `nva_tipo_bovino` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dat_fecha_ult_parto` date NULL DEFAULT NULL,
   `dou_costo_bovino` double(8, 2) NULL DEFAULT NULL,
-  `dou_precio_veenta` double(8, 2) NULL DEFAULT NULL,
+  `dou_precio_venta` double(8, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`int_idexpediente`) USING BTREE,
   INDEX `fk_propietario`(`int_id_propietario`) USING BTREE,
   INDEX `fk_raza`(`int_idraza`) USING BTREE,
   CONSTRAINT `fk_propietario` FOREIGN KEY (`int_id_propietario`) REFERENCES `tb_propietario` (`int_id_propietario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_raza` FOREIGN KEY (`int_idraza`) REFERENCES `tb_raza` (`int_idraza`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_expediente
 -- ----------------------------
-INSERT INTO `tb_expediente` VALUES (2, 'Dulce', 'activo', 'vaca.png', 'femenino', 1, 'Blanco con Negro', 1, 1, 'carta3.png', 'ternero', '2021-09-25', 325.00, NULL);
-INSERT INTO `tb_expediente` VALUES (14, 'Parchada', 'activo', 'vaca.png', 'femenino', 1, 'sadasd', 1, 1, 'carta3.png', 'ternero', '2021-09-25', 450.00, NULL);
+INSERT INTO `tb_expediente` VALUES (2, 'Dulce', 'vendido', 'vaca.png', 'femenino', 1, 'Blanco con Negro', 1, 1, 'carta3.png', 'ternero', '2021-09-25', 325.00, 450.00);
+INSERT INTO `tb_expediente` VALUES (14, 'Parchada', 'vendido', 'vaca.png', 'femenino', 1, 'sadasd', 1, 1, 'carta3.png', 'ternero', '2021-09-25', 450.00, 600.00);
 
 -- ----------------------------
 -- Table structure for tb_natalidad
@@ -411,7 +416,9 @@ CREATE TABLE `tb_producto`  (
   `int_idproducto` int NOT NULL AUTO_INCREMENT,
   `nva_nom_producto` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `int_existencia` int NULL DEFAULT NULL,
-  `dou_costo_producto` double NULL DEFAULT NULL,
+  `dou_costo_producto` double(8, 2) NULL DEFAULT NULL,
+  `dou_precio_venta_producto` double(8, 2) NULL DEFAULT NULL,
+  `nva_image_producto` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `txt_descrip_producto` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `dat_fecha_vencimiento` datetime NULL DEFAULT NULL,
   `int_idcategoria` int NULL DEFAULT NULL,
@@ -423,10 +430,10 @@ CREATE TABLE `tb_producto`  (
 -- ----------------------------
 -- Records of tb_producto
 -- ----------------------------
-INSERT INTO `tb_producto` VALUES (5, 'Marqueta de Queso', 15, 54, 'Queso Duro Blando', '2021-10-24 13:33:00', 1);
-INSERT INTO `tb_producto` VALUES (6, 'tsetse', 35, 234, 'estests', '2021-10-14 13:34:00', 1);
-INSERT INTO `tb_producto` VALUES (7, 'Botella de Leche', 4, 1.5, 'leche de vaca', '2021-11-26 10:47:43', 1);
-INSERT INTO `tb_producto` VALUES (8, 'Desparasitante', 15, 5, 'Desparasistante en polvo', '2021-11-28 10:51:14', 3);
+INSERT INTO `tb_producto` VALUES (5, 'Marqueta de Queso', 10, 54.00, 60.00, NULL, 'Queso Duro Blando', '2021-10-24 13:33:00', 1);
+INSERT INTO `tb_producto` VALUES (6, 'tsetse', 35, 234.00, 275.00, NULL, 'estests', '2021-10-14 13:34:00', 1);
+INSERT INTO `tb_producto` VALUES (7, 'Botella de Leche', 2, 1.50, 1.50, NULL, 'leche de vaca', '2021-11-26 10:47:43', 1);
+INSERT INTO `tb_producto` VALUES (8, 'Desparasitante', 15, 5.00, NULL, NULL, 'Desparasistante en polvo', '2021-11-28 10:51:14', 3);
 
 -- ----------------------------
 -- Table structure for tb_propietario
@@ -506,19 +513,27 @@ INSERT INTO `tb_usuario` VALUES (202138341, 'kathy', '$2y$10$Ctks1F6Z5SS6kYWansP
 DROP TABLE IF EXISTS `tb_venta`;
 CREATE TABLE `tb_venta`  (
   `int_idventa` int NOT NULL AUTO_INCREMENT,
-  `dou_total_venta` double NULL DEFAULT NULL,
-  `dat_fecha_venta` datetime NULL DEFAULT NULL,
-  `int_idempleado` int NULL DEFAULT NULL,
-  `int_id_cliente` int NULL DEFAULT NULL,
+  `dou_total_venta` double NOT NULL,
+  `dat_fecha_venta` datetime NOT NULL,
+  `dat_fecha_sistema_venta` datetime NOT NULL,
+  `int_idempleado` int NOT NULL,
+  `int_id_cliente` int NOT NULL,
   PRIMARY KEY (`int_idventa`) USING BTREE,
   INDEX `idusuario`(`int_idempleado`) USING BTREE,
   INDEX `tb_clientes_fk`(`int_id_cliente`) USING BTREE,
   CONSTRAINT `tb_clientes_fk` FOREIGN KEY (`int_id_cliente`) REFERENCES `tb_clientes` (`int_idcliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tb_empleado_fk` FOREIGN KEY (`int_idempleado`) REFERENCES `tb_empleado` (`int_idempleado`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tb_venta
 -- ----------------------------
+INSERT INTO `tb_venta` VALUES (1, 60, '0000-00-00 00:00:00', '2021-11-15 23:55:32', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (2, 3, '2021-11-16 12:01:13', '2021-11-16 00:01:51', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (3, 180, '2021-11-16 12:11:30', '2021-11-16 00:11:48', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (4, 120, '2021-11-16 12:18:01', '2021-11-16 00:18:22', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (5, 0, '2021-11-16 02:19:14', '2021-11-16 02:19:40', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (6, 0, '2021-11-16 02:19:14', '2021-11-16 02:19:48', 202152261, 2);
+INSERT INTO `tb_venta` VALUES (7, 450, '2021-11-16 02:21:24', '2021-11-16 02:21:57', 202152261, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
