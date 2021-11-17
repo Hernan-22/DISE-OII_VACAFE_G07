@@ -11,7 +11,7 @@
  Target Server Version : 100421
  File Encoding         : 65001
 
- Date: 17/11/2021 01:19:42
+ Date: 17/11/2021 01:49:24
 */
 
 SET NAMES utf8mb4;
@@ -53,7 +53,6 @@ CREATE TABLE `tb_botellas`  (
 -- ----------------------------
 -- Records of tb_botellas
 -- ----------------------------
-INSERT INTO `tb_botellas` VALUES (1, '2021-11-30', 25, 1, 1.00);
 
 -- ----------------------------
 -- Table structure for tb_cargo
@@ -138,24 +137,22 @@ CREATE TABLE `tb_compra`  (
 -- ----------------------------
 -- Records of tb_compra
 -- ----------------------------
-INSERT INTO `tb_compra` VALUES (1, 'Nueva Compra Medicamentos', 20.00, 0.00, '2021-11-16 10:40:55', '2021-11-16 22:45:18', 'Factura', '000001', 'n/a', 3, 202152261);
-INSERT INTO `tb_compra` VALUES (2, 'Compra Bovinos', 500.00, 0.00, '2021-11-16 10:45:56', '2021-11-16 22:48:03', 'Certificado de Carta de Venta', '000002', 'n/a', 3, 202152261);
-INSERT INTO `tb_compra` VALUES (3, 'Nueva Compra Bovinos 2', 350.00, 0.00, '2021-11-16 10:49:07', '2021-11-16 22:50:34', 'Certificado de Carta de Venta', '000003', 'n/a', 3, 202152261);
-INSERT INTO `tb_compra` VALUES (4, 'Nueva Compra 4', 25.00, 0.00, '2021-11-17 12:15:30', '2021-11-17 00:20:52', 'Factura', '000004', 'n/a', 2, 202152261);
-INSERT INTO `tb_compra` VALUES (5, 'Compra Bovinos 1', 500.00, 0.00, '2021-11-17 12:34:02', '2021-11-17 00:34:44', 'Certificado de Carta de Venta', '000005', 'n/a', 4, 202152261);
 
 -- ----------------------------
 -- Table structure for tb_control_vacunas
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_control_vacunas`;
 CREATE TABLE `tb_control_vacunas`  (
-  `int_id_control_vac` int NOT NULL AUTO_INCREMENT,
-  `dat_fecha_aplicacion` datetime NOT NULL,
-  `nva_vacuna_aplicada` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `id_exped_aplicado` int NOT NULL,
+  `int_id_control_vac` int NOT NULL,
+  `dat_fecha_aplicacion` date NULL DEFAULT NULL,
+  `nva_vacuna_aplicada` int NULL DEFAULT NULL,
+  `id_exped_aplicado` int NULL DEFAULT NULL,
   PRIMARY KEY (`int_id_control_vac`) USING BTREE,
-  INDEX `fk_expeaplicada`(`id_exped_aplicado`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+  INDEX `tb_productos`(`nva_vacuna_aplicada`) USING BTREE,
+  INDEX `tb_bovino`(`id_exped_aplicado`) USING BTREE,
+  CONSTRAINT `tb_productos` FOREIGN KEY (`nva_vacuna_aplicada`) REFERENCES `tb_producto` (`int_idproducto`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_bovino` FOREIGN KEY (`id_exped_aplicado`) REFERENCES `tb_expediente` (`int_idexpediente`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_control_vacunas
@@ -185,11 +182,6 @@ CREATE TABLE `tb_detalle_compra`  (
 -- ----------------------------
 -- Records of tb_detalle_compra
 -- ----------------------------
-INSERT INTO `tb_detalle_compra` VALUES (1, 4, 5.00, 20.00, 4, 1, NULL);
-INSERT INTO `tb_detalle_compra` VALUES (2, 1, 500.00, 500.00, NULL, 2, 1);
-INSERT INTO `tb_detalle_compra` VALUES (3, 1, 350.00, 350.00, NULL, 3, 2);
-INSERT INTO `tb_detalle_compra` VALUES (4, 1, 25.00, 25.00, 4, 4, NULL);
-INSERT INTO `tb_detalle_compra` VALUES (5, 1, 500.00, 500.00, NULL, 5, 1);
 
 -- ----------------------------
 -- Table structure for tb_detalle_venta
@@ -215,9 +207,6 @@ CREATE TABLE `tb_detalle_venta`  (
 -- ----------------------------
 -- Records of tb_detalle_venta
 -- ----------------------------
-INSERT INTO `tb_detalle_venta` VALUES (1, 1, 850.00, 850.00, NULL, 2, 1);
-INSERT INTO `tb_detalle_venta` VALUES (2, 1, 825.00, 825.00, NULL, 1, 2);
-INSERT INTO `tb_detalle_venta` VALUES (3, 25, 1.50, 37.50, 3, NULL, 3);
 
 -- ----------------------------
 -- Table structure for tb_empleado
@@ -275,8 +264,6 @@ CREATE TABLE `tb_expediente`  (
 -- ----------------------------
 -- Records of tb_expediente
 -- ----------------------------
-INSERT INTO `tb_expediente` VALUES (1, 'Preuba 1 Unido', 'vendido', '../archivo_carta_venta/img_1.png', 'femenino', NULL, 'Probando Expediente Unido', 1, 1, '../archivo_expdiente/img_1.png', 'novia', NULL, 500.00, 825.00);
-INSERT INTO `tb_expediente` VALUES (2, 'Pinta', 'vendido', '../archivo_carta_venta/img_2.png', 'femenino', NULL, 'Probando union', 1, 1, '../archivo_expdiente/img_2.png', 'vaca_lechera', NULL, 350.00, 375.00);
 
 -- ----------------------------
 -- Table structure for tb_natalidad
@@ -297,9 +284,6 @@ CREATE TABLE `tb_natalidad`  (
 -- ----------------------------
 -- Records of tb_natalidad
 -- ----------------------------
-INSERT INTO `tb_natalidad` VALUES (1, '2021-11-10', 2, 1);
-INSERT INTO `tb_natalidad` VALUES (2, '2021-11-01', 2, 1);
-INSERT INTO `tb_natalidad` VALUES (3, '2021-11-11', 2, 1);
 
 -- ----------------------------
 -- Table structure for tb_preñez
@@ -319,10 +303,6 @@ CREATE TABLE `tb_preñez`  (
 -- ----------------------------
 -- Records of tb_preñez
 -- ----------------------------
-INSERT INTO `tb_preñez` VALUES (1, 2, '2021-11-15', '2021-11-22', '2021-11-10');
-INSERT INTO `tb_preñez` VALUES (2, 1, '2021-11-16', '2021-11-16', '2021-11-16');
-INSERT INTO `tb_preñez` VALUES (3, 1, '2021-11-16', '2021-11-16', '2021-11-16');
-INSERT INTO `tb_preñez` VALUES (4, 1, '2021-11-16', '2021-11-16', '2021-11-16');
 
 -- ----------------------------
 -- Table structure for tb_producto
@@ -347,12 +327,6 @@ CREATE TABLE `tb_producto`  (
 -- ----------------------------
 -- Records of tb_producto
 -- ----------------------------
-INSERT INTO `tb_producto` VALUES (1, 'Leche', 4, 1.50, NULL, '../archivo_expdiente/img_5.jpg', 'Botella de Leche', '2021-11-16', 1, 'Activo');
-INSERT INTO `tb_producto` VALUES (2, 'tsetse', 35, 234.00, 275.00, NULL, 'estests', '2021-10-14', 1, 'activo');
-INSERT INTO `tb_producto` VALUES (3, 'Botella de Leche', -39, 1.50, 1.50, NULL, 'leche de vaca', '2021-11-26', 1, 'Activo');
-INSERT INTO `tb_producto` VALUES (4, 'Desparasitante', 20, 5.00, NULL, NULL, 'Desparasistante en polvo', '2021-11-28', 3, 'Activo');
-INSERT INTO `tb_producto` VALUES (5, 'Marqueta de Queso', 7, 54.00, 60.00, NULL, 'Queso Duro Blando', '2021-10-24', 1, 'Activo');
-INSERT INTO `tb_producto` VALUES (6, 'Queso Fresco', 3, 2.50, 4.00, '', 'Queso Fresco la Marqueta', '2021-11-30', 1, 'activo');
 
 -- ----------------------------
 -- Table structure for tb_propietario
@@ -447,8 +421,5 @@ CREATE TABLE `tb_venta`  (
 -- ----------------------------
 -- Records of tb_venta
 -- ----------------------------
-INSERT INTO `tb_venta` VALUES (1, 850, '2021-11-17 12:55:05', '2021-11-17 00:55:28', 202152261, 4);
-INSERT INTO `tb_venta` VALUES (2, 825, '2021-11-17 12:59:35', '2021-11-17 00:59:47', 202152261, 8);
-INSERT INTO `tb_venta` VALUES (3, 37.5, '2021-11-17 12:59:55', '2021-11-17 01:01:22', 202152261, 8);
 
 SET FOREIGN_KEY_CHECKS = 1;
