@@ -21,12 +21,16 @@ $(function (){
         
 	        if (json[0]=="Exito") {
 
+	        	var fecha_compra = formatearDatetime(json[4]['dat_fecha_compra']);
+	        	var fecha_sistema = formatearDatetime(json[4]['dat_fecha_sistema']);
+
+
 	    		$('#proveedor').empty().html(json[4]['nva_nom_proveedor']);
 	    		$('#tipo_doc').empty().html(json[4]['nva_tipo_documento']);
 	    		$('#num_doc').empty().html(json[4]['nva_numero_documento']);
 	    		$('#descrip').empty().html(json[4]['txt_descrip_compra']);
-	    		$('#fecha_compra').empty().html(json[4]['dat_fecha_compra']);
-	    		$('#fecha_sistema').empty().html(json[4]['dat_fecha_sistema']);
+	    		$('#fecha_compra').empty().html(fecha_compra);
+	    		$('#fecha_sistema').empty().html(fecha_sistema);
 	    		$('#total_compra').val('$'+json[4]['dou_total_compra']);
 	    		$('#iva_compra').val('$'+json[4]['dou_iva_aplicado']);
 	    		$('#subtotal_compra').val('$'+json[6]);
@@ -41,6 +45,24 @@ $(function (){
     });
      
 });
+
+function formatearDatetime(datetime){
+	//divido la feha de la hora
+	var fecha_string = datetime;
+	var separacion = fecha_string.split(' ');
+	var fecha = separacion[0];
+	var hora = separacion[1];
+	var fecha_formateada = "";
+
+	//Formteo la fecha
+	var porciones_fecha = fecha.split('-');
+	var fecha1 = porciones_fecha[2]+"-"+porciones_fecha[1]+"-"+porciones_fecha[0];
+
+	//concateno la fecha formteada con la hora y un espacio
+	fecha_formateada = fecha1+" "+hora;
+	return fecha_formateada;
+
+}
 
 
 function cargar_taba_compras(){

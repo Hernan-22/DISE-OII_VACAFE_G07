@@ -90,7 +90,12 @@
 			print json_encode($array);
 			exit();
 	    }		 
-	}else{		
+	}else{
+		$array_select = array(
+			"table"=>"tb_proveedor",
+			"int_idproveedor"=>"nva_nom_proveedor"
+		);		 
+		$result_select = $modelo->crear_select($array_select);		
 					
 		$htmltr = $html="";
 		$cuantos = 0;
@@ -107,14 +112,14 @@
 					ON 
 						tb_expediente.int_idraza = tb_raza.int_idraza
 				WHERE
-					nva_estado_bovino = 'activo'";
+					nva_estado_bovino != 'vendido'";
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td class="text-center">'.$row['nva_nom_bovino'].'</td>
-	                            <td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'.$row['nva_foto_bovino'].'"></td>
+	                            <td class="text-center"><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'"></td>
 	                            <td class="text-center">'.$row['nva_nom_raza'].'</td>
 
 	                            <td class="text-center project-actions">
@@ -141,11 +146,11 @@
                     	</table>';
 
             $_SESSION['comprando']="si";
-        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$_SESSION));
+        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$result_select));
 			exit();
 
         }else {
-        	print json_encode(array("Error",$_POST,$result,$_SESSION));
+        	print json_encode(array("Error",$_POST,$result,$result_select));
 			exit();
         }
 	}

@@ -78,7 +78,7 @@
 					$subtotal = $subtotal + $row['dou_subtotal_item_compra'];
 					$htmltr.='<tr>
 					          <td>'.$row['nva_nom_bovino'].'</td>
-						          <td class="text-center "><img alt="Avatar" class="table-avatar" src="../dist/img/'.$row['nva_foto_bovino'].'"></td>
+						          <td class="text-center "><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'"></td>
 						           <td class="text-center ">'.$row['nva_nom_raza'].'</td>
 						           <td class="text-center ">'."$".''.$row['dou_subtotal_item_compra'].'</td>
 					           </tr>';		
@@ -123,9 +123,10 @@
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
-			foreach ($result[2] as $row) {	
+			foreach ($result[2] as $row) {
+			$fecha = datetimeformateado($row['dat_fecha_compra']);	
 				 $htmltr.='<tr>
-	                            <td class="text-center">'.$row['dat_fecha_compra'].'</td>
+	                            <td class="text-center">'.$fecha.'</td>
 	                            <td class="text-center">'.$row['nva_nom_proveedor'].'</td>
 	                            <td class="text-center">'.$row['txt_descrip_compra'].'</td>
 	                            <td class="text-center">'."$".''.$row['dou_total_compra'].'</td>
@@ -161,6 +162,22 @@
         }
 	}
 
+	function datetimeformateado($fecha3){
+
+			//divido la feha de la hora
+			$separacion= explode(" ",$fecha3);
+			$hora = $separacion[1];
+			$fecha = $separacion[0];
+
+			$pos = strpos($fecha, "/");
+			if ($pos === false) $fecha = explode("-",$fecha);
+			else $fecha = explode("/",$fecha);
+			$dia1 = (strlen($fecha[0])==1) ? '0'.$fecha[0] : $fecha[0];
+
+			//Concateno la fecha formteada con la hora y un espacio
+			$fecha1 = $fecha[2].'-'.$fecha[1].'-'.$dia1.' '.$hora;
+			return $fecha1;
+	}
 
 
 ?>

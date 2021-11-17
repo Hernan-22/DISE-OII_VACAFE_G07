@@ -2,6 +2,8 @@
 	
 	require_once("../Conexion/Modelo.php");
 	$modelo = new Modelo();
+	$subtotal = 0.0;
+	$grantotal = 0.0;
 	if (isset($_POST['estos_totales']) && $_POST['estos_totales']=="si_estos") {
 
 		$sql_ultima_venta = "SELECT * FROM tb_venta ORDER BY int_idventa DESC LIMIT 1;";
@@ -21,29 +23,27 @@
 								tb_detalle_venta.int_idventa = tb_venta.int_idventa WHERE tb_venta.int_idventa = '$idultventa'";
 		$resultado_totales = $modelo->get_query($sql_totales);
 
-		if($resultado_venta[0]=='1'){
+		if($resultado_idventa[0]=='1'){
 
 			if ($resultado_totales[0]=='1' && $resultado_totales[4]>0) {
 						
 						$htmltr2 = $html2="";
 						foreach ($resultado_totales[2] as $row) {
-						
-					 	$htmltr2.='<tr>
-					                <td>'.$row['subtotal_venta'].'</td>
-					                <td>'.$row['dou_total_venta'].'</td>
-					            </tr>';		
+							$subtotal = $row['subtotal_venta'];
+							$grantotal = $row['dou_total_venta'];
 						}
-						$html2.='<table class="table table-striped projects" width="100%">
-			                    <thead>
+
+
+						$html2.='<table class="table" width="100%">			                   
 						            <tr>
 						                <th style="width:50%">Sub Total: </th>
-						                <th>Venta Total $:</th>
+						                 <td>$'.$subtotal.'</td>
 						            </tr>
-						        </thead>
-		                    <tbody>';
-			            $html2.=$htmltr2;
-						$html2.='</tbody>
-			                    	</table>';					
+						            <tr>
+						                <th>Venta Total $:</th>
+						                <td>$'.$grantotal.'</td>
+						            </tr>
+			           			</table>';					
 					$array = array("obtenido","totales","",$html2);
 					print json_encode($array);
 					exit();	
@@ -142,7 +142,7 @@
 //========================DETALLE DE LA VENTA BOVINOS===========================================================
 		$sql_det_bovinos ="SELECT
 								nva_nom_bovino, 
-								dou_precio_venta, 
+								dou_precio_venta_bovino, 
 								dou_subtotal_item_vender, 
 							    nva_nom_raza
 							FROM
@@ -196,7 +196,7 @@
 					$htmltr.='<tr>
 						        <td>'.$row['nva_nom_bovino'].'</td>							   
 							    <td class="text-center ">'.$row['nva_nom_raza'].'</td>
-							    <td class="text-center ">'."$".''.$row['dou_precio_venta'].'</td>
+							    <td class="text-center ">'."$".''.$row['dou_precio_venta_bovino'].'</td>
 					           </tr>';		
 				}
 				$html.='<table class="table table-striped projects" width="100%">

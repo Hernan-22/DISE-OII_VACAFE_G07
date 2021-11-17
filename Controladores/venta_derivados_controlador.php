@@ -119,7 +119,7 @@
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td>'.$row['nva_nom_producto'].'</td>
-	                             <td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'.$row['nva_image_producto'].'">
+	                             <td class="text-center"><img alt="img" width="90" height="100" src="'.$row['nva_image_producto'].'">
 	                             </td>
 	                            <td class="text-center">'."$".''.$row['dou_precio_venta_producto'].'</td>
 	                            <td class="text-center project-actions">

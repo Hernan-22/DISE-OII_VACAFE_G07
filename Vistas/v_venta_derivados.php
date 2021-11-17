@@ -279,12 +279,7 @@
         <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
         <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
         <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-      <!-- jquery-fechas
-        <script src="../plugins/bootstrap-date-time-picker/js/bootstrap-datetimepicker.js"></script>
-        <script src="../plugins/bootstrap-date-time-picker/js/bootstrap-datetimepicker.min.js"></script>
-          
-        <script src="../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>-->
-
+     
         <script src="../plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
         <script src="../plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
 

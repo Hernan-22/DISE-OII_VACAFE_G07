@@ -112,14 +112,14 @@
 					ON 
 						tb_expediente.int_idraza = tb_raza.int_idraza
 				WHERE
-					nva_estado_bovino = 'activo'";
+					nva_estado_bovino != 'vendido'";
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td>'.$row['nva_nom_bovino'].'</td>
-	                            <td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'.$row['nva_foto_bovino'].'">
+	                            <td class="text-center"><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'">
 	                            </td>
 	                            <td class="text-center">'.$row['nva_nom_raza'].'</td>
 	                            <td class="text-center">'."$".''.$row['dou_precio_venta_bovino'].'</td>

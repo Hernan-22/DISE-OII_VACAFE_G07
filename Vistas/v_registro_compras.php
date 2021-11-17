@@ -69,6 +69,7 @@
                 <div class="card-tools">
                   
                 </div>
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -106,7 +107,35 @@
                             </div>
                             <div class="modal-body">
                                <div class="invoice p-3 mb-3">
-                                   
+                                   <div class="row invoice-info">
+                                        <div class="col-sm-4 invoice-col">
+                                            <img src="../dist/img/logo-n.png" alt="user-avatar" class="img-circle img-fluid">
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col
+                                            text-center">
+                                            <address>
+                                                <h4>
+                                                    <strong>FINCA LA VACA CAFÉ</strong>
+                                                </h4>
+                                                CALLE LA INDIA
+                                                <br>
+                                                COMUNIDAD EL PROGRESO
+                                                <br>
+                                                POLIGONO A, LOTE 4
+                                                <br>
+                                                BARRIO SAN JUAN,
+                                                COJUTEPEQUE.
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            <img src="../dist/img/ues-a.png" alt="user-avatar" class="img
+                                                img-fluid float-right">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
                                     <div class="row invoice-info">
                                         <div class="col-sm-6 invoice-col">
                                             Proveedor

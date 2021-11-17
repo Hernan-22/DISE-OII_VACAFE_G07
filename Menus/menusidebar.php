@@ -45,9 +45,9 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#">
+                            <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" >
                               <i class="fas fa-user-tie"></i>
-                              
+                              <strong><?php print $_SESSION['empleado']?></strong>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <a href="#" class="dropdown-item">
@@ -156,13 +156,13 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="../Vistas/f_productoo.php" class="nav-link">
+                                        <a href="../Vistas/v_producto.php" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Nuevo Producto</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="../Vistas/v_producto.php" class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Inventario</p>
                                         </a>
@@ -179,7 +179,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_leche.php" class="nav-link">
                                             <p>Nuevo Ingreso</p>
                                         </a>
                                     </li>
@@ -205,18 +205,18 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
-                                            <p>Preñes</p>
+                                        <a href="../Vistas/v_preñez.php" class="nav-link">
+                                            <p>Preñez</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_natalidad.php" class="nav-link">
                                             <p>Natalidad</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
-                                            <p>Mortalidad</p>
+                                        <a href="../Vistas/v_mortalidad.php" class="nav-link">
+                                            <p>Baja</p>
                                         </a>
                                     </li>
                                 </ul>

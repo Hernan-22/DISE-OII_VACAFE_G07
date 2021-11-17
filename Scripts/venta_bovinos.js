@@ -126,7 +126,7 @@ $(function (){
 			var fila='<tr class="filas" id="fila'+cont+'">'+	        
 	       '<td><input type="hidden" class="form-control" id="idexpediente[]" name="idexpediente[]" value="'+data_idbovino+'">'+data_nombrebovino+'</td>'+
 
-	       	'<td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'+data_foto+'"></td>'+
+	       	'<td class="text-center"><img alt="img" width="90" height="100" src="../dist/img/'+data_foto+'"></td>'+
 
 	       	'<td class="text-center"><span id="raza_bovino" name="raza_bovino" >'+data_raza+'</span> </td>'+
 

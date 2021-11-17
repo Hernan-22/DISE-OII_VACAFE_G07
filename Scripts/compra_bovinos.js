@@ -55,7 +55,7 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {
-	        	$("#formulario_registro_compra").trigger('reset');	    	 	
+	        	limpiar();    	 	
 				Toast.fire({
 	            	icon: 'success',
 	            	title: 'Compra registrada exitosamente!.'
@@ -122,7 +122,7 @@ $(function (){
 			var fila='<tr class="filas" id="fila'+cont+'">'+	        
 	       '<td><input type="hidden" class="form-control" id="idexpediente[]" name="idexpediente[]" value="'+data_idexpe+'">'+data_nombreb+'</td>'+
 
-	       	'<td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'+data_foto+'"></td>'+
+	       	'<td class="text-center"><img alt="img" width="90" height="100" src="'+data_foto+'"></td>'+
 
 	       	'<td class="text-center"><span id="raza_bovino" name="raza_bovino" >'+data_raza+'</span> </td>'+
 
@@ -157,6 +157,10 @@ $(function (){
 		
     });
 
+    $(document).on("click",".btn_limpiar",function(e){
+    	limpiar();
+    });
+
     $('.validcion_solo_numeros_fact').keypress(function(e) {
 
         tecla = (document.all) ? e.keyCode : e.which;
@@ -181,6 +185,12 @@ $(function (){
 
      
 });
+
+function limpiar(){
+
+	$("#formulario_registro_compra_b").trigger('reset');	
+	$(".filas").remove();
+}
 
 
 function modificarSubtotales(){
@@ -250,7 +260,9 @@ function cargar_tabla_bovinos(){
     }).done(function(json) {
     	console.log("EL consultar",json);
     	$("#tb_seleccion_bovino").empty().html(json[1]);
-    	$('#example1').DataTable();     	
+    	$('#example1').DataTable(); 
+
+    	$("#proveedor_compra_b").empty().html(json[5][0]);    	
     }).fail(function(){
 
     }).always(function(){

@@ -123,7 +123,7 @@ $(function (){
 			var fila='<tr class="filas" id="fila'+cont+'">'+	        
 	        '<td><input type="hidden" class="form-control" id="idproducto_v[]" name="idproducto_v[]" value="'+data_iditem+'">'+data_nombreitem+'</td>'+
 	        
-	        '<td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'+data_imgen+'"></td>'+
+	        '<td class="text-center"><img alt="img" width="90" height="100" src="'+data_imgen+'"></td>'+
 
 	        '<td><input type="number" autocomplete="off" class="form-control" name="precio_item_venta[]" id="precio_item_venta[]" value="'+data_precioitem+'"></td>'+
 

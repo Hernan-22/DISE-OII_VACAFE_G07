@@ -41,7 +41,7 @@
                             POLIGONO A, LOTE 4
                             <br>
                             BARRIO SAN JUAN,
-              COJUTEPEQUE.
+                            COJUTEPEQUE.
                         </address>
                     </div>
                     <!-- /.col -->
@@ -52,47 +52,39 @@
                     <!-- /.col -->
                 </div>
                 <div class="row invoice-info">
-                    <div class="col-sm-4 invoice-col">
-                        <strong>Vendedor</strong>
-                        <address>
-                            <span id="nom_vendedor_factura">Administrador</span>
-                            <br>
-                        </address>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                        Cliente
-                        <address>
-                            <strong>Juan Hernández</strong>
-                            <br>
-                            Dui: 12345678-9
-                            <br>
-                            Dirección: Santo Domingo
-                            <br>
-                            Teléfono: (503) 7365-7821
-                            <br>
-                        </address>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-4 invoice-col">
-                        <b>Factura</b>
-                        <br>
-                        <b>No.</b>
-                        0001
-                        <br>
-                        <b>Registro No.</b>
-                        100001-1
-                        <br>
-                        <b>NIT:</b>
-                        0614-290209-000-0
-                        <br>
-                        <b>Fecha:</b>
-                        09-09-2021
-                        <b>Hora:</b>
-                        18:15
-                    </div>
-                    <!-- /.col -->
-                </div>
+                                        <div class="col-sm-4 invoice-col">
+                                            <span>Vendedor</span>
+                                            <address>
+                                                <strong id="vendedor_fact">Administrador</strong>
+                                                <br>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            Cliente
+                                            <address>
+                                                <strong id="nom_cliente_fact">Juan Hernández</strong>
+                                                <br>
+                                                <span>Dui: </span><strong id="dui_cliente_fact"></strong>
+                                                <br>
+                                                <span>Dirección: </span> <strong id="direc_cliente_fact"></strong>
+                                                <br>
+                                                <span>Telefono: (503)</span>  <strong id="tel_cliente_fact"></strong>
+                                                <br>
+                                            </address>
+                                        </div>
+                                        <!-- /.col -->
+                                        <div class="col-sm-4 invoice-col">
+                                            <b>Factura</b>
+                                            <br>
+                                            <b>No.</b>
+                                            <strong id="num_fact"></strong>                                            
+                                            <br>
+                                            <span>Fecha y Hora:</span>
+                                             <strong id="fecha_fact"></strong>   
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
                 <!-- /.row -->
                 <!-- Table row -->
                 <div class="row">
@@ -171,5 +163,6 @@
         <script>
          window.addEventListener("load", window.print());
         </script>
+        <script src="../Scripts/factura_previa.js"></script>
     </body>
 </html>

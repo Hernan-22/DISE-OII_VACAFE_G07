@@ -84,12 +84,7 @@
         		                                        <div class="form-group">
         		                                            <label>Proveedor</label>
         		                                            <div class="input-group mb-3">
-        		                                                <select class="form-control" id="proveedor_compra" name="proveedor_compra" required>
-        		                                                    <option selected="selected">Todos</option>
-        		                                                    <option value="1">Salinera Turcios</option>
-        		                                                    <option value="2">Agroservicio El Frutal</option>
-        		                                                    <option value="3">Agua El Manantial</option>
-        		                                                    <option value="4">Finca Cuscatlán</option>
+        		                                                <select class="form-control" id="proveedores_compra" name="proveedores_compra" >
         		                                                 </select>
         		                                            </div>
         		                                        </div>
@@ -141,7 +136,7 @@
                                                                 Agregar
                                                                 Producto
                                                         </a>
-                                                        <a class="btn bg-success">
+                                                        <a class="btn bg-success btn_limpiar">
                                                             <i class="fa fa-trash"></i>
                                                                 Limpiar
                                                         </a>

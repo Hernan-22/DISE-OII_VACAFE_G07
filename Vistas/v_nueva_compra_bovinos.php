@@ -80,13 +80,7 @@
                                                         <div class="form-group">
                                                             <label>Proveedor</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-control" id="proveedor_compra_b" name="proveedor_compra_b" required>
-                                                                    <option selected="selected">Todos</option>
-                                                                    <option value="1">Salinera Turcios</option>
-                                                                    <option value="2">Persona Independiente</option>
-                                                                    <option value="3">Agroservicio El Frutal</option>
-                                                                    <option value="4">Agua El Manantial</option>
-                                                                    <option value="5">Finca Cuscatlán</option>
+                                                                <select class="form-control" id="proveedor_compra_b" name="proveedor_compra_b" >
                                                                  </select>
                                                             </div>
                                                         </div>
@@ -137,9 +131,9 @@
                                                         <a class="btn bg-success" data-toggle="modal" data-target="#md_agregar_bovino">
                                                             <i class="fas fa-shopping-cart"></i>
                                                                 Agregar
-                                                                Producto
+                                                                Bovino
                                                         </a> 
-                                                        <a  class="btn bg-success">
+                                                        <a  class="btn bg-success btn_limpiar">
                                                             <i class="fa fa-trash"></i>
                                                                 Limpiar
                                                         </a >

@@ -105,7 +105,7 @@
                                             <b>No.</b>
                                             <strong id="num_fact"></strong>                                            
                                             <br>
-                                            <b>Fecha y Hora:</b>
+                                            <span>Fecha y Hora:</span>
                                              <strong id="fecha_fact"></strong>   
                                         </div>
                                         <!-- /.col -->
@@ -113,8 +113,7 @@
                                     <!-- /.row -->
                                     <!-- Table row -->
                                     <div class="row">
-                                        <div class="col-12 table-responsive">
-                                            <table class="table table-striped" >
+                                        <div class="table-responsive">                                            
                                                 <div id="tb_factura_ver"></div> 
                                         </div>
                                         <!-- /.col -->
@@ -124,9 +123,8 @@
                                         <!-- accepted payments column -->
                                         <div class="col-6"></div>
                                         <!-- /.col -->
-                                        <div class="col-6">
-                                            <div class="table-responsive" id="tb_sumas_factura">
-                                                
+                                        <div class=" col-4 table-responsive">
+                                            <div id="tb_sumas_factura">                                                
                                             </div>
                                         </div>
                                         <!-- /.col -->
@@ -136,17 +134,17 @@
                                     <div class="row no-print">
                                         <div class="col-12">
                                             <a
-                                                href="r_imprime-factura.html"
+                                                href="r_imprime_factura.php"
                                                 rel="noopener"
                                                 target="_blank"
                                                 class="btn btn-success"
                                             >                                            
                                                 <i class="fas fa-print"></i> Imprimir
                                             </a>
-                                            <button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
+                                            <a href="../Vistas/v_registro_ventas.php"  class="btn btn-success float-right" style="margin-right: 5px;">
                                                 <i class="fas fa-save"></i>
                                                 Guardar
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

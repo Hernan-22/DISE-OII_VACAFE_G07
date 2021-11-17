@@ -28,7 +28,7 @@
 		            "nva_tipo_documento" => $_POST['tipo_doc_compra'],
 		            "nva_numero_documento" => $_POST['num_doc_compra'],
 		            "txt_sitio_compra" => $sitio_compra,
-		            "int_idproveedor" => $_POST['proveedor_compra'],
+		            "int_idproveedor" => $_POST['proveedores_compra'],
 		            "int_idempleado" => $_POST['empleado_compra']
 		        );
 		        $result_compra = $modelo->insertar_generica($array_insertar);
@@ -104,11 +104,17 @@
 			print json_encode($array);
 			exit();
 	    }		 
-	}else{		
+	}else{
+
+		$array_select = array(
+			"table"=>"tb_proveedor",
+			"int_idproveedor"=>"nva_nom_proveedor"
+		);		 
+		$result_select = $modelo->crear_select($array_select);		
 					
 		$htmltr = $html="";
 		$cuantos = 0;
-		$sql ="SELECT int_idproducto, nva_nom_producto, dou_costo_producto FROM tb_producto";
+		$sql ="SELECT int_idproducto, nva_nom_producto, dou_costo_producto FROM tb_producto WHERE int_idcategoria = 3 AND nva_estado_producto = 'Activo'";
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
@@ -137,13 +143,11 @@
             $html.=$htmltr;
 			$html.='</tbody>
                     	</table>';
-
-            $_SESSION['comprando']="si";
-        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$_SESSION));
+        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$result_select));
 			exit();
 
         }else {
-        	print json_encode(array("Error",$_POST,$result,$_SESSION));
+        	print json_encode(array("Error",$_POST,$result,$result_select));
 			exit();
         }
 	}

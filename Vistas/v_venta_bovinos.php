@@ -70,7 +70,7 @@
                                 <div class="col-12 col-sm-12">
                                     <div class="card">
                                         <div class="card-header bg-success">
-                                            <h3 class="card-title">Ventas | Derivados</h3>
+                                            <h3 class="card-title">Ventas | Bovinos</h3>
                                         </div>
                                         <input type="hidden" id="almacenar_venta_b" name="almacenar_venta_b" value="nueva_venta_b">
                                         <input type="hidden" id="empleado_venta_b" name="empleado_venta_b" <?php print 'value ="'.$_SESSION['idempleado'].'"'?>>

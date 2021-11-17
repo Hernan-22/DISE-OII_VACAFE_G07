@@ -39,7 +39,7 @@ $(function (){
 	        timer: 5000
     	});
     	
-    	if ($("#proveedor_compra").val() == "Todos"){
+    	if ($("#proveedores_compra").val() == "Seleccione"){
  			Toast.fire({
 		        icon: 'info',
 		        title: 'Debe elegir un Proveedor'
@@ -55,7 +55,7 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {
-	        	$("#formulario_registro_compra").trigger('reset');	    	 	
+	        	limpiar();	    	 	
 				Toast.fire({
 	            	icon: 'success',
 	            	title: 'Compra registrada exitosamente!.'
@@ -156,6 +156,10 @@ $(function (){
 		
     });
 
+    $(document).on("click",".btn_limpiar",function(e){
+    	limpiar();
+    });
+
     $('.validcion_solo_numeros_fact').keypress(function(e) {
 
         tecla = (document.all) ? e.keyCode : e.which;
@@ -238,6 +242,12 @@ detalles=detalles-1;
 
 }
 
+function limpiar(){
+
+	$("#formulario_registro_compra").trigger('reset');	
+	$(".filas").remove();
+}
+
 function cargar_taba_productos(){
 	//mostrar_mensaje("Consultando datos");
 	var datos = {"consultar_info":"si_consultala"}
@@ -249,7 +259,9 @@ function cargar_taba_productos(){
     }).done(function(json) {
     	console.log("EL consultar",json);
     	$("#tb_seleccion_productos").empty().html(json[1]);
-    	$('#example1').DataTable();     	
+    	$('#example1').DataTable();
+
+    	$("#proveedores_compra").empty().html(json[5][0]);    	
     }).fail(function(){
 
     }).always(function(){
