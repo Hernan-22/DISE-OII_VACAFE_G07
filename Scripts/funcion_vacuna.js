@@ -2,33 +2,6 @@ $(function (){
 	//$('#addvacuna').parsley();
 	
 	cargar_datos();
-	// $(".select2").select2();
-	$(document).on("blur",".validar_campos_unicos",function(e){
-		e.preventDefault();
-		if ($(this).val()=="") {
-			return;
-		}
-		console.log("validar_campo",$(this).data('quien_es'));
-		mostrar_mensaje("Espere","Validando "+$(this).data('quien_es'));
-		var datos = {"validar_campos":"si_por_campo","campo":$(this).val(),"tipo":$(this).data('quien_es')};
-
-		console.log("datos: ",datos);
-		$.ajax({
-	        dataType: "json",
-	        method: "POST",
-	        url:'vacuna_controlador_Json.php',
-	        data : datos,
-	    }).done(function(json) {
-	    	console.log("retorno de validacion",json);
-	    	if (json[0]=="Exito") {
-	    		 
-	    	}
-	    	console.log("El envio: ",json);
-	    }).always(function(){
-	    	Swal.close();
-	    });
-
-	});
 	$(document).on("click",".btn_cerrar_class",function(e){
 		e.preventDefault();
 		$("#addvacuna").trigger('reset');
@@ -36,6 +9,19 @@ $(function (){
 
 
 	});
+	var fecha_hoy = new Date(); 
+	var fecha_mañana = new Date(); 
+	$('#dat_fecha_aplicacion').datepicker({
+	    format: "dd/mm/yyyy",
+	    todayBtn: true,
+	    clearBtn: false,
+	    language: "es",
+	    calendarWeeks: true,
+	    autoclose: true,
+	    todayHighlight: true,
+	    endDate:fecha_hoy
+	});
+
 	$(document).on("click",".btn_eliminar",function(e){
 		e.preventDefault();
 		var id_vehiculo = $(this).attr("data-int_id_control_vac");
@@ -53,24 +39,27 @@ $(function (){
 	$(document).on("click",".btn_editar",function(e){
 
 		e.preventDefault(); 
-		mostrar_mensaje("Consultando datos");
-		var id_vehiculo = $(this).attr("data-int_id_control_vac");
+	//	mostrar_mensaje("Consultando datos");
+		var int_id_control_vac = $(this).attr("data-int_id_control_vac");
 		console.log("El id es: ",int_id_control_vac);
 		var datos = {"consultar_info":"si_condui_especifico","int_id_control_vac":int_id_control_vac}
 		$.ajax({
 	        dataType: "json",
 	        method: "POST",
-	        url:'vacuna_controlador_Json.php',
+	        url:'../Controladores/vacuna_controlador_Json.php',
 	        data : datos,
 	    }).done(function(json) {
 	    	console.log("EL consultar especifico",json);
 	    	if (json[0]=="Exito") {
+	    		var fecHA_string = json[2]['dat_fecha_aplicacion'];
+				var porciones = fecHA_string.split('-');
 	    		
-	    		$('#llave_persona').val(int_id_control_vac);
+	    		$('#llave_vacuna').val(int_id_control_vac);
 	    		$('#ingreso_datos').val("si_actualizalo");
 	    		$('#id_exped_aplicado').val(json[2]['id_exped_aplicado']);
-	    		$('#dat_fecha_aplicacion').val(json[2]['dat_fecha_aplicacion']);
-	    		$('#nva_vacuna_aplicada').val(json[2]['nva_vacuna_aplicada']);
+	    		$('#dat_fecha_aplicacion').val(fecHA_string);
+	    		$('#vacuna').val(json[2]['nva_vacuna_aplicada']);
+
 	    		$('#modalAddvacuna').modal('show');
 	    	}
 	    	 
@@ -82,11 +71,46 @@ $(function (){
 
 
 	});
+    $('#addvacuna').validate({
+	    rules: {	     
+	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
 
 
 	$(document).on("submit","#addvacuna",function(e){
 		e.preventDefault();
 		var datos = $("#addvacuna").serialize();
+			var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 7000
+    	});
+			if ($("#id_exped_aplicado").val() == "Seleccione"){
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Debe elegir el  bovino'
+		    });
+			return;
+ 		}
+ 			if ($("#vacuna").val() == "Seleccione"){
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Debe elegir la vacuna'
+		    });
+			return;
+ 		}
 		console.log("Imprimiendo datos: ",datos);
 		$.ajax({
             dataType: "json",
@@ -96,6 +120,7 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);
         	$('#modalAddvacuna').modal('hide');
+        	$("#addvacuna").trigger('reset');
         	cargar_datos();
         	
         }).fail(function(){
@@ -109,7 +134,7 @@ $(function (){
 });
 
 function cargar_datos(){
-	mostrar_mensaje("Consultando datos");
+	//mostrar_mensaje("Consultando datos");
 	var datos = {"consultar_info":"si_consultala"}
 	$.ajax({
         dataType: "json",
@@ -118,7 +143,7 @@ function cargar_datos(){
         data : datos,
     }).done(function(json) {
     	console.log("EL consultar",json);
-    	$("#datos_tabla").empty().html(json[1]);
+    	$("#tabla_vacuna").empty().html(json[1]);
     	//$('#tabla_vacuna').DataTable();
     	$('#modalAddvacuna').modal('hide');
     }).fail(function(){
@@ -147,43 +172,3 @@ function mostrar_mensaje(titulo,mensaje=""){
 }
 
 
-function validar_archivo(file){
-	console.log("validar_archivo",file);
-	 
-     var Lector;
-     var Archivos = file[0].files;
-     var archivo = file;
-     var archivo2 = file.val();
-     if (Archivos.length > 0) {
-
-
-        Lector = new FileReader();
-        Lector.onloadend = function(e) {
-            var origen, tipo, tamanio;
-            //Envia la imagen a la pantalla
-            origen = e.target; //objeto FileReader
-            //Prepara la información sobre la imagen
-
-            tipo = archivo2.substring(archivo2.lastIndexOf("."));
-            console.log("el tipo",tipo);
-            tamanio = e.total / 1024;
-            console.log("el tamaño",tamanio);
-
-            if (tipo !== ".jpeg" && tipo !== ".JPEG" && tipo !== ".jpg" && tipo !== ".JPG" && tipo !== ".png" && tipo !== ".PNG") {
-                //  
-                console.log("error_tipo");
-                $("#error_en_la_imagen").css('display','block');
-            }
-            else{
-                 $("#error_en_la_imagen").css('display','none');
-                console.log("en el else");
-            }
-
-       };
-        Lector.onerror = function(e) {
-        console.log(e)
-       }
-       Lector.readAsDataURL(Archivos[0]);
-   }
-
-}

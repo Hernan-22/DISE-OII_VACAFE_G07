@@ -200,7 +200,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_vacunas.php" class="nav-link">
                                             <p>Vacunas</p>
                                         </a>
                                     </li>
