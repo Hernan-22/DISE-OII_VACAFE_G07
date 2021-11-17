@@ -1,3 +1,7 @@
+<?php 
+    date_default_timezone_set('America/El_Salvador');
+    @session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -16,6 +20,9 @@
             <!-- Navbar -->
             <?php
                 require_once ('../Menus/menusidebar.php');
+            ?>
+            <?php
+                require_once ('../Menus/loader.php');               
             ?>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -71,9 +78,9 @@
                                     <br>
                                     <div class="row invoice-info">
                                         <div class="col-sm-4 invoice-col">
-                                            Vendedor
+                                            <span>Vendedor</span>
                                             <address>
-                                                <strong>Administrador</strong>
+                                                <strong id="vendedor_fact">Administrador</strong>
                                                 <br>
                                             </address>
                                         </div>
@@ -81,13 +88,13 @@
                                         <div class="col-sm-4 invoice-col">
                                             Cliente
                                             <address>
-                                                <strong>Juan Hernández</strong>
+                                                <strong id="nom_cliente_fact">Juan Hernández</strong>
                                                 <br>
-                                                Dui: 12345678-9
+                                                <span>Dui: </span><strong id="dui_cliente_fact"></strong>
                                                 <br>
-                                                Dirección: Santo Domingo
+                                                <span>Dirección: </span> <strong id="direc_cliente_fact"></strong>
                                                 <br>
-                                                Teléfono: (503) 7365-7821
+                                                <span>Telefono: (503)</span>  <strong id="tel_cliente_fact"></strong>
                                                 <br>
                                             </address>
                                         </div>
@@ -96,18 +103,10 @@
                                             <b>Factura</b>
                                             <br>
                                             <b>No.</b>
-                                            0001
+                                            <strong id="num_fact"></strong>                                            
                                             <br>
-                                            <b>Registro No.</b>
-                                            100001-1
-                                            <br>
-                                            <b>NIT:</b>
-                                            0614-290209-000-0
-                                            <br>
-                                            <b>Fecha:</b>
-                                            09-09-2021
-                                            <b>Hora:</b>
-                                            18:15
+                                            <b>Fecha y Hora:</b>
+                                             <strong id="fecha_fact"></strong>   
                                         </div>
                                         <!-- /.col -->
                                     </div>
@@ -115,43 +114,8 @@
                                     <!-- Table row -->
                                     <div class="row">
                                         <div class="col-12 table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Cantidad</th>
-                                                        <th>Producto</th>
-                                                        <th>Precio Unitario</th>
-                                                        <th>Ventas Exentas</th>
-                                                        <th>Ventas Afectas</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>25</td>
-                                                        <td>Botella de Leche</td>
-                                                        <td>$1.50</td>
-                                                        <td></td>
-                                                        <td>$37.50</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Marqueta de queso
-                                                            Duro 50LB
-                                                        </td>
-                                                        <td>$64.00</td>
-                                                        <td></td>
-                                                        <td>$64.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Ternero</td>
-                                                        <td>$250</td>
-                                                        <td></td>
-                                                        <td>$250</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <table class="table table-striped" >
+                                                <div id="tb_factura_ver"></div> 
                                         </div>
                                         <!-- /.col -->
                                     </div>
@@ -161,21 +125,8 @@
                                         <div class="col-6"></div>
                                         <!-- /.col -->
                                         <div class="col-6">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tr>
-                                                        <th style="width:50%">Sumas:</th>
-                                                        <td>$351.50</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>IVA(13%)</th>
-                                                        <td>$00.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Venta Total:</th>
-                                                        <td>$351.50</td>
-                                                    </tr>
-                                                </table>
+                                            <div class="table-responsive" id="tb_sumas_factura">
+                                                
                                             </div>
                                         </div>
                                         <!-- /.col -->
@@ -193,7 +144,7 @@
                                                 <i class="fas fa-print"></i> Imprimir
                                             </a>
                                             <button type="button" class="btn btn-success float-right" style="margin-right: 5px;">
-                                                <i class="fas fa-download"></i>
+                                                <i class="fas fa-save"></i>
                                                 Guardar
                                             </button>
                                         </div>
@@ -228,6 +179,7 @@
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>
+        <script src="../Scripts/factura_previa.js"></script>
         
     </body>
 </html>

@@ -61,10 +61,10 @@ $(function (){
 	            	title: 'Venta registrada exitosamente!.'
        			});
        			cargar_tabla_bovinos();
-       			/*var timer = setInterval(function(){
-					$(location).attr('href','../Vistas/v_registro_compras.php');
+       			var timer = setInterval(function(){
+					$(location).attr('href','../Vistas/r_factura_venta.php');
 					clearTimeout(timer);
-				},3500);	*/	
+				},3500);
 				
 
 	    	}else if (json[0]=="Error" && json[1]=="existencias"){

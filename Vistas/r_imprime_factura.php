@@ -1,3 +1,7 @@
+<?php 
+    date_default_timezone_set('America/El_Salvador');
+    @session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -13,6 +17,9 @@
     </head>
     <body>
         <div class="wrapper col-6 ">
+            <?php
+                require_once ('../Menus/loader.php');               
+            ?>
             <!-- Main content -->
             <section class="invoice">
                 <!-- title row -->
@@ -22,8 +29,7 @@
                         <img src="../dist/img/logo-n.png" alt="user-avatar" class="img-circle img-fluid">
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-4 invoice-col
-            text-center">
+                    <div class="col-sm-4 invoice-col text-center">
                         <address>
                             <h4>
                                 <strong>FINCA LA VACA CAFÉ</strong>
@@ -47,9 +53,9 @@
                 </div>
                 <div class="row invoice-info">
                     <div class="col-sm-4 invoice-col">
-                        Vendedor
+                        <strong>Vendedor</strong>
                         <address>
-                            <strong>Administrador</strong>
+                            <span id="nom_vendedor_factura">Administrador</span>
                             <br>
                         </address>
                     </div>

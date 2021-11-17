@@ -103,7 +103,7 @@
 					nva_nom_bovino, 
 					nva_estado_bovino, 
 					nva_nom_raza,
-					dou_precio_venta, 
+					dou_precio_venta_bovino, 
 					nva_foto_bovino
 				FROM
 					tb_expediente
@@ -122,12 +122,12 @@
 	                            <td class="text-center"><img alt="Avatar" class="table-avatar" src="../dist/img/'.$row['nva_foto_bovino'].'">
 	                            </td>
 	                            <td class="text-center">'.$row['nva_nom_raza'].'</td>
-	                            <td class="text-center">'."$".''.$row['dou_precio_venta'].'</td>
+	                            <td class="text-center">'."$".''.$row['dou_precio_venta_bovino'].'</td>
 	                            <td class="text-center project-actions">
 			                        <button class="btn btn-info btn-sm btn_bovino_seleccionado" 
 			                        	data-idbovino_seleccionado="'.$row['int_idexpediente'].'" 
 			                        	data-nombre_bovino_selec="'.$row['nva_nom_bovino'].'"	
-			                        	data-precio_bovino_selec="'.$row['dou_precio_venta'].'"
+			                        	data-precio_bovino_selec="'.$row['dou_precio_venta_bovino'].'"
 			                        	data-foto_bovino_selec="'.$row['nva_foto_bovino'].'"
 			                        	data-raza_bovino_selec="'.$row['nva_nom_raza'].'">
 			                            <i class="fas fa-check"></i>
