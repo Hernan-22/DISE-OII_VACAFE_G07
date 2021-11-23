@@ -3,12 +3,12 @@
 	include_once("../Conexion/Modelo.php");
 	$modelo = new Modelo();
 	if (isset($_POST['desbloquear']) && $_POST['desbloquear']=="si_con_contrasena") {
-		$sql = "SELECT 
-					*FROM tb_empleado AS te
-				JOIN tb_usuario as tu 
-				ON tu.int_idempleado = te.int_idempleado
-				WHERE (te.nva_email_empleado='$_SESSION[usuario]' OR tu.nva_nom_usuario = '$_SESSION[usuario]')
-				";
+		$sql = "SELECT
+					* 
+				FROM
+					tb_usuario 
+				WHERE
+					nva_nom_usuario = '$_SESSION[usuario]'";
 		$resultado = $modelo->get_query($sql);
 		if ($resultado[0]==1 && $resultado[4]==1) {
 			$verificacion = $modelo->desencrilas_contrasena($_POST['contra_desbloqueo'],$resultado[2][0]['nva_contraseña_usuario']);
@@ -33,8 +33,7 @@
 		$array_update = array(
             "table" => "tb_usuario",
             "id_persona" => $_POST['id_persona'],
-            "contrasena"=>$modelo->encriptarlas_contrasenas($_POST['contrasena']),
-             
+            "contrasena"=>$modelo->encriptarlas_contrasenas($_POST['contrasena'])             
         );
 		$resultado = $modelo->actualizar_generica($array_update);
 

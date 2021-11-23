@@ -30,7 +30,7 @@
          <div class="col-12 text-center">
             <img src="../dist/img/logo-n.png" alt="user-avatar" class="img-circle img-fluid">
             <br>
-             <b><p class="login-box-msg"><?php print $_SESSION['empleado'] ? $_SESSION['empleado']:"" ?></p></b>
+             <b><p class="login-box-msg"><?php print $_SESSION['usuario'] ? $_SESSION['usuario']:"" ?></p></b>
           </div>
           <br>
           <p class="login-box-msg">Pantalla Bloqueada</p>
@@ -66,10 +66,11 @@
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
    
     <script type="text/javascript" src="../plugins2/parsleyjs/parsley.min.js"></script>
-    <script src="../Scripts/pantalla_bloqueo.js" type="text/javascript" charset="utf-8" async defer></script>
+    
     <script src="../plugins/jquery/jquery.min.js"></script>
     <!-- jquery-validation -->
     <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="../Scripts/pantalla_bloqueo.js" type="text/javascript" charset="utf-8" async defer></script>
   </body>
 </html>

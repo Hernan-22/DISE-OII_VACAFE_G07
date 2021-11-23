@@ -47,7 +47,7 @@
                     <li class="nav-item dropdown">
                             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" >
                               <i class="fas fa-user-tie"></i>
-                              <strong><?php print $_SESSION['empleado']?></strong>
+                              <strong><?php print $_SESSION['usuario']?></strong>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <a href="#" class="dropdown-item">

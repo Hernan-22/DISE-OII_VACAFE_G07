@@ -1,5 +1,5 @@
 <?php 
-	
+	@session_start();
 	require_once("../Conexion/Modelo.php");
 	$modelo = new Modelo();
 	if (isset($_POST['validar_campos']) && $_POST['validar_campos']=="si_por_campo") {
@@ -53,7 +53,7 @@
 
 		$array_update = array(
             "table" => "tb_usuario",
-            "int_idusuario"=>$_POST['llave_usuario'] ,
+            "int_idusuario"=>$_POST['llave_usuario'],
             "nva_nom_usuario" => $_POST['nombre_usuario'],
             "nva_contraseña_usuario" => $modelo->encriptarlas_contrasenas($_POST['contrasena_usuario']),
             "int_idempleado" => $_POST['empleado_usuario']            
@@ -61,6 +61,22 @@
 		$resultado = $modelo->actualizar_generica($array_update);
 
 		if($resultado[0]=='1' && $resultado[4]>0){
+
+			$sql = "SELECT
+						* 
+					FROM
+						tb_usuario 
+					WHERE
+						int_idusuario = '$_POST[llave_usuario]';";
+
+
+			$resultado1 = $modelo->get_query($sql);
+			if($resultado1[0]=='1' && $resultado1[4]>0){
+				$_SESSION['usuario']=$resultado1[2][0]['nva_nom_usuario'];
+			}else{
+				print json_encode(array("Error","no se pudo actualizar el usuario",$_POST,$resultado1));
+				exit();
+			}
 			$array_update = array(
             "table" => "tb_empleado",
             "int_idempleado" => $_POST['empleado_usuario'],

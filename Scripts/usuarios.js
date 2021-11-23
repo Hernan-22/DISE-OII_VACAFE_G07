@@ -93,7 +93,7 @@ $(function (){
 	        toast: true,
 	        position: 'top-end',
 	        showConfirmButton: false,
-	        timer: 7000
+	        timer: 5000
     	});
     	if ($("#contrasena_usuario").val() != $("#recontrasena_usuario").val()) {
 
@@ -109,8 +109,7 @@ $(function (){
 		    });
 			return;
  		}
-		console.log("Imprimiendo datos: ",datos);
-		mostrar_mensaje("Almacenando información","Por favor no recargue la página");
+		console.log("Imprimiendo datos: ",datos);		
 		$.ajax({
             dataType: "json",
             method: "POST",
@@ -119,28 +118,29 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {	    	 	
+								
+				cargar_datos();
+				$('#md_edit_usuario').modal('hide');
 				Toast.fire({
 	            	icon: 'success',
 	            	title: 'Usuario modificado exitosamente!.'
-       			}); 				
-				cargar_datos();
-				$('#md_edit_usuario').modal('hide');
+       			}); 
+	    	}else if(json[1]=="no se pudo actualizar el usuario"){
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'no se pudo actualizar el usuario!'
+		        });
 	    	}else{
 	    	 	Toast.fire({
 		            icon: 'error',
 		            title: 'Error al modificar!'
 		        });
 	    	}
-        	
-        	
         });
-
-
 	});
 });
 
 function cargar_datos(){
-	mostrar_mensaje("Consultando datos");
 	var datos = {"consultar_info":"si_consultala"}
 	$.ajax({
         dataType: "json",
@@ -158,24 +158,6 @@ function cargar_datos(){
     });
 }
 
-function mostrar_mensaje(titulo,mensaje=""){
-	Swal.fire({
-	  title: titulo,
-	  html: mensaje,
-	  allowOutsideClick: false,
-	  timerProgressBar: true,
-	  didOpen: () => {
-	    Swal.showLoading()
-	     
-	  },
-	  willClose: () => {
-	    
-	  }
-	}).then((result) => {
-	  
-	   
-	})
-}
 
 
 /*
