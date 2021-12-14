@@ -55,7 +55,6 @@
             "table" => "tb_usuario",
             "int_idusuario"=>$_POST['llave_usuario'],
             "nva_nom_usuario" => $_POST['nombre_usuario'],
-            "nva_contraseña_usuario" => $modelo->encriptarlas_contrasenas($_POST['contrasena_usuario']),
             "int_idempleado" => $_POST['empleado_usuario']            
         );
 		$resultado = $modelo->actualizar_generica($array_update);
@@ -84,11 +83,31 @@
 	        );
 			$resultado_Empleado = $modelo->actualizar_generica($array_update);
 
-        	print json_encode(array("Exito",$_POST,$resultado,$resultado_Empleado));
+        	print json_encode(array("Exito",$_POST,$resultado,$resultado_Empleado,$resultado1[2][0]['nva_nom_usuario']));
 			exit();
 
         }else {
         	print json_encode(array("Error",$_POST,$resultado,$resultado_Empleado));
+			exit();
+        }
+
+
+	}else if (isset($_POST['mod_contrasena']) && $_POST['mod_contrasena']=="si_mod_contrasena") {
+
+		$array_update = array(
+            "table" => "tb_usuario",
+            "int_idusuario"=>$_POST['id_usuario'],
+            "nva_contraseña_usuario" => $modelo->encriptarlas_contrasenas($_POST['contrasena_usuario'])
+        );
+		$resultado_contrasena = $modelo->actualizar_generica($array_update);
+
+		if($resultado_contrasena[0]=='1' && $resultado_contrasena[4]>0){
+
+        	print json_encode(array("Exito",$_POST,$resultado_contrasena));
+			exit();
+
+        }else {
+        	print json_encode(array("Error",$_POST,$resultado_contrasena));
 			exit();
         }
 
@@ -117,6 +136,19 @@
         }
 
 
+	}else if (isset($_POST['consultar_pass']) && $_POST['consultar_pass']=="si_coneste_id") {
+
+		$resultado = $modelo->get_todos("tb_usuario","WHERE int_idusuario = '".$_POST['id']."'");	
+		
+		if($resultado[0]=='1'){
+
+			print json_encode(array("Exito",$_POST,$resultado[2][0]));
+			exit();
+
+        }else {
+        	print json_encode(array("Error",$_POST,$resultado));
+			exit();
+        }
 	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="datonuevo") {		
 		$id_insertar = $modelo->retonrar_id_insertar("tb_usuario");		
         $array_insertar = array(
@@ -172,6 +204,10 @@
 			                        <button class="btn btn-info btn-sm btn_editar"
 			                        	data-idusuario='.$row['int_idusuario'].' data-email_empleado='.$row['nva_email_empleado'].'>
 			                            <i class="fas fa-pencil-alt"></i>
+			                        </button>
+			                        <button class="btn btn-info btn-sm btn_editar_pass"
+			                        	data-idusuario='.$row['int_idusuario'].'>
+			                            <i class="fas fa-key"></i>
 			                        </button>
 			                    </td>
 	                        </tr>';	

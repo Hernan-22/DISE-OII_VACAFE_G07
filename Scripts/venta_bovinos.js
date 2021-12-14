@@ -15,6 +15,11 @@ $(function (){
 	$('#formulario_registro_venta_b').validate({
 	    rules: {	     
 	    },
+	    message:{
+			'fecha_venta_b':{
+				required:'La Fecha no puede quedar vacía',				
+			}			
+		}
 	    errorElement: 'span',
 	    errorPlacement: function (error, element) {
 	      error.addClass('invalid-feedback');

@@ -329,7 +329,7 @@
                                             <div class="image view view-first">
                                                 <img class="thumb-image" style="width: 20%; display: block;" src="">
                                             </div>
-                                            <input id="imagen_bovino" name="imagen_bovino" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-secondary">
+                                            <input id="imagen_bovino" name="imagen_bovino" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-success">
                                             <label style="display:none;font-size: 12px; list-style: none; color: #ea553d; margin-top: 5px;" id="error_en_la_imagen">La imagen no es valida</label>
 
                                         </div>

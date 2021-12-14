@@ -39,6 +39,20 @@ $(function (){
 	    }
 	});
 
+	$('#formulario_mod_pass').validate({
+	   
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
+
 
 	
 	$(document).on("change","#imagen_persona",function(e){
@@ -70,10 +84,43 @@ $(function (){
 	    		$('#ingreso_datos').val("si_actualizalo");
 	    		$('#empleado_usuario').empty().html(json[3][0]);
 	    		$('#nombre_usuario').val(json[2]['nva_nom_usuario']);
+	    		$('#correo_usuario').val(email_empleado);	    		
+	    		$('#md_edit_usuario').modal('show');	    		
+	    	}
+	    	 
+	    }).fail(function(){
+
+	    }).always(function(){
+
+	    });
+
+
+	});
+
+	
+
+	$(document).on("click",".btn_editar_pass",function(e){
+
+		e.preventDefault(); 
+		var id = $(this).attr("data-idusuario");
+		console.log("El id es: ",id);
+
+		var datos = {"consultar_pass":"si_coneste_id","id":id}
+
+		$.ajax({
+	        dataType: "json",
+	        method: "POST",
+	        url:'../Controladores/usuarios_controlador.php',
+	        data : datos,
+	    }).done(function(json) {
+	    	console.log("EL consultar especifico",json);
+	    	if (json[0]=="Exito") {	    		
+
+	    		$('#id_usuario').val(id);
+	    		console.log("id: ",id);
 	    		$('#contrasena_usuario').val(json[2]['nva_contraseña_usuario']);
 	    		$('#recontrasena_usuario').val(json[2]['nva_contraseña_usuario']);
-	    		$('#correo_usuario').val(email_empleado);	    		
-	    		$('#md_edit_usuario').modal('show');
+	    		$('#md_edit_password').modal('show');
 	    		
 	    	}
 	    	 
@@ -118,13 +165,14 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {	    	 	
-								
-				cargar_datos();
-				$('#md_edit_usuario').modal('hide');
 				Toast.fire({
-	            	icon: 'success',
-	            	title: 'Usuario modificado exitosamente!.'
-       			}); 
+			        icon: 'success',
+			        title: 'Usuario Modificado!'
+		    	});
+		    	console.log("usuario: ", json[4]['nva_nom_usuario']);
+		    	$('#usuario_session').empty().html(json[4]);
+				$('#md_edit_usuario').modal('hide');       			
+       			cargar_datos();
 	    	}else if(json[1]=="no se pudo actualizar el usuario"){
 	    		Toast.fire({
 		            icon: 'error',
@@ -138,9 +186,51 @@ $(function (){
 	    	}
         });
 	});
+
+	$(document).on("submit","#formulario_mod_pass",function(e){
+		e.preventDefault();
+		var datos = $("#formulario_mod_pass").serialize();
+		var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 5000
+    	});
+    	if ($("#contrasena_usuario").val() != $("#recontrasena_usuario").val()) {
+
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Las contraseñas no coinciden!'
+		    });
+			return;
+ 		}
+		console.log("Imprimiendo datos: ",datos);		
+		$.ajax({
+            dataType: "json",
+            method: "POST",
+            url:'../Controladores/usuarios_controlador.php',
+            data : datos,
+        }).done(function(json) {
+        	console.log("EL GUARDAR",json);        	
+	        if (json[0]=="Exito") {	
+				cargar_datos();				
+				Toast.fire({
+	            	icon: 'success',
+	            	title: 'Contraseña modificada exitosamente!.'
+       			});
+       			$('#md_edit_password').modal('hide');
+	    	}else {
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'No se pudo actualizar la contraseña!'
+		        });
+	    	}
+        });
+	});
 });
 
 function cargar_datos(){
+
 	var datos = {"consultar_info":"si_consultala"}
 	$.ajax({
         dataType: "json",
