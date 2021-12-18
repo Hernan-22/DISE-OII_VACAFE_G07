@@ -113,7 +113,7 @@ $(function () {
 
 	$(document).on("click",".btn_editar",function(e){
      e.preventDefault(); 
-	//	mostrar_mensaje("Consultando datos");
+		//	mostrar_mensaje("Consultando datos");
 		var id = $(this).attr("data-int_idexpediente");
 		console.log("El id es: ",id);
 		var datos = {"consultar_info":"si_nombre_especifico","idexpediente":id}

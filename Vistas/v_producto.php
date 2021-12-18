@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-xs-1"></div>
                     </div>
-                    <div class="modal-body">
+                    <div class="card-body">
                         <!-- TABLA PRODUCTOS -->
                         <div class="card-body p-0" id="tablaPro"> 
                         </div>

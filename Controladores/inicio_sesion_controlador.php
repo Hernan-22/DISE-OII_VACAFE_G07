@@ -82,7 +82,9 @@
 				$_SESSION['empleado']=$resultado[2][0]['nva_nom_empleado'];				
 				$_SESSION['usuario']=$resultado[2][0]['nva_nom_usuario'];
 				$_SESSION['correo']=$resultado[2][0]['nva_email_empleado'];
+				$_SESSION['foto']=$resultado[2][0]['nva_fotografia'];
 				$_SESSION['idempleado']=$resultado[2][0]['int_idempleado'];
+				$_SESSION['idusuario']=$resultado[2][0]['int_idusuario'];
 
 				$array = array("Exito","Bienvenido al sistema ".$resultado[2][0]['nva_nom_empleado'],$resultado,$_SESSION);
 				print json_encode($array);

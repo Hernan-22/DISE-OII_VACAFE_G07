@@ -26,6 +26,10 @@
         <!-- dropzonejs -->
         <link rel="stylesheet" href="../plugins/dropzone/min/dropzone.min.css">
 
+        <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
         <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
         <!-- Toastr -->
         <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
@@ -51,8 +55,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                         </div>
-                    </div>
-                  
+                    </div>                  
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -60,19 +63,20 @@
                         <div class="card-header bg-success">
                             <h3 class="card-title ">Usuarios</h3>
                             <div class="card-tools">
-                                <a class="btn btn-success " href="#md_registrar_usuario" data-toggle="modal">
+                                <a class="btn btn-success btn_nuevo" href="#md_registrar_usuario" data-toggle="modal">
                                     <i class="fas fa-plus-circle"></i>
                                     Nuevo
                                 </a>
                             </div>
                         </div>
                         <div class="col-xs-12">
-                        <div class="col-xs-1"></div>
-                        <div class="col-xs-10"></div>
-                    </div>
-
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-10"></div>
+                        </div>
+                        <div class="card-body">
                         <!-- TABLA EMPLEADOS -->
-                        <div class="card-body p-0" id="datos_tabla"> 
+                            <div class="card-body p-0" id="datos_tabla"> 
+                            </div>
                         </div>
                     </div>                   
                 </section>  
@@ -81,7 +85,7 @@
                 <div class="modal fade" id="md_edit_usuario">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form method="POST" name="formulario_registro" id="formulario_registro">
+                            <form method="POST" name="formulario_editar" id="formulario_editar">
                                 <div class="modal-header bg-success">
                                     <h4 class="modal-title">Usuarios | Editar</h4>
                                     <button
@@ -94,8 +98,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">                               
-                                    <input type="hidden" id="almacenar_datos" name="almacenar_datos" value="si_actualizar_usuario">
-                                    <input type="hidden" id="llave_usuario" name="llave_usuario" value="si_registro">
+                                    <input type="hidden" id="ingreso_datos" name="ingreso_datos" value="si_actualizar_usuario">
+                                    <input type="hidden" id="llave_usuario_edit" name="llave_usuario_edit" value="si_registro">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <span>
@@ -106,13 +110,13 @@
                                                      <span class="input-group-text">
                                                             <i class="fas fa-user"></i>
                                                         </span>
-                                                    <select class="form-control" id="empleado_usuario" name="empleado_usuario">
+                                                    <select class="form-control" id="empleado_usuario_edit" name="empleado_usuario_edit">
                                                     </select>
                                                 </div>
                                                  <span>
                                                        *
                                                     </span>
-                                                    <label for="correo_usuario">Correo</label>
+                                                    <label for="correo_usuario_edit">Correo</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">
@@ -120,7 +124,7 @@
                                                             </span>
                                                         </div>
                                                         <input type="email" class="form-control" placeholder="juan@gmail.com" autocomplete="off"  required
-                                                        id="correo_usuario" name="correo_usuario" >
+                                                        id="correo_usuario_edit" name="correo_usuario_edit" >
                                                     </div>    
                                             </div>
                                             <!-- /.col -->
@@ -129,7 +133,7 @@
                                                     <span>
                                                        *
                                                     </span>
-                                                    <label for="nombre_usuario">Nombre Usuario</label>
+                                                    <label for="nombre_usuario_edit">Nombre Usuario</label>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">
@@ -137,15 +141,11 @@
                                                             </span>
                                                         </div>
                                                         <input type="text" class="form-control" placeholder="juan" autocomplete="off"
-                                                        id="nombre_usuario" name="nombre_usuario" required>
+                                                        id="nombre_usuario_edit" name="nombre_usuario_edit" required>
                                                     </div>
+                                                    <label for="contrasena_usuario">Seleccione uina Fotografía</label>
                                                     <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-user-tie"></i>
-                                                            </span>
-                                                        </div>
-                                                         <input id="imagen_bovino" name="imagen_bovino" data-buttonText="Seleccionar" type="file" class="fileinput-button" data-buttonname="btn-success">
+                                                        <input id="imagen_usuario_edit" name="imagen_usuario_edit" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info">
                                                     </div>                         
                                                 </div>
                                             </div>
@@ -252,9 +252,9 @@
                                                 </span>
                                                 <label>Empleado</label>
                                                 <div class="input-group mb-3">
-                                                     <span class="input-group-text">
+                                                    <span class="input-group-text">
                                                             <i class="fas fa-user"></i>
-                                                        </span>
+                                                    </span>
                                                     <select class="form-control" id="empleado_usuario" name="empleado_usuario">
                                                     </select>
                                                 </div>
@@ -316,39 +316,8 @@
                                                     </div>
                                                     <label for="contrasena_usuario">Seleccione uina Fotografía</label>
 
-                                                    <div class="input-group mb-3">                       
-                                                        <input id="imagen_expediente" name="imagen_expediente" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info">
-                                                        <div class="table table-striped files" id="previews">
-                  <div id="template" class="row mt-2">
-                    <div class="col-auto">
-                        <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
-                    </div>
-                    <div class="col d-flex align-items-center">
-                        <p class="mb-0">
-                          <span class="lead" data-dz-name></span>
-                          (<span data-dz-size></span>)
-                        </p>
-                        <strong class="error text-danger" data-dz-errormessage></strong>
-                    </div>
-                   
-                    <div class="col-auto d-flex align-items-center">
-                      <div class="btn-group">
-                        <button class="btn btn-primary start">
-                          <i class="fas fa-upload"></i>
-                          <span>Start</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-warning cancel">
-                          <i class="fas fa-times-circle"></i>
-                          <span>Cancel</span>
-                        </button>
-                        <button data-dz-remove class="btn btn-danger delete">
-                          <i class="fas fa-trash"></i>
-                          <span>Delete</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                                                    <div class="input-group mb-3">
+                                                         <input id="imagen_usuario" name="imagen_usuario" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info" accept="image/*">
                                                     </div>                         
                                                 </div>
                                             </div>
@@ -368,13 +337,7 @@
                         </div>
                     </div>
                 </div>
-            </div>             
-            </div>
-
-           
-
-         
-
+            </div>            
             <footer class="main-footer">
               <div class="float-right d-none d-sm-block">
               </div>
@@ -418,145 +381,24 @@
         <!-- Toastr -->
         <script src="../plugins/toastr/toastr.min.js"></script>
 
-       
+        <!-- DataTables  & Plugins -->
+        <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+        <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+        <script src="../plugins/jszip/jszip.min.js"></script>
+        <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+        <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+        <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+        <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+        <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
         <!-- AdminLTE App -->
         <script src="../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>  
         <script src="../Scripts/usuarios.js"></script> 
     </body>
-    <script>
-      $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
-
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-          theme: 'bootstrap4'
-        })
-
-        //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-        //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-        //Money Euro
-        $('[data-mask]').inputmask()
-
-        //Date picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
-
-        //Date and time picker
-        $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
-
-        //Date range picker
-        $('#reservation').daterangepicker()
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({
-          timePicker: true,
-          timePickerIncrement: 30,
-          locale: {
-            format: 'MM/DD/YYYY hh:mm A'
-          }
-        })
-        //Date range as a button
-        $('#daterange-btn').daterangepicker(
-          {
-            ranges   : {
-              'Today'       : [moment(), moment()],
-              'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-              'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-              'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-              'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            },
-            startDate: moment().subtract(29, 'days'),
-            endDate  : moment()
-          },
-          function (start, end) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-          }
-        )
-
-        //Timepicker
-        $('#timepicker').datetimepicker({
-          format: 'LT'
-        })
-
-        //Bootstrap Duallistbox
-        $('.duallistbox').bootstrapDualListbox()
-
-        //Colorpicker
-        $('.my-colorpicker1').colorpicker()
-        //color picker with addon
-        $('.my-colorpicker2').colorpicker()
-
-        $('.my-colorpicker2').on('colorpickerChange', function(event) {
-          $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-        })
-
-        $("input[data-bootstrap-switch]").each(function(){
-          $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
-
-      })
-      // BS-Stepper Init
-      document.addEventListener('DOMContentLoaded', function () {
-        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-      })
-
-      // DropzoneJS Demo Code Start
-      Dropzone.autoDiscover = false
-
-      // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-     /* var previewNode = document.querySelector("#template")
-      previewNode.id = ""
-      var previewTemplate = previewNode.parentNode.innerHTML
-      previewNode.parentNode.removeChild(previewNode)*/
-
-      var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-        url: "/target-url", // Set the url
-        thumbnailWidth: 80,
-        thumbnailHeight: 80,
-        parallelUploads: 20,
-        previewTemplate: previewTemplate,
-        autoQueue: false, // Make sure the files aren't queued until manually added
-        previewsContainer: "#previews", // Define the container to display the previews
-        clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-      })
-
-      myDropzone.on("addedfile", function(file) {
-        // Hookup the start button
-        file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
-      })
-
-      // Update the total progress bar
-      myDropzone.on("totaluploadprogress", function(progress) {
-        document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-      })
-
-      myDropzone.on("sending", function(file) {
-        // Show the total progress bar when upload starts
-        document.querySelector("#total-progress").style.opacity = "1"
-        // And disable the start button
-        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-      })
-
-      // Hide the total progress bar when nothing's uploading anymore
-      myDropzone.on("queuecomplete", function(progress) {
-        document.querySelector("#total-progress").style.opacity = "0"
-      })
-
-      // Setup the buttons for all transfers
-      // The "add files" button doesn't need to be setup because the config
-      // `clickable` has already been specified.
-      document.querySelector("#actions .start").onclick = function() {
-        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-      }
-      document.querySelector("#actions .cancel").onclick = function() {
-        myDropzone.removeAllFiles(true)
-      }
-      // DropzoneJS Demo Code End
-    </script>
+    
 </html>

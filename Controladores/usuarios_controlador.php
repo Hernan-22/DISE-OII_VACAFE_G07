@@ -2,6 +2,8 @@
 	@session_start();
 	require_once("../Conexion/Modelo.php");
 	$modelo = new Modelo();
+	
+
 	if (isset($_POST['validar_campos']) && $_POST['validar_campos']=="si_por_campo") {
 
  
@@ -35,27 +37,70 @@
 
 
 	}else if (isset($_GET['subir_imagen']) && $_GET['subir_imagen']=="subir_imagen_ajax") {
-
-		$file_path = "archivos_usuario/".basename($_FILES['file-0']['name']);
+		$trozos = explode(".", $_FILES['file-0']['name']);
+		$extension = end($trozos);
+		$name = "user_" . $_GET['id'] . "." . $extension;
+		$file_path = "../img/usuarios/".$name;
 		try {
-			$mover = move_uploaded_file($_FILES['file-0']['tmp_name'], $file_path);
-			 
-				 print json_encode("Exito",$mover);
-				 exit();
-			 
+
+			$temporal = $_FILES['file-0']['tmp_name'];
+			$nombre = $_FILES['file-0']['name'];
+			$mimeType = $_FILES['file-0']['type'];
+
+			if ($extension == "png") {
+				//abre la foto original
+				$original = imagecreatefrompng($temporal);				
+			}else if ($extension == "jpg"){
+				//abre la foto original
+				$original = imagecreatefromjpeg($temporal);				
+			}else{
+				print json_encode(array("Error","extension"));
+				exit();
+			}
+			//dimensiones de la foto original
+			$ancho_original = imagesx($original);
+			$alto_original = imagesy($original);
+			
+
+			//crear un lienxo vacio(foto destino 128x128)
+			$copia = imagecreatetruecolor(128,128);
+
+			imagecopyresampled($copia, $original, 0,0,0,0, 128, 128, $ancho_original, $alto_original);
+
+			if ($extension == "png") {
+				//abre la foto original
+				imagepng($copia, $file_path);			
+			}else{
+				//abre la foto original
+				imagejpeg($copia, $file_path);				
+			}
+			$array_update = array(
+			"table" => "tb_usuario",
+			"int_idusuario" => $_GET['id'],
+			"nva_fotografia" => $file_path, //campo en la tabla
+
+			);
+			$resultado = $modelo->actualizar_generica($array_update);
+			if ($resultado[0] == '1' && $resultado[4] > 0) {
+				print json_encode(array("Exito", $mover, $resultado));
+				exit();
+			} else {
+				print json_encode(array("Error", $mover, $resultado));
+				exit();
+			}			 
 		} catch (Exception $e) {
 			print json_encode("Error",$e);
-				exit();
+			exit();
 		}
 		
 
-	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="si_actualizar_usuario") {
+	}else if (isset($_POST['ingreso_datos']) && $_POST['ingreso_datos']=="si_actualizar") {
 
 		$array_update = array(
             "table" => "tb_usuario",
-            "int_idusuario"=>$_POST['llave_usuario'],
-            "nva_nom_usuario" => $_POST['nombre_usuario'],
-            "int_idempleado" => $_POST['empleado_usuario']            
+            "int_idusuario"=>$_POST['llave_usuario_edit'],
+            "nva_nom_usuario" => $_POST['nombre_usuario_edit'],
+            "int_idempleado" => $_POST['empleado_usuario_edit']            
         );
 		$resultado = $modelo->actualizar_generica($array_update);
 
@@ -66,28 +111,36 @@
 					FROM
 						tb_usuario 
 					WHERE
-						int_idusuario = '$_POST[llave_usuario]';";
+						int_idusuario = '$_POST[llave_usuario_edit]';";
 
 
 			$resultado1 = $modelo->get_query($sql);
 			if($resultado1[0]=='1' && $resultado1[4]>0){
-				$_SESSION['usuario']=$resultado1[2][0]['nva_nom_usuario'];
+
+
+				if ($_POST['llave_usuario_edit']  == $_SESSION['idusuario']) {
+					$_SESSION['usuario']=$resultado1[2][0]['nva_nom_usuario'];
+					$_SESSION['foto']=$resultado1[2][0]['nva_fotografia'];
+					$usuario_Actual = $_SESSION['usuario'];
+				}
+				
+				$usuario_Actual = $_SESSION['usuario'];
 			}else{
-				print json_encode(array("Error","no se pudo actualizar el usuario",$_POST,$resultado1));
+				print json_encode(array("Error","no se pudo obtener el usuario",$_POST,$resultado1));
 				exit();
 			}
 			$array_update = array(
             "table" => "tb_empleado",
-            "int_idempleado" => $_POST['empleado_usuario'],
-            "nva_email_empleado"=>$_POST['correo_usuario']           
+            "int_idempleado" => $_POST['empleado_usuario_edit'],
+            "nva_email_empleado"=>$_POST['correo_usuario_edit']           
 	        );
 			$resultado_Empleado = $modelo->actualizar_generica($array_update);
 
-        	print json_encode(array("Exito",$_POST,$resultado,$resultado_Empleado,$resultado1[2][0]['nva_nom_usuario']));
+        	print json_encode(array("Exito",$_POST['llave_usuario_edit'],$_POST,$resultado,$resultado_Empleado,$usuario_Actual));
 			exit();
 
         }else {
-        	print json_encode(array("Error",$_POST,$resultado,$resultado_Empleado));
+        	print json_encode(array("Error",$_POST,$resultado));
 			exit();
         }
 
@@ -116,8 +169,7 @@
 
 		$array_select = array(
 			"table"=>"tb_empleado",
-			"int_idempleado"=>"nva_nom_empleado" 
-
+			"int_idempleado"=>"nva_nom_empleado"
 		);
 		$where = "WHERE nva_email_empleado='".$_POST['correo_emp']."'";
 		$result_select = $modelo->crear_select($array_select,$where);
@@ -149,6 +201,7 @@
         	print json_encode(array("Error",$_POST,$resultado));
 			exit();
         }
+	
 	}else if (isset($_POST['almacenar_datos']) && $_POST['almacenar_datos']=="datonuevo") {		
 		$id_insertar = $modelo->retonrar_id_insertar("tb_usuario");		
         $array_insertar = array(
@@ -177,7 +230,13 @@
         }
     
 		 
-	}else{		
+	}else{
+		$array_select = array(
+			"table"=>"tb_empleado",
+			"int_idempleado"=>"nva_nom_empleado"
+		);
+		$where = "WHERE int_idcargo = 202109351";
+		$result_select_emp_save = $modelo->crear_select($array_select,$where);
 
 		$htmltr = $html="";
 		$cuantos = 0;
@@ -185,7 +244,8 @@
 					int_idusuario,
 					nva_nom_usuario,
 					nva_nom_empleado,					 
-					nva_email_empleado 
+					nva_email_empleado,
+					nva_fotografia 
 				FROM
 					tb_usuario
 					INNER JOIN
@@ -197,7 +257,9 @@
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
-	                            <td class="text-center">'.$row['nva_nom_usuario'].'</td>
+				  				<td class="text-center"><img class="profile-user-img img-fluid img-circle" alt="User profile picture" src="'.$row['nva_fotografia'].'">
+	                             </td>
+				 				<td class="text-center">'.$row['nva_nom_usuario'].'</td>
 	                            <td class="text-center">'.$row['nva_nom_empleado'].'</td>
 	                            <td class="text-center">'.$row['nva_email_empleado'].'</td>
 	                            <td class="text-center project-actions">
@@ -212,9 +274,10 @@
 			                    </td>
 	                        </tr>';	
 			}
-			$html.='<table class="table table-striped projects" width="100%">
+			$html.='<table id="example1" class="table table-striped projects" width="100%">
                     <thead>
                         <tr>
+                        	<th class="text-center">Fotografía</th>
                             <th class="text-center">Usuario</th>
                             <th class="text-center">Empleado</th>
                             <th class="text-center">Email</th>
@@ -227,7 +290,7 @@
                     	</table>';
 
 
-        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result));
+        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$result_select_emp_save));
 			exit();
 
         }else {
@@ -235,5 +298,7 @@
 			exit();
         }
 	}
+
+	
 
 ?>

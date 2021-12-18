@@ -1,7 +1,46 @@
 $(function (){	
-	cargar_datos();	
+	cargar_datos();
 
+
+	console.log("esta funcionando")
 	$('#formulario_registro').validate({
+	    rules: {
+	      email: {
+	        required: true,
+	        email: true,
+	      },
+	      password: {
+	        required: true,
+	        minlength: 5
+	      },
+	      terms: {
+	        required: true
+	      },
+	    },
+	    messages: {
+	      email: {
+	        required: "Por favor ingresa un email",
+	        email: "Por favor ingresa un email valido"
+	      },
+	      password: {
+	        required: "Please provide a password",
+	        minlength: "Your password must be at least 5 characters long"
+	      },
+	      terms: "Please accept our terms"
+	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
+	$('#formulario_editar').validate({
 	    rules: {
 	      email: {
 	        required: true,
@@ -57,8 +96,9 @@ $(function (){
 	
 	$(document).on("change","#imagen_persona",function(e){
 		validar_archivo($(this));
-
 	});
+
+
 	
 
 	$(document).on("click",".btn_editar",function(e){
@@ -68,7 +108,6 @@ $(function (){
 		var email_empleado = $(this).attr("data-email_empleado");
 		console.log("El id es: ",id);
 		console.log("El id emil es: ",email_empleado);
-
 		var datos = {"consultar_info":"si_coneste_id","id":id,"correo_emp":email_empleado}
 
 		$.ajax({
@@ -80,11 +119,11 @@ $(function (){
 	    	console.log("EL consultar especifico",json);
 	    	if (json[0]=="Exito") {	    		
 
-	    		$('#llave_usuario').val(id);
-	    		$('#ingreso_datos').val("si_actualizalo");
-	    		$('#empleado_usuario').empty().html(json[3][0]);
-	    		$('#nombre_usuario').val(json[2]['nva_nom_usuario']);
-	    		$('#correo_usuario').val(email_empleado);	    		
+	    		$('#llave_usuario_edit').val(id);
+	    		$('#ingreso_datos').val("si_actualizar");
+	    		$('#empleado_usuario_edit').empty().html(json[3][0]);
+	    		$('#nombre_usuario_edit').val(json[2]['nva_nom_usuario']);
+	    		$('#correo_usuario_edit').val(email_empleado);	    		
 	    		$('#md_edit_usuario').modal('show');	    		
 	    	}
 	    	 
@@ -97,7 +136,59 @@ $(function (){
 
 	});
 
-	
+	$(document).on("submit","#formulario_editar",function(e){
+		e.preventDefault();
+		var datos = $("#formulario_editar").serialize();
+		var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 5000
+    	});
+    	if ($("#empleado_usuario_edit").val() == "Seleccione"){
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Debe Elegir un Empleado'
+		    });
+			return;
+ 		}
+		console.log("Imprimiendo datos: ",datos);		
+		$.ajax({
+            dataType: "json",
+            method: "POST",
+            url:'../Controladores/usuarios_controlador.php',
+            data : datos,
+        }).done(function(json) {
+        	console.log("EL GUARDAR",json);        	
+	        if (json[0]=="Exito") {	    	 	
+				
+		    	$('#usuario_session').empty().html(json[5]);				
+				$('#md_edit_usuario').modal('hide');
+
+				console.log("el id del usuario: ",json[1]);
+				if ($("#imagen_usuario_edit").val() != "") {
+					subir_archivo($("#imagen_usuario_edit"), json[1]);
+				}else{
+					Toast.fire({
+				        icon: 'info',
+				        title: 'Imagen Vacía!'
+		    		});
+				}
+				Toast.fire({
+			        icon: 'success',
+			        title: 'Usuario Modificado!'
+		    	});	
+				$("#formulario_editar").trigger('reset');
+       			cargar_datos();
+	    	}else if(json[0]=="Error"){
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'No se pudo actualizar el usuario!'
+		        });
+	    	}
+        });
+	});
+
 
 	$(document).on("click",".btn_editar_pass",function(e){
 
@@ -131,60 +222,6 @@ $(function (){
 	    });
 
 
-	});
-
-	$(document).on("submit","#formulario_registro",function(e){
-		e.preventDefault();
-		var datos = $("#formulario_registro").serialize();
-		var Toast = Swal.mixin({
-	        toast: true,
-	        position: 'top-end',
-	        showConfirmButton: false,
-	        timer: 5000
-    	});
-    	if ($("#contrasena_usuario").val() != $("#recontrasena_usuario").val()) {
-
- 			Toast.fire({
-		        icon: 'info',
-		        title: 'Las contraseñas no coinciden!'
-		    });
-			return;
- 		}else if ($("#empleado_usuario").val() == "Seleccione"){
- 			Toast.fire({
-		        icon: 'info',
-		        title: 'Debe Elegir un Empleado'
-		    });
-			return;
- 		}
-		console.log("Imprimiendo datos: ",datos);		
-		$.ajax({
-            dataType: "json",
-            method: "POST",
-            url:'../Controladores/usuarios_controlador.php',
-            data : datos,
-        }).done(function(json) {
-        	console.log("EL GUARDAR",json);        	
-	        if (json[0]=="Exito") {	    	 	
-				Toast.fire({
-			        icon: 'success',
-			        title: 'Usuario Modificado!'
-		    	});
-		    	console.log("usuario: ", json[4]['nva_nom_usuario']);
-		    	$('#usuario_session').empty().html(json[4]);
-				$('#md_edit_usuario').modal('hide');       			
-       			cargar_datos();
-	    	}else if(json[1]=="no se pudo actualizar el usuario"){
-	    		Toast.fire({
-		            icon: 'error',
-		            title: 'no se pudo actualizar el usuario!'
-		        });
-	    	}else{
-	    	 	Toast.fire({
-		            icon: 'error',
-		            title: 'Error al modificar!'
-		        });
-	    	}
-        });
 	});
 
 	$(document).on("submit","#formulario_mod_pass",function(e){
@@ -227,11 +264,75 @@ $(function (){
 	    	}
         });
 	});
+
+	$(document).on("submit","#formulario_registro",function(e){
+		e.preventDefault();
+		var datos = $("#formulario_registro").serialize();
+		var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 5000
+    	});
+    	if ($("#contrasena_usuario").val() != $("#recontrasena_usuario").val()) {
+
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Las contraseñas no coinciden!'
+		    });
+			return;
+ 		}else if ($("#empleado_usuario").val() == "Seleccione"){
+ 			Toast.fire({
+		        icon: 'info',
+		        title: 'Debe Elegir un Empleado'
+		    });
+			return;
+ 		}
+		console.log("Imprimiendo datos: ",datos);		
+		$.ajax({
+            dataType: "json",
+            method: "POST",
+            url:'../Controladores/usuarios_controlador.php',
+            data : datos,
+        }).done(function(json) {
+        	console.log("EL GUARDAR",json);        	
+	        if (json[0]=="Exito") {	    	 	
+				Toast.fire({
+			        icon: 'success',
+			        title: 'Usuario Modificado!'
+		    	});
+		    	$("#formulario_editar").trigger('reset');
+				$('#md_registrar_usuario').modal('hide');
+				if ($("#imagen_usuario").val() != "") {
+					subir_archivo($("#imagen_usuario"), json[1]);
+				}else{
+					Toast.fire({
+				        icon: 'info',
+				        title: 'Imagen Vacía!'
+		    		});
+				}	
+       			cargar_datos();
+	    	}else if(json[1]=="no se pudo actualizar el usuario"){
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'no se pudo actualizar el usuario!'
+		        });
+	    	}else{
+	    	 	Toast.fire({
+		            icon: 'error',
+		            title: 'Error al modificar!'
+		        });
+	    	}
+        });
+	});
+
+
 });
 
 function cargar_datos(){
 
 	var datos = {"consultar_info":"si_consultala"}
+
 	$.ajax({
         dataType: "json",
         method: "POST",
@@ -240,7 +341,10 @@ function cargar_datos(){
     }).done(function(json) {
     	console.log("EL consultar",json);
     	$("#datos_tabla").empty().html(json[1]); 
-    	$('#md_registrar_usuario').modal('hide');    	
+    	$('#md_registrar_usuario').modal('hide');
+    	$("#empleado_usuario").empty().html(json[5][0]);
+    	$('#example1').DataTable(); 
+
     }).fail(function(){
 
     }).always(function(){
@@ -250,21 +354,10 @@ function cargar_datos(){
 
 
 
-/*
-function subir_archivo(archivo,id_persona){
 
-	Swal.fire({
-      title: '¡Subiendo imagen!',
-      html: 'Por favor espere mientras se sube el archivo',
-      timerProgressBar: true,
-      allowEscapeKey:false,
-      allowOutsideClick:false,
-      onBeforeOpen: () => {
-        Swal.showLoading()
-      }
-  	});
+function subir_archivo(archivo,id_usuario){
 
-  console.log("aca archivos",archivo,id_persona);
+  console.log("aca archivos",archivo,id_usuario);
   // return null;
     var file =archivo.files;
     var formData = new FormData();
@@ -274,10 +367,16 @@ function subir_archivo(archivo,id_persona){
      jQuery.each(archivo[0].files, function(i, file) {
         data.append('file-'+i, file);
      });
+    var Toast = Swal.mixin({
+	    toast: true,
+	    position: 'top-end',
+	    showConfirmButton: false,
+	    timer: 5000
+    });
 
      console.log("data",data);
      $.ajax({  
-        url: "json_usuarios.php?id="+id_persona+'&subir_imagen=subir_imagen_ajax',  
+        url: "../Controladores/usuarios_controlador.php?id="+id_usuario+'&subir_imagen=subir_imagen_ajax',  
         type: "POST", 
         dataType: "json",  
         data: data,  
@@ -292,18 +391,22 @@ function subir_archivo(archivo,id_persona){
 	            
 
 	        if(json[0]=="Exito"){  
-	             Swal.fire(
-		          '¡Excelente!',
-		          'La información ha sido almacenada correctamente!',
-		          'success'
-	        	);
-        	  
+	            Toast.fire({
+			        icon: 'success',
+			        title: 'Datos registrados con exito!'			        
+		    	});
+		    	
+        	 	cargar_datos();
+            }else if(json[1]=="extension"){
+                 Toast.fire({
+			        icon: 'error',
+			        title: 'Extensión no Permitida!'
+		    	});
             }else{
-                Swal.fire(
-		          '¡Error!',
-		          'No ha sido posible registrar la imagen',
-		          'error'
-		        );
+                 Toast.fire({
+			        icon: 'error',
+			        title: 'Error en la imagen!'
+		    	});
             }
 
         }
@@ -313,9 +416,9 @@ function subir_archivo(archivo,id_persona){
 
 
 
-/*
 
-function validar_archivo(file){
+
+/*function validar_archivo(file){
 	console.log("validar_archivo",file);
 	 
      var Lector;
