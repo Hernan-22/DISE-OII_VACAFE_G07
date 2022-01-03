@@ -11,7 +11,7 @@
  Target Server Version : 100421
  File Encoding         : 65001
 
- Date: 17/11/2021 01:49:24
+ Date: 03/01/2022 08:41:11
 */
 
 SET NAMES utf8mb4;
@@ -67,9 +67,9 @@ CREATE TABLE `tb_cargo`  (
 -- ----------------------------
 -- Records of tb_cargo
 -- ----------------------------
-INSERT INTO `tb_cargo` VALUES (202109351, 'Administrador de Sistema');
-INSERT INTO `tb_cargo` VALUES (202110272, 'Vaquero Ordeñador a Máquina');
-INSERT INTO `tb_cargo` VALUES (202112353, 'Granjero');
+INSERT INTO `tb_cargo` VALUES (1, 'Administrador de Sistema');
+INSERT INTO `tb_cargo` VALUES (2, 'Vaquero Ordeñador a Máquina');
+INSERT INTO `tb_cargo` VALUES (3, 'Granjero');
 
 -- ----------------------------
 -- Table structure for tb_categoria
@@ -79,7 +79,7 @@ CREATE TABLE `tb_categoria`  (
   `int_idcategoria` int NOT NULL AUTO_INCREMENT,
   `nva_nom_categoria` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`int_idcategoria`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of tb_categoria
@@ -87,6 +87,7 @@ CREATE TABLE `tb_categoria`  (
 INSERT INTO `tb_categoria` VALUES (1, 'DERIVADOS DE LECHE');
 INSERT INTO `tb_categoria` VALUES (2, 'BOVINOS');
 INSERT INTO `tb_categoria` VALUES (3, 'MEDICINA');
+INSERT INTO `tb_categoria` VALUES (4, 'INSUMOS');
 
 -- ----------------------------
 -- Table structure for tb_clientes
@@ -150,13 +151,15 @@ CREATE TABLE `tb_control_vacunas`  (
   PRIMARY KEY (`int_id_control_vac`) USING BTREE,
   INDEX `tb_productos`(`nva_vacuna_aplicada`) USING BTREE,
   INDEX `tb_bovino`(`id_exped_aplicado`) USING BTREE,
-  CONSTRAINT `tb_productos` FOREIGN KEY (`nva_vacuna_aplicada`) REFERENCES `tb_producto` (`int_idproducto`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tb_bovino` FOREIGN KEY (`id_exped_aplicado`) REFERENCES `tb_expediente` (`int_idexpediente`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `tb_bovino` FOREIGN KEY (`id_exped_aplicado`) REFERENCES `tb_expediente` (`int_idexpediente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_productos` FOREIGN KEY (`nva_vacuna_aplicada`) REFERENCES `tb_producto` (`int_idproducto`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_control_vacunas
 -- ----------------------------
+INSERT INTO `tb_control_vacunas` VALUES (1, '2021-12-11', 1, 1);
+INSERT INTO `tb_control_vacunas` VALUES (2, '0000-00-00', 1, 1);
 
 -- ----------------------------
 -- Table structure for tb_detalle_compra
@@ -233,7 +236,8 @@ CREATE TABLE `tb_empleado`  (
 -- ----------------------------
 -- Records of tb_empleado
 -- ----------------------------
-INSERT INTO `tb_empleado` VALUES (202152261, '98654578-9', 'Katherine Lorena', 'Peña Sigüenza', 'Cantón las Flores, municipio de Cojutepeque, departamento de Cuscatlán', '1998-03-26', 350, '7856-5139', 'cm16057@ues.edu.sv', 202109351, 'Activo', 'Femenino');
+INSERT INTO `tb_empleado` VALUES (1, '98654578-9', 'Katherine Lorena', 'Peña Sigüenza', 'Cantón las Flores, municipio de Cojutepeque, departamento de Cuscatlán', '1998-03-26', 350, '7856-5139', 'cm16057@ues.edu.sv', 1, 'Activo', 'Femenino');
+INSERT INTO `tb_empleado` VALUES (2, '12345678-9', 'Fabricio', 'Corvera', 'Santo Domingo, San Vicente', '1997-09-27', 350, '6300-3455', 'fabricio@gmail.com', 1, 'Activo', 'Masculino');
 
 -- ----------------------------
 -- Table structure for tb_expediente
@@ -264,6 +268,7 @@ CREATE TABLE `tb_expediente`  (
 -- ----------------------------
 -- Records of tb_expediente
 -- ----------------------------
+INSERT INTO `tb_expediente` VALUES (1, 'Prueba', 'activo', '../archivo_carta_venta/img_1.png', 'femenino', NULL, 'aasdasdasd', 1, 1, '../archivo_expdiente/img_1.jpeg', 'novia', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_natalidad
@@ -303,6 +308,7 @@ CREATE TABLE `tb_preñez`  (
 -- ----------------------------
 -- Records of tb_preñez
 -- ----------------------------
+INSERT INTO `tb_preñez` VALUES (1, 1, '2021-12-14', '2021-12-22', '2021-12-15');
 
 -- ----------------------------
 -- Table structure for tb_producto
@@ -327,6 +333,7 @@ CREATE TABLE `tb_producto`  (
 -- ----------------------------
 -- Records of tb_producto
 -- ----------------------------
+INSERT INTO `tb_producto` VALUES (1, 'Desparacitante', 1, 1.50, 2.50, '../archivo_expdiente/img_1.png', 'para las vacas', '2021-12-30', 3, 'Activo');
 
 -- ----------------------------
 -- Table structure for tb_propietario
@@ -390,6 +397,7 @@ CREATE TABLE `tb_usuario`  (
   `nva_nom_usuario` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nva_contraseña_usuario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `int_idempleado` int NULL DEFAULT NULL,
+  `nva_fotografia` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`int_idusuario`) USING BTREE,
   INDEX `fk_empleado`(`int_idempleado`) USING BTREE,
   CONSTRAINT `fk_empleado` FOREIGN KEY (`int_idempleado`) REFERENCES `tb_empleado` (`int_idempleado`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -398,7 +406,8 @@ CREATE TABLE `tb_usuario`  (
 -- ----------------------------
 -- Records of tb_usuario
 -- ----------------------------
-INSERT INTO `tb_usuario` VALUES (202138341, 'kathy', '$2y$10$Ctks1F6Z5SS6kYWansP3OuNo/U9qbDoBdytBx0CsWA.BAkCgOmPdm', 202152261);
+INSERT INTO `tb_usuario` VALUES (1, 'kathy', '$2y$10$VH/Wr/hl58HGT9Ju8be6DeU1gIII2i4IKSeCugFIskNkRFicJYpKi', 1, '../img/usuarios/user_20214127412900000029_1.jpg');
+INSERT INTO `tb_usuario` VALUES (2, 'fabri', '$2y$10$iTum7jYvLCRV9j5MVlbhZ.p44KBF1tO3/JA.NFu5/.LCYrpmn.Ava', 2, '../img/usuarios/user_20214127414700000047_2.jpeg');
 
 -- ----------------------------
 -- Table structure for tb_venta
