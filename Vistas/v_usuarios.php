@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+        <link rel="stylesheet" href="../dist/css/   .min.css">
         <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
         <!-- Toastr -->
         <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
@@ -143,9 +144,10 @@
                                                         <input type="text" class="form-control" placeholder="juan" autocomplete="off"
                                                         id="nombre_usuario_edit" name="nombre_usuario_edit" required>
                                                     </div>
-                                                    <label for="contrasena_usuario">Seleccione uina Fotografía</label>
+                                                    <label for="contrasena_usuario">Seleccione una Fotografía</label>
                                                     <div class="input-group mb-3">
                                                         <input id="imagen_usuario_edit" name="imagen_usuario_edit" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info">
+                                                        <label style="display:none;font-size: 10px; list-style: none; color: #ea553d; margin-top: 5px;" id="error_en_la_imagen">La imagen no es valida</label>
                                                     </div>                         
                                                 </div>
                                             </div>
@@ -255,7 +257,7 @@
                                                     <span class="input-group-text">
                                                             <i class="fas fa-user"></i>
                                                     </span>
-                                                    <select class="form-control" id="empleado_usuario" name="empleado_usuario">
+                                                    <select class="form-control " id="empleado_usuario" name="empleado_usuario">
                                                     </select>
                                                 </div>
                                                 <span>
@@ -268,7 +270,7 @@
                                                             <i class="fas fa-user-tie"></i>
                                                         </span>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="juan" autocomplete="off"
+                                                    <input type="text" class="form-control  validar_campo_unico" data-quien_es="usuario_guardar" placeholder="juan" autocomplete="off"
                                                     id="nombre_usuario" name="nombre_usuario" required>
                                                 </div>
                                                 <span>
@@ -314,10 +316,11 @@
                                                         <input type="password" class="form-control" autocomplete="off"
                                                         id="recontrasena_usuario" name="recontrasena_usuario" required minlength="5">
                                                     </div>
-                                                    <label for="contrasena_usuario">Seleccione uina Fotografía</label>
+                                                    <label for="contrasena_usuario">Seleccione una Fotografía</label>
 
                                                     <div class="input-group mb-3">
-                                                         <input id="imagen_usuario" name="imagen_usuario" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info" accept="image/*">
+                                                         <input id="imagen_usuario" name="imagen_usuario" data-buttonText="Seleccionar" type="file" class="filestyle" data-buttonname="btn-info">
+                                                         <label style="display:none;font-size: 10px; list-style: none; color: #ea553d; margin-top: 5px;" id="error_en_la_imagen">La imagen no es valida</label>
                                                     </div>                         
                                                 </div>
                                             </div>
@@ -371,7 +374,8 @@
         <script src="../plugins/bs-stepper/js/bs-stepper.min.js"></script>
         <!-- dropzonejs -->
         <script src="../plugins/dropzone/min/dropzone.min.js"></script>
-        <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>     
+
+        <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>    
         <!-- jquery-validation -->
         <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
         <script src="../plugins/jquery-validation/additional-methods.min.js"></script>

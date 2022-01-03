@@ -391,7 +391,7 @@
 				$comando = Conexion::getInstance()->getDb()->prepare($sql);//ejecutro la actualización
 	       		$comando->execute();
 	       		$cuantos = $comando->rowCount();
-	       		return array("1",$elcodigo,array("Actualizado",$sql),"",$cuantos);//retorno en caso de exito 
+	       		return array("1",$elcodigo,array("Actualizado",$sql), "", $cuantos);//retorno en caso de exito 
 				//echo json_encode(array("exito" => $exito));
 			} catch (Exception $e) {
 				return array("0","Error al actualizar",$e->getMessage(),$e->getLine(),$sql);//retorno mensajes en caso de error

@@ -32,29 +32,20 @@
                     </li>
                 </ul>
                 <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-                   
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
-                            data-widget="fullscreen"
-                            href="#"
-                            role="button"
-                        >
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </a>
-                    </li>
+                <ul class="navbar-nav ml-auto">                   
+                    
                     <li class="nav-item dropdown">
+                       
                             <a class="nav-link brand-link" data-toggle="dropdown" href="javascript:void(0)" >
                               <!--<i class="fas fa-user-tie"></i>-->
                               <div class="user-block">
-                                    <img src="<?php print $_SESSION['foto'] ?>" alt="La Vaca Café" class="img-circle img-bordered-sm" alt="user image" style="opacity: .8">
+                                    <img src="<?php print $_SESSION['foto'] ?>" class="img-circle img-bordered-sm" style="opacity: .8">
                                     <strong id="usuario_session"><?php print $_SESSION['usuario']?></strong>
                               </div>
                               
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <a href="#" class="dropdown-item">
+                                <a href="../Vistas/v_perfil_usuario.php" class="dropdown-item">
                                     <i class="fas fa-user mr-2"></i> Perfil                            
                                 </a>
                                 <a href="../Vistas/v_bloquear_pantalla.php" class="dropdown-item">
@@ -65,8 +56,7 @@
                                     <i class="fas fa-sign-out-alt mr-2"></i> Salir                           
                                 </a>                              
                             </div>
-                        </li>
-                    
+                    </li>                    
                 </ul>
             </nav>      
             

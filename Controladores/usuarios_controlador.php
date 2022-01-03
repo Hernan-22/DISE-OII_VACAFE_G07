@@ -7,22 +7,38 @@
 	if (isset($_POST['validar_campos']) && $_POST['validar_campos']=="si_por_campo") {
 
  
-		$array_seleccionar = array();
-		$array_seleccionar['table']="tb_persona";
-		$array_seleccionar['campo']="id";
+		/*$encontro = 0;
+		$sql = "SELECT nva_nom_usuario FROM tb_usuario;";
+		$result = $modelo->get_query($sql);
+		if($result[0]=='1'){
 
-		if ($_POST['tipo']=="email") {
-			$array_seleccionar['email']=$_POST['campo'];
-		}else if ($_POST['tipo']=="usuario") {
-			$array_seleccionar['table']="tb_usuario";
-			$array_seleccionar['usuario']=$_POST['campo'];
-		
-		}else if ($_POST['tipo']=="dui") { 
-			$array_seleccionar['dui']=$_POST['campo'];
+			foreach ($result[2] as $row) {
+				
+				if ($row['nva_nom_usuario'] == $_POST['campo']) {
+					$encontro = 1;
+					return;
+				}
+			}
+
+			if ($encontro == 1) {
+				print json_encode(array("Error","existe",$result));
+				exit();
+			}else{
+				print json_encode(array("Exito","no existe",$result));
+				exit();
+			}
+
 		}else{
-			$array_seleccionar['telefono']=$_POST['campo'];
-		
-		}
+			print json_encode(array("Error","no se pueden obtener los usuarios",$result));
+				exit();
+		}*/
+		$array_seleccionar = array();
+		$array_seleccionar['table']="tb_usuario";
+		$array_seleccionar['campo']="int_idusuario";
+
+		if ($_POST['tipo']=="usuario_guardar") {
+			$array_seleccionar['nva_nom_usuario']=$_POST['campo'];
+		}else{}
 
 		
 
@@ -39,7 +55,7 @@
 	}else if (isset($_GET['subir_imagen']) && $_GET['subir_imagen']=="subir_imagen_ajax") {
 		$trozos = explode(".", $_FILES['file-0']['name']);
 		$extension = end($trozos);
-		$name = "user_" . $_GET['id'] . "." . $extension;
+		$name = "user_".date("Yidisus")."_". $_GET['id'] . "." . $extension;
 		$file_path = "../img/usuarios/".$name;
 		try {
 
@@ -50,7 +66,7 @@
 			if ($extension == "png") {
 				//abre la foto original
 				$original = imagecreatefrompng($temporal);				
-			}else if ($extension == "jpg"){
+			}else if ($extension == "jpg" || $extension == "jpeg"){
 				//abre la foto original
 				$original = imagecreatefromjpeg($temporal);				
 			}else{
@@ -68,12 +84,14 @@
 			imagecopyresampled($copia, $original, 0,0,0,0, 128, 128, $ancho_original, $alto_original);
 
 			if ($extension == "png") {
-				//abre la foto original
+				//delvuelve la foto redimencionada
 				imagepng($copia, $file_path);			
 			}else{
-				//abre la foto original
+				//delvuelve la foto redimencionada
 				imagejpeg($copia, $file_path);				
 			}
+
+
 			$array_update = array(
 			"table" => "tb_usuario",
 			"int_idusuario" => $_GET['id'],
@@ -81,13 +99,34 @@
 
 			);
 			$resultado = $modelo->actualizar_generica($array_update);
-			if ($resultado[0] == '1' && $resultado[4] > 0) {
-				print json_encode(array("Exito", $mover, $resultado));
-				exit();
+			if ($resultado[0] == '1' ) {
+
+				$sql = "SELECT
+						* 
+					FROM
+						tb_usuario 
+					WHERE
+						int_idusuario = '$_GET[id]';";
+				$resultado_foto = $modelo->get_query($sql);
+				if($resultado_foto[0]=='1' && $resultado_foto[4]>0){
+
+					//Verifico que el usuario editado sea el correcto
+					if ($_GET['id']  == $_SESSION['idusuario']) {
+						//vuelvo a asignarla foto del usuario para mostrarla
+						$_SESSION['foto']=$resultado_foto[2][0]['nva_fotografia'];
+						$nueva_foto = $_SESSION['foto'];					
+					}	
+				}else{
+					print json_encode(array("Error","no se pudo obtener la foto",$resultado_foto));
+					exit();
+				}
+
 			} else {
-				print json_encode(array("Error", $mover, $resultado));
+				print json_encode(array("Error", $resultado));
 				exit();
-			}			 
+			}
+			print json_encode(array("Exito", "foto actualizada", $nueva_foto, $resultado));
+			exit();			 
 		} catch (Exception $e) {
 			print json_encode("Error",$e);
 			exit();
@@ -104,7 +143,7 @@
         );
 		$resultado = $modelo->actualizar_generica($array_update);
 
-		if($resultado[0]=='1' && $resultado[4]>0){
+		if($resultado[0]=='1'){
 
 			$sql = "SELECT
 						* 
@@ -117,14 +156,20 @@
 			$resultado1 = $modelo->get_query($sql);
 			if($resultado1[0]=='1' && $resultado1[4]>0){
 
-
+				//Verifico que el usuario editado sea el correcto
 				if ($_POST['llave_usuario_edit']  == $_SESSION['idusuario']) {
+
+					//vuelvo a asignar el nombre de usuario para mandarlo en session
 					$_SESSION['usuario']=$resultado1[2][0]['nva_nom_usuario'];
-					$_SESSION['foto']=$resultado1[2][0]['nva_fotografia'];
+
+					//esto es para mostrarlo en la vista
 					$usuario_Actual = $_SESSION['usuario'];
 				}
-				
+
+				//si no entra en la condición mantiene el usuario
 				$usuario_Actual = $_SESSION['usuario'];
+				
+				
 			}else{
 				print json_encode(array("Error","no se pudo obtener el usuario",$_POST,$resultado1));
 				exit();

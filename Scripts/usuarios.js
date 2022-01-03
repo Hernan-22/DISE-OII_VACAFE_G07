@@ -93,11 +93,42 @@ $(function (){
 	});
 
 
-	
-	$(document).on("change","#imagen_persona",function(e){
-		validar_archivo($(this));
-	});
 
+	$(document).on("blur",".validar_campo_unico",function(e){
+		e.preventDefault();
+		if ($(this).val()=="") {
+			return;
+		}
+		var Toast = Swal.mixin({
+	        toast: true,
+	        position: 'top-end',
+	        showConfirmButton: false,
+	        timer: 5000
+    	});
+		console.log("validar_campo",$(this).data('quien_es'));
+
+		var datos = {"validar_campos":"si_por_campo","campo":$(this).val(),"tipo":$(this).data('quien_es')};
+
+		console.log("datos: ",datos);
+		$.ajax({
+	        dataType: "json",
+	        method: "POST",
+	        url:'../Controladores/usuarios_controlador.php',
+	        data : datos,
+	    }).done(function(json) {
+	    	console.log("retorno de validacion",json);
+	    	if (json[0]=="Error") {
+	    		
+	    		Toast.fire({
+			        icon: 'error',
+			        title: 'Este nombre de usuario ya existe'
+		    	});
+		    	return;
+
+	    	}
+	    	console.log("El envio: ",json);
+	    });
+	});
 
 	
 
@@ -161,8 +192,10 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {	    	 	
-				
-		    	$('#usuario_session').empty().html(json[5]);				
+				if (json[5][0] != "") {
+					$('#usuario_session').empty().html(json[5]);
+				}
+		    					
 				$('#md_edit_usuario').modal('hide');
 
 				console.log("el id del usuario: ",json[1]);
@@ -297,33 +330,34 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {	    	 	
-				Toast.fire({
-			        icon: 'success',
-			        title: 'Usuario Modificado!'
-		    	});
+					    	
 		    	$("#formulario_editar").trigger('reset');
 				$('#md_registrar_usuario').modal('hide');
 				if ($("#imagen_usuario").val() != "") {
 					subir_archivo($("#imagen_usuario"), json[1]);
-				}else{
-					Toast.fire({
-				        icon: 'info',
-				        title: 'Imagen Vacía!'
-		    		});
-				}	
+				}
        			cargar_datos();
-	    	}else if(json[1]=="no se pudo actualizar el usuario"){
-	    		Toast.fire({
-		            icon: 'error',
-		            title: 'no se pudo actualizar el usuario!'
-		        });
+       			Toast.fire({
+			        icon: 'success',
+			        title: 'Usuario registrado con exito!'
+		    	});	
+       			return;
 	    	}else{
 	    	 	Toast.fire({
 		            icon: 'error',
-		            title: 'Error al modificar!'
+		            title: 'Error al registrar!'
 		        });
+		        return;
 	    	}
         });
+	});
+
+	$(document).on("change","#imagen_usuario_edit",function(e){
+		validar_archivo($(this));
+	});
+
+	$(document).on("change","#imagen_usuario",function(e){
+		validar_archivo($(this));
 	});
 
 
@@ -386,17 +420,23 @@ function subir_archivo(archivo,id_usuario){
         context: this,
 
         success: function (json) {
-	          Swal.close();
-	            console.log("eljson_img",json);
+	          
+	            console.log("el json_img",json);
 	            
-
-	        if(json[0]=="Exito"){  
-	            Toast.fire({
-			        icon: 'success',
-			        title: 'Datos registrados con exito!'			        
-		    	});
+ 			
+ 				console.log("img: ",json[2]);
+ 			 
+	        if(json[0]=="Exito"){  	            
 		    	
-        	 	cargar_datos();
+        	 	Toast.fire({
+	            	icon: 'success',
+	            	title: 'Datos registrados con exito!'
+       			});
+       			var timer = setInterval(function(){
+					$(location).attr('href','../Vistas/v_usuarios.php');
+					clearTimeout(timer);
+				},1500);
+
             }else if(json[1]=="extension"){
                  Toast.fire({
 			        icon: 'error',
@@ -418,7 +458,7 @@ function subir_archivo(archivo,id_usuario){
 
 
 
-/*function validar_archivo(file){
+function validar_archivo(file){
 	console.log("validar_archivo",file);
 	 
      var Lector;
@@ -459,4 +499,4 @@ function subir_archivo(archivo,id_usuario){
 
 
 
-}*/
+}

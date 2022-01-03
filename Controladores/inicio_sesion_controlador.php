@@ -79,7 +79,7 @@
 				
 				$_SESSION['logueado']="si";
 				$_SESSION['bloquear_pantalla']="no";
-				$_SESSION['empleado']=$resultado[2][0]['nva_nom_empleado'];				
+				$_SESSION['empleado']=$resultado[2][0]['nva_nom_empleado'];			
 				$_SESSION['usuario']=$resultado[2][0]['nva_nom_usuario'];
 				$_SESSION['correo']=$resultado[2][0]['nva_email_empleado'];
 				$_SESSION['foto']=$resultado[2][0]['nva_fotografia'];
