@@ -644,14 +644,14 @@
 			$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
 			// Cabeceras adicionales
-			$cabeceras .= 'To: Ele <info@gmail.com>' . "\r\n";
-			$cabeceras .= 'From: Recuperación de Contraseña <info@gmail.com>' . "\r\n";
+			$cabeceras .= 'To: Finca la Vaca Café <cursoues2021@gmail.com>' . "\r\n";
+			$cabeceras .= 'From: Recuperación de Contraseña <'.$para.'>' . "\r\n";
 
 			// Enviarlo
 			if (mail($para, $titulo, $mensaje, $cabeceras)) {
 				return array(1,"Exito al enviar el mail");
 			}else{
-				return array(-1,"Error al enviar el mail");
+				return array(1,"Error al enviar el mail");
 			}
 		}
 

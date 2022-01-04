@@ -23,6 +23,8 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
+
+       <!--ENVIO DE CORREO-->
       <form id="envio_correo" name="envio_correo" method="post">
         <input type="hidden" id="enviar_contra" name="enviar_contra" value="si_enviala">
         <span>
@@ -30,7 +32,7 @@
         </span>
         <label for="contrasena">Correo</label>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="E-mail" id="email_enviar" name="email_enviar" required> 
+          <input type="email" class="form-control" placeholder="E-mail" id="email_enviar" name="email_enviar" required autocomplete="off"> 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -44,6 +46,67 @@
           <!-- /.col -->
         </div>
       </form>
+
+       <!--VERIFICACION DE CODIGO-->
+      <form class="hiden" id="validando_codigo_correo" name="validando_codigo_correo" method="post" >
+        <input type="hidden" id="verificar_correo" name="verificar_correo" value="si_verificar">
+        <input type="hidden" id="idusuario" name="idusuario" value="correo">
+        <span>
+          *
+        </span>
+        <label for="codigo_enviado">Código</label>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" id="codigo_enviado" name="codigo_enviado" required> 
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-key"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success btn-block">Verificar</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+       <!--ACTUALIZAR NUEVA CONTRASEÑA-->
+      <form class="hiden" id="nueva_contra" name="nueva_contra" method="post" >
+        <input type="hidden" id="actualizar_password" name="actualizar_password" value="si_actualizar">
+        <input type="hidden" id="idusuario2" name="idusuario2" value="correo">
+        <span>
+          *
+        </span>
+        <label for="new_password">Nueva Contraseña</label>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" id="new_password" name="new_password" required> 
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-key"></span>
+            </div>
+          </div>
+        </div>
+        <span>
+          *
+        </span>
+        <label for="repit_new_password">Repita su Contraseña</label>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" id="repit_new_password" name="repit_new_password" required> 
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-key"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success btn-block">Verificar</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
       <p class="mt-3 mb-1">
         <a href="index.php">Login</a>
       </p>

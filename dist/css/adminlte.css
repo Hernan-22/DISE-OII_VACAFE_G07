@@ -5073,7 +5073,7 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #ffffffdb;
   background-clip: border-box;
   border: 0 solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
@@ -35411,7 +35411,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #e9ecef;
+  background-image:url("../../img/login_fondo.jpg");
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
