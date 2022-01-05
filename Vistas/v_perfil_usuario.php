@@ -1,6 +1,20 @@
 <?php 
     date_default_timezone_set('America/El_Salvador');
-    @session_start(); 
+    @session_start();
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -42,9 +56,9 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <div class="callout callout-info">
+                                <div class="callout callout-info" id="nombre_perfil_mayus">
                                     <h5>
-                                        <img src="<?php print $_SESSION['foto'] ?>" alt="user-avatar" class="img-circle img-fluid"> <strong id="nombre_perf">....</strong> <strong id="apellido_perf">....</strong>
+                                        <img src="<?php print $_SESSION['foto'] ?>" alt="user-avatar" class="img-circle img-fluid"> <strong id="nombre_perf" >....</strong> <strong id="apellido_perf">....</strong>
                                     </h5>
 
                                 </div>
@@ -172,21 +186,6 @@
         <!-- AdminLTE for demo purposes -->
         <script src="../dist/js/demo.js"></script>
         <script src="../Scripts/perfil.js"></script>
-        <script>
-            var doc = new jsPDF();
-            var elementHTML = $('#content').html();
-            var specialElementHandlers = {
-                '#Aqui': function (element, renderer) {
-                    return true;
-                }
-            };
-            doc.fromHTML(elementHTML, 15, 15, {
-                'width': 170,
-                'elementHandlers': specialElementHandlers
-            });
-
-            // Save the PDF
-            doc.save('sample-document.pdf');
-        </script>
+        
     </body>
 </html>

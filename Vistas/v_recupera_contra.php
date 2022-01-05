@@ -22,7 +22,7 @@
       <a class="h1"><b>La Vaca</b> Café</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
+      <p class="login-box-msg" id="mensaje">¿Olvidaste tu contraseña? Aquí puede recuperar fácilmente una nueva contraseña.</p>
 
        <!--ENVIO DE CORREO-->
       <form id="envio_correo" name="envio_correo" method="post">
@@ -56,7 +56,7 @@
         </span>
         <label for="codigo_enviado">Código</label>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="codigo_enviado" name="codigo_enviado" required> 
+          <input type="password" class="form-control" id="codigo_enviado" name="codigo_enviado" required autocomplete="off"> 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-key"></span>
@@ -80,7 +80,7 @@
         </span>
         <label for="new_password">Nueva Contraseña</label>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="new_password" name="new_password" required> 
+          <input type="password" class="form-control" id="new_password" name="new_password" required autocomplete="off"> 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-key"></span>
@@ -92,7 +92,7 @@
         </span>
         <label for="repit_new_password">Repita su Contraseña</label>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" id="repit_new_password" name="repit_new_password" required> 
+          <input type="password" class="form-control" id="repit_new_password" name="repit_new_password" required autocomplete="off"> 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-key"></span>
@@ -101,7 +101,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-success btn-block">Verificar</button>
+            <button type="submit" class="btn btn-success btn-block">Cambiar</button>
           </div>
           <!-- /.col -->
         </div>

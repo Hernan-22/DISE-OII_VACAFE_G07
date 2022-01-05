@@ -342,10 +342,22 @@ $(function (){
 			        title: 'Usuario registrado con exito!'
 		    	});	
        			return;
-	    	}else{
+	    	}else if (json[1]=="existe usuario") {
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'Este nombre de usuario ya existe'
+		        });
+		        return;
+	    	}else if (json[1]=="existe empleado") {
+	    		Toast.fire({
+		            icon: 'error',
+		            title: 'Este empleado ya tiene un usuario registrado'
+		        });
+		        return;
+	    	}else if (json[1]=="consulta"){
 	    	 	Toast.fire({
 		            icon: 'error',
-		            title: 'Error al registrar!'
+		            title: 'Error en la consulta!'
 		        });
 		        return;
 	    	}

@@ -65,7 +65,7 @@
 			
 			if($result[0]=='1' && $result[4]>0){
 
-				$verificacion = $modelo->desencrilas_contrasena($_POST['codigo_enviado'],$resultado[2][0]['nva_contraseña_usuario']);
+				$verificacion = $modelo->desencrilas_contrasena($_POST['codigo_enviado'],$result[2][0]['nva_contraseña_usuario']);
 				if ($verificacion[0]===1) {
 					
 					$array = array("Exito","correcto",$result,$idusuario);

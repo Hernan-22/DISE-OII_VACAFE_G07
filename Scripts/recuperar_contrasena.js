@@ -10,26 +10,54 @@ $(function(){
 	      email: {
 	        required: true,
 	        email: true,
-	      },
-	      password: {
-	        required: true,
-	        minlength: 5
-	      },
-	      terms: {
-	        required: true
-	      },
+	      }	     
 	    },
 	    messages: {
 	      email: {
 	        required: "Por favor ingresa un email",
 	        email: "Por favor ingresa un email valido"
-	      },
-	      password: {
-	        required: "Please provide a password",
-	        minlength: "Your password must be at least 5 characters long"
-	      },
-	      terms: "Please accept our terms"
+	      }	     
 	    },
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
+
+	$('#validando_codigo_correo').validate({
+	    rules: {
+	    	password: {
+		        required: true,
+		        minlength: 5
+		      },	      
+	    },	   
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.input-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	});
+
+	$('#nueva_contra').validate({
+	    rules: {
+	    	password: {
+		        required: true,
+		        minlength: 5
+		      },	      
+	    },	   
 	    errorElement: 'span',
 	    errorPlacement: function (error, element) {
 	      error.addClass('invalid-feedback');
@@ -73,6 +101,9 @@ $(function(){
             	icon: 'success',
             	title: 'Correo Enviado!.'
        			});
+
+				$("#mensaje").empty().html("Ingresa el código enviado a tu correo");
+
        			$("#validando_codigo_correo").css("display","block");
        			$("#idusuario").val(json[4]);
        			$("#envio_correo").css("display","none");
@@ -121,6 +152,7 @@ $(function(){
             	icon: 'success',
             	title: 'Código Correcto!'
        			});
+       			$("#mensaje").empty().html("Estamos a un paso de terminar, ingresa tu nueva contraseña");
        			$("#nueva_contra").css("display","block");
        			$("#idusuario2").val(json[3]);
        			$("#validando_codigo_correo").css("display","none");

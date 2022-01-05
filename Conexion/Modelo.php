@@ -651,7 +651,7 @@
 			if (mail($para, $titulo, $mensaje, $cabeceras)) {
 				return array(1,"Exito al enviar el mail");
 			}else{
-				return array(1,"Error al enviar el mail");
+				return array(-1,"Error al enviar el mail");
 			}
 		}
 
@@ -732,7 +732,7 @@
 			<div style="font-family: sans-serif">
 			<div style="font-size: 14px; color: #555555; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
 			<p style="margin: 0; font-size: 14px; text-align: center;"><strong>Recuperación de Contraseña</strong></p>
-			<p style="margin: 0; font-size: 14px; text-align: center;"><strong>Curso de Programación PHP 2021</strong></p>
+			<p style="margin: 0; font-size: 14px; text-align: center;"><strong>Finca la Vaca Café - UES &copy; 2021</strong></p>
 			</div>
 			</div>
 			</td>
@@ -804,7 +804,7 @@
 			<!--<![endif]-->
 			<tr>
 			<td style="text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:6px;"><a href="https://www.designedwithbee.com/"><img align="center" alt="Designed with BEE" class="icon" height="32" src="images/bee.png" style="display: block; height: auto; border: 0;" width="34"/></a></td>
-			<td style="font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:15px;color:#9d9d9d;vertical-align:middle;letter-spacing:undefined;text-align:center;"><a href="https://www.designedwithbee.com/" style="color:#9d9d9d;text-decoration:none;">Elenilson</a></td>
+			<td style="font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:15px;color:#9d9d9d;vertical-align:middle;letter-spacing:undefined;text-align:center;"><a href="https://www.designedwithbee.com/" style="color:#9d9d9d;text-decoration:none;">Finca la Vaca Café</a></td>
 			</tr>
 			</table>
 			</td>

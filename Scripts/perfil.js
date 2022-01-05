@@ -7,6 +7,10 @@ $(function (){
      
 });
 
+function mayusculas(e){
+	e.value = e.value.toUpperCase();
+}
+
 
 function cargar_datos_perfil_empleado(){
 	//mostrar_mensaje("Consultando datos");
@@ -27,11 +31,13 @@ function cargar_datos_perfil_empleado(){
     		}else if (idcargo = 2) {
     			cargo = "Vendedor";
     		}
+    		var nombre =json[2]['nva_nom_empleado'];
+    		var apellido =json[2]['nva_ape_empleado'];
+    		
+			
 
-    		//var nombre = UpperCase(json[2]['nva_nom_empleado']);
-
-    		$('#nombre_perf').empty().html(json[2]['nva_nom_empleado']);
-	    	$('#apellido_perf').empty().html(json[2]['nva_ape_empleado']);
+    		$('#nombre_perf').empty().html(nombre.toUpperCase());
+	    	$('#apellido_perf').empty().html(apellido.toUpperCase());
 
 	    	$('#dui_per').empty().html(json[2]['nva_dui_empledao']);
 	    	$('#nombre_per').empty().html(json[2]['nva_nom_empleado']);
