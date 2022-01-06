@@ -138,7 +138,7 @@ $(function(){
 	    	 	
 				Toast.fire({
             	icon: 'success',
-            	title: 'Bienvenido Al Sistema!.'
+            	title: 'Bienvenido al Sistema!.'
        			}); 
 				var timer = setInterval(function(){
 					$(location).attr('href','../Vistas/v_principal.php');

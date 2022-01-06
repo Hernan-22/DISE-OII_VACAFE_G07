@@ -97,7 +97,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="../Vistas/v_registro_ventas.php" class="nav-link">
                                             <p>Registro</p>
                                         </a>
                                     </li>
