@@ -3,7 +3,7 @@
 	require_once("../Conexion/Modelo.php");
 	$modelo = new Modelo();	
 	$agregar_pro_seleccionado = [];
-
+	$tipo_doc = "";
 	
 	if (isset($_POST['almacenar_venta']) && $_POST['almacenar_venta']=="nueva_venta") {
 
@@ -22,13 +22,16 @@
 		            "table" => "tb_venta",
 		            "int_idventa"=>$id_insertar,
 		            "dou_total_venta" => $_POST['total_g_venta_d'],
-		            "dat_fecha_venta" => $modelo->formatear_fecha_hora($_POST['fecha_venta_d']),
+		            "dou_iva_venta" => $_POST['iva_v_venta_d'],
+		            "dat_fecha_venta" => $modelo->formatear_fecha_hora($_POST['fecha_venta_d']),		            
 		            "dat_fecha_sistema_venta" => date("Y-m-d G:i:s"),
+		            "nva_tipo_documento" => $_POST['tipo_doc_compra'],
 		            "int_idempleado" => $_POST['empleado_venta'],
-		            "int_id_cliente" => $_POST['cliente_venta_d']
+		            "int_id_cliente" => $_POST['cliente_venta_d'],
+		            "int_num_doc" => $_POST['num_fact_guardar']
 		        );
 		        $result_venta = $modelo->insertar_generica($array_insertar);
-
+				$tipo_doc = $_POST['tipo_doc_compra'];
 		    if($result_venta[0]=='1'){//EVALUA SI LA VENTA SE RALIAZÓ CORRECTAMENTE
 
 										
@@ -86,7 +89,7 @@
 					}
 					
 		        	
-		        	print json_encode(array("Exito",$_POST,$result_venta));
+		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_insertar));
 					exit();
 	        }else {
 	        	//ENVIO EL ERROR OBTENIDO EN ESTA POSICIÓN
@@ -113,14 +116,23 @@
 		$htmltr = $html="";
 		$cuantos = 0;
 		$sql ="SELECT int_idproducto, nva_image_producto, nva_nom_producto, dou_precio_venta_producto FROM tb_producto WHERE int_idcategoria = 1";
+
+		$sql_num ="SELECT int_idventa FROM tb_venta ORDER BY int_idventa DESC LIMIT 1;";
+
 		$result = $modelo->get_query($sql);
+		$result_num_fact = $modelo->get_query($sql_num);
+
+
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td>'.$row['nva_nom_producto'].'</td>
-	                             <td class="text-center"><img alt="img" width="90" height="100" src="'.$row['nva_image_producto'].'">
-	                             </td>
+	                            <td class="text-center">
+	                            	<div class="product-image-thumb active">
+	                            		<img alt="Product Image" style="width: 89px; height: 81px; " src="'.$row['nva_image_producto'].'">
+	                            	</div>
+	                            </td>
 	                            <td class="text-center">'."$".''.$row['dou_precio_venta_producto'].'</td>
 	                            <td class="text-center project-actions">
 			                        <button class="btn btn-info btn-sm btn_item_seleccionado" 
@@ -147,7 +159,7 @@
 			$html.='</tbody>
                     	</table>';
 
-        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$result_select));
+        	print json_encode(array("Exito",$html,$cuantos,$_POST,$result,$result_select,$result_num_fact[2][0]['int_idventa']));
 			exit();
 
         }else {

@@ -1,6 +1,20 @@
 <?php 
     date_default_timezone_set('America/El_Salvador');
     @session_start(); 
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,39 +66,39 @@
                     <!-- /.col -->
                 </div>
                 <div class="row invoice-info">
-                                        <div class="col-sm-4 invoice-col">
-                                            <span>Vendedor</span>
-                                            <address>
-                                                <strong id="vendedor_fact">Administrador</strong>
-                                                <br>
-                                            </address>
-                                        </div>
+                    <div class="col-sm-4 invoice-col">
+                        <span>Vendedor</span>
+                        <address>
+                            <strong id="vendedor_fact">Administrador</strong>
+                            <br>
+                        </address>
+                    </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 invoice-col">
+                        <div class="col-sm-4 invoice-col">
                                             Cliente
-                                            <address>
-                                                <strong id="nom_cliente_fact">Juan Hernández</strong>
-                                                <br>
-                                                <span>Dui: </span><strong id="dui_cliente_fact"></strong>
-                                                <br>
-                                                <span>Dirección: </span> <strong id="direc_cliente_fact"></strong>
-                                                <br>
-                                                <span>Telefono: (503)</span>  <strong id="tel_cliente_fact"></strong>
-                                                <br>
-                                            </address>
-                                        </div>
+                            <address>
+                                <strong id="nom_cliente_fact">Juan Hernández</strong>
+                                <br>
+                                <span>Dui: </span><strong id="dui_cliente_fact"></strong>
+                                <br>
+                                <span>Dirección: </span> <strong id="direc_cliente_fact"></strong>
+                                <br>
+                                <span>Telefono: (503)</span>  <strong id="tel_cliente_fact"></strong>
+                                <br>
+                            </address>
+                        </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-4 invoice-col">
-                                            <b>Factura</b>
-                                            <br>
-                                            <b>No.</b>
-                                            <strong id="num_fact"></strong>                                            
-                                            <br>
-                                            <span>Fecha y Hora:</span>
-                                             <strong id="fecha_fact"></strong>   
-                                        </div>
+                        <div class="col-sm-4 invoice-col">
+                            <b>Factura</b>
+                            <br>
+                            <b>No.</b>
+                            <strong id="num_fact"></strong>                                            
+                            <br>
+                            <span>Fecha y Hora:</span>
+                            <strong id="fecha_fact"></strong>   
+                        </div>
                                         <!-- /.col -->
-                                    </div>
+                </div>
                 <!-- /.row -->
                 <!-- Table row -->
                 <div class="row">
@@ -111,7 +125,7 @@
                                     <td>1</td>
                                     <td>
                                         Marqueta de queso
-                    Duro 50LB
+                                        Duro 50LB
                                     </td>
                                     <td>$64.00</td>
                                     <td></td>

@@ -1,6 +1,20 @@
 <?php 
     date_default_timezone_set('America/El_Salvador');
-    @session_start(); 
+    @session_start();
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    }  
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,7 +45,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Factura</h1>
+                                <h1 id="tipo_doc">Factura</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right"></ol>
@@ -133,12 +147,7 @@
                                     <!-- this row will not appear when printing -->
                                     <div class="row no-print">
                                         <div class="col-12">
-                                            <a
-                                                href="r_imprime_factura.php"
-                                                rel="noopener"
-                                                target="_blank"
-                                                class="btn btn-success"
-                                            >                                            
+                                            <a href="r_imprime_factura.php" rel="noopener" target="_blank" class="btn btn-success" >                                            
                                                 <i class="fas fa-print"></i> Imprimir
                                             </a>
                                             <a href="../Vistas/v_registro_ventas.php"  class="btn btn-success float-right" style="margin-right: 5px;">

@@ -26,7 +26,8 @@ function cargar_factura(){
 	    		$('#direc_cliente_fact').empty().html(json[4]['txt_direc_cliente']);
 	    		$('#tel_cliente_fact').empty().html(json[4]['nva_telefono_cliente']);
 	    		$('#num_fact').empty().html(numero_factura);
-	    		$('#fecha_fact').empty().html(json[4]['dat_fecha_venta']);    
+	    		$('#fecha_fact').empty().html(json[4]['nva_tipo_documento']);
+	    		$('#tipo_doc').empty().html(json[4]['dat_fecha_venta']);   
 
 	         	$("#tb_factura_ver").empty().html(json[2]);
 	         

@@ -91,7 +91,7 @@
 
     <!-- MODAL DE LA VENTA REALIZADA -->
       <div class="modal fade" id="md_ver_compra">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="POST" name="formulario_registro" id="formulario_registro">
                             <div class="modal-header bg-success">
@@ -137,21 +137,21 @@
                                     <br>
                                     <br>
                                     <div class="row invoice-info">
-                                        <div class="col-sm-6 invoice-col">
+                                        <div class="col-sm-4 invoice-col">
                                             Proveedor
                                             <address>
                                                 <strong id="proveedor">El Frutal</strong>                   
                                             </address>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-3 invoice-col">
+                                        <div class="col-sm-4 invoice-col">
                                             Tipo de Documento
                                             <address>
                                                 <strong id="tipo_doc">Factura</strong>                      
                                             </address>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-sm-3 invoice-col">
+                                        <div class="col-sm-4 invoice-col">
                                             No.Documento
                                            <address>
                                                 <strong id="num_doc">15</strong>                            
@@ -160,19 +160,19 @@
                                         <!-- /.col -->
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">                
+                                        <div class="col-sm-4">                
                                             Descripción
                                             <address>
                                                 <strong id="descrip">Nueva Compra de Insumos</strong> 
                                             </address>
                                         </div>
-                                        <div class="col-sm-3">                
+                                        <div class="col-sm-4">                
                                             Fecha de Compra
                                             <address>
                                                 <strong id="fecha_compra">dd/mm/yyyy</strong> 
                                             </address>
                                         </div>
-                                        <div class="col-sm-3">                
+                                        <div class="col-sm-4">                
                                             Fecha de Sistema
                                             <address>
                                                 <strong id="fecha_sistema">dd/mm/yyyy</strong> 

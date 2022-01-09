@@ -5,7 +5,7 @@
 	if (isset($_POST['ver_venta']) && $_POST['ver_venta']=="si_esta") {
 		
 		$htmltr = $html="";
-		$subtotal = 0.0;
+		$subtotal = 00.00;
 
 		$sql = "SELECT
 					*
@@ -59,7 +59,7 @@
 				                <td class="text-center ">'."$".''.$row['dou_subtotal_item_vender'].'</td>
 				            </tr>';		
 					}
-					$html.='<table class="table table-striped projects" width="100%">
+					$html.='<table class="table table-sm" width="100%">
 		                    <thead>
 					            <tr>
 					            	<th>Cantidad</th>

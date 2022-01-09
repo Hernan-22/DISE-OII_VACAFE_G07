@@ -127,7 +127,7 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                              
-                              <div class="alert alert-info alert-dismissible">
+                              <div class="alert alert-info alert-dismissible" id="alerta_celos">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 <h4><i class="icon fas fa-info"></i> Alerta!</h4>
                                  Vaca cabos mucos  en celo --octubre.
@@ -194,5 +194,6 @@
     <script src="../dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../dist/js/pages/dashboard.js"></script>
+    <script src="../Scripts/principal.js"></script>
 </body>
 </html>

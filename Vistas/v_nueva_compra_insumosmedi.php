@@ -1,6 +1,20 @@
  <?php 
     date_default_timezone_set('America/El_Salvador');
-    @session_start(); 
+    @session_start();
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    }
 ?>    
 <!DOCTYPE html>
 <html lang="en">
