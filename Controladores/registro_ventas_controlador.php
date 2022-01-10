@@ -39,7 +39,8 @@
 								* 
 							FROM
 								tb_detalle_venta
-								INNER JOIN tb_expediente ON tb_detalle_venta.int_idexpediente = tb_expediente.int_idexpediente 
+								INNER JOIN tb_expediente ON tb_detalle_venta.int_idexpediente = tb_expediente.int_idexpediente
+								INNER JOIN tb_raza ON tb_expediente.int_idraza = tb_raza.int_idraza 
 							WHERE
 								int_idventa = '$_POST[idventa]'";
 		$resultado_detbovino = $modelo->get_query($sql_det_bovinos);
@@ -81,16 +82,14 @@
 					$subtotal = $subtotal + $row['dou_subtotal_item_vender'];
 					$htmltr.='<tr>
 					          <td>'.$row['nva_nom_bovino'].'</td>
-						          <td class="text-center "><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'"></td>
 						           <td class="text-center ">'.$row['nva_nom_raza'].'</td>
 						           <td class="text-center ">'."$".''.$row['dou_subtotal_item_vender'].'</td>
 					           </tr>';		
 				}
-				$html.='<table class="table table-striped projects" width="100%">
+				$html.='<table class="table" width="100%">
 			                <thead>
 						        <tr>
 						            <th >Bovino</th>
-						            <th class="text-center col-2" >Foto</th>
                                     <th class="text-center col-2" >Raza</th>
                                     <th class="text-center col-2" >Costo $</th>
 						        </tr>

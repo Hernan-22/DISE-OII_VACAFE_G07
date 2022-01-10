@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <?php 
     date_default_timezone_set('America/El_Salvador');
-    @session_start(); 
+    @session_start();
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    }  
 ?>
 <html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Compra | Nueva</title>
+        <title>Venta | Nueva</title>
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
          <!-- DataTables -->
@@ -77,7 +91,7 @@
                                         <div class="row">
                                             <div class="col-md-10 offset-md-1">
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-3">
                                                         <div class="form-group">
                                                             <label>Cliente</label>
                                                             <div class="input-group mb-3">
@@ -117,16 +131,45 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group text-center">
-                                                        <a class="btn bg-success" data-toggle="modal" data-target="#md_seleccion_bovinos">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                            Agregar
-                                                            Bovino
-                                                        </a>
-                                                        <a class="btn bg-success btn_limpiar_b">
-                                                            <i class="fa fa-trash"></i>
-                                                            Limpiar
-                                                        </a>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label>Tipo Documento</label>
+                                                            <div class="input-group mb-3"> 
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                         <i class="fa fa-file-alt"></i>
+                                                                    </span>
+                                                                </div>     
+                                                                <select class="form-control" id="tipo_doc_venta_b" name="tipo_doc_venta_b" required>
+                                                                    <option value="Ticket" selected="selected">Ticket</option>
+                                                                    <option value="Factura" >Factura</option>
+                                                                    <option value="Crédito Fiscal" >Crédito Fiscal</option>
+                                                                </select>
+                                                            </div>   
+                                                        </div>                                                      
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+                                                            <a class="btn bg-success" data-toggle="modal" data-target="#md_seleccion_bovinos">
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                                Agregar
+                                                                Bovino
+                                                            </a>
+                                                            <a class="btn bg-success btn_limpiar_b">
+                                                                <i class="fa fa-trash"></i>
+                                                                Limpiar
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-6">                 
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="form-group  float-right">
+                                                            <label >No. </label>
+                                                            <label id="num_fact">000000</label>
+                                                            <input type="hidden" id="num_fact_guardar_b" name="num_fact_guardar_b">
+                                                            
+                                                        </div>
                                                     </div>
                                                 </div>                                                
                                             </div>
@@ -148,7 +191,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Producto</th>
-                                                        <th class="text-center col-2">Fotografía</th>
+                                                        <th class="col-2">Fotografía</th>
                                                         <th class="text-center col-2">Raza</th>
                                                         <th class="text-center col-2">Precio $</th>
                                                         <th class="text-center col-2">Acción</th>
@@ -221,6 +264,244 @@
                             </div>
                         </div>
                     </form>       
+                </div>
+
+                <!-- MODAL FACTURA, CRÉDITO-->
+                <div class="modal fade" id="md_ver_venta_b">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form method="POST" name="formulario_registro_ventas" id="formulario_registro_ventas">
+                                <div class="modal-header bg-success">
+                                    <h4 class="modal-title">Venta</h4>
+                                    <button
+                                        type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="invoice p-3 mb-3">
+                                        <div class="row invoice-info">
+                                            <div class="col-sm-4 invoice-col">
+                                                <img src="../dist/img/logo-n.png" alt="user-avatar" class="img-circle img-fluid">
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col text-center">
+                                                <address>
+                                                    <h4>
+                                                        <strong>FINCA LA VACA CAFÉ</strong>
+                                                    </h4>
+                                                    CALLE LA INDIA
+                                                    <br>
+                                                    COMUNIDAD EL PROGRESO
+                                                    <br>
+                                                    POLIGONO A, LOTE 4
+                                                    <br>
+                                                    BARRIO SAN JUAN,
+                                                    COJUTEPEQUE.
+                                                    </address>
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col">
+                                                <img src="../dist/img/ues-a.png" alt="user-avatar" class="img img-fluid float-right">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="row invoice-info">
+                                            <div class="col-sm-4 invoice-col">
+                                                Cliente
+                                                <address>
+                                                    <strong id="nom_cliente_fact">...</strong>
+                                                    <br>
+                                                    <br>
+                                                    <span>Dui: </span><strong id="dui_cliente_fact"></strong>
+                                                    <br>
+                                                    <span>Dirección: </span> <strong id="direc_cliente_fact"></strong>
+                                                    <br>
+                                                    <span>Telefono: (503)</span>  <strong id="tel_cliente_fact"></strong>
+                                                    <br>
+                                                </address>
+                                            </div>
+                                                <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col">
+                                                Tipo de Documento
+                                                <address>
+                                                    <strong id="tipo_doc_ver_fact">...</strong>
+                                                    <br>
+                                                    <br>
+                                                    <span> No.Documento: </span><strong id="num_doc_ver_fact">#000000</strong>
+                                                    <br>
+                                                    <span>Fecha: </span><strong id="fecha_fact">dd/mm/yyyy</strong> 
+                                                    <br>
+                                                    <span>Hora: </span><strong id="hora_fact">hh:mm:ss</strong> 
+                                                </address>
+                                            </div>
+                                                <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col">
+                                                Vendedor
+                                                <address>
+                                                    <strong id="vendedor_fact">...</strong>   
+                                                    <br>
+                                                    <br>
+                                                    <span>Fecha Sistema: </span><strong id="fecha_fact_sis">dd/mm/yyyy</strong> 
+                                                    <br>
+                                                    <span>Hora Sistema: </span><strong id="hora_fact_sis">hh:mm:ss</strong> 
+                                                </address>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>                               
+                                        <!-- /.row -->
+                                        <!-- Table row -->
+                                        <div class="row">
+                                            <div class="col-12 table-responsive">
+                                                <div id="tb_Detalle_Derivados_Ver"></div> 
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="row">
+                                            <div class="col-8">
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="table-responsive">
+                                                    <table class="table" width="100%">                             
+                                                        <tr>
+                                                            <th style="width:50%">Sub Total:</th>
+                                                             <td><span id="sub_total_fact">$00.00</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Iva 13%:</th>
+                                                            <td><span id="iva_fact">$00.00</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Venta Total: </th>
+                                                            <td><span id="total_fact">$00.00</span></td>
+                                                        </tr>
+                                                    </table>                             
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button class="btn bg-success" type="button" data-dismiss="modal">
+                                                    <i class="fas fa-print"></i>
+                                                    Imprimir
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="col-6">
+                                                <button class="btn bg-success float-sm-right" type="button" data-dismiss="modal">
+                                                    <i class="fas fa-check"></i>
+                                                    Listo
+                                                </button>
+                                            </div>
+                                            
+                                             
+                                        </div>
+                                    </div>
+                                </div>    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--MODAL TICKET -->
+                <div class="modal fade" id="md_ticket_b">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form method="POST" name="formulario_registro_ventas_t" id="formulario_registro_ventas_t">
+                                <div class="modal-header bg-success">
+                                    <h4 class="modal-title" id="tipo_doc_t_v">...</h4>
+                                    <button
+                                        type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="invoice p-3 mb-3">
+                                        <div class="row invoice-info">
+                                            <div class="col-sm-2 invoice-col user-block">
+                                                <img src="../dist/img/logo-n.png" alt="user image" class="img-circle img-bordered-sm">
+                                            </div>
+                                            
+                                            <address class="text-center">
+                                                <h4>
+                                                     <strong>FINCA LA VACA CAFÉ</strong>
+                                                </h4>
+                                                Calle la India,
+                                                <br>
+                                                Comunidad el Progreso,
+                                                <br>
+                                                poligono A, lote #4,
+                                                <br>
+                                                barrio San Juan,
+                                                Cojutepeque, Cuscatlán.
+                                            </address> 
+
+                                            <div class="col-sm-2 invoice-col user-block">
+                                                <img src="../dist/img/ues-a.png" alt="user-avatar" class="img-circle img-bordered-sm float-right">
+                                            </div>
+                                            <br>
+                                            <p class="text-muted">NRC: </p><p class="text-muted col-4" id="nrc_v"> ...    </p> <p class="text-muted">NIT: </p> <p class="text-muted col-6" id="nit_v"> ...</p>
+                                            
+                                            <br>
+                                            <p class="text-muted col-12 text-center" id="nit_v"> Giro: Compra y Venta de Ganado</p>
+                                            
+                                            <br>
+                                            <p class="text-muted col-6 text-center" id="fecha_v">dd/mm/yyyy</p><p class="text-muted text-center col-6" id="hora_v">hh:mm:ss</p>                                            
+                                            <br>
+                                            <p class="text-muted col-12 text-center" id="cliente_v">...</p>                       
+                                            <br>
+                                            <p class="text-muted text-center col-12" id="ticket_v">000000</p>
+                                                    
+                                            
+                                            <!-- /.col -->
+                                           
+                                        </div>
+                                        
+                                        <p class="text-muted col-12 text-center" id="ticket_v">-----------------------------------------------------------------------------------</p>
+                                        <!-- Table row -->
+                                        <div class="row">
+                                            <div class="col-12 table-responsive">
+                                                <div id="tb_Detalle_Derivados_Ver_t"></div> 
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <p class="text-muted col-12 text-center" id="ticket_v">-----------------------------------------------------------------------------------</p>
+                                        <div class="row">
+                                            <div class="col-12 table-responsive">
+                                                <div class="table-responsive">                    
+                                                    <p class="text-muted text-center col-12 float-sm-right" id="total_v">Total: $</p>  
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div class="table-responsive">
+                                                    <p class="text-muted col-12" id="vendedor_v">...</p>
+                                                     
+                                                </div>
+                                                <button class="btn bg-success" type="button" data-dismiss="modal">
+                                                        <i class="fas fa-print"></i>
+                                                        Imprimir
+                                                </button>
+                                                <div class="form-group float-sm-right">
+                                                    <button class="btn bg-success" type="button" data-dismiss="modal">
+                                                        <i class="fas fa-check"></i>
+                                                        Listo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </form>
+                        </div>
+                    </div>
                 </div>              
             </div>
               

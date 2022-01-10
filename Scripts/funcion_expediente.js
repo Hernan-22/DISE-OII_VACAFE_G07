@@ -3,7 +3,7 @@
 
 function validar_campito(){
 
-$(document).on("change","#tipo_bovino",function(e){
+	$(document).on("change","#tipo_bovino",function(e){
 		e.preventDefault();
 
 		if ($("#tipo_bovino").val() == "vaca_lechera"){

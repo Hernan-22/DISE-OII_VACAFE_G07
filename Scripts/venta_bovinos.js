@@ -19,7 +19,7 @@ $(function (){
 			'fecha_venta_b':{
 				required:'La Fecha no puede quedar vacía',				
 			}			
-		}
+		},
 	    errorElement: 'span',
 	    errorPlacement: function (error, element) {
 	      error.addClass('invalid-feedback');
@@ -60,14 +60,97 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {
-	        	limpiar();
+	        	limpiar(json[5]);
 				Toast.fire({
 	            	icon: 'success',
 	            	title: 'Venta registrada exitosamente!.'
        			});
-       			cargar_tabla_bovinos();
        			var timer = setInterval(function(){
-					$(location).attr('href','../Vistas/r_factura_venta.php');
+						var datos = {"ver_venta":"si_esta","idventa":json[4]};
+				        console.log("los datos enviados: ",datos);
+				        //return;
+				        $.ajax({
+				            dataType: "json",
+				            method: "POST",
+				            url:'../Controladores/registro_ventas_controlador.php',
+				            data : datos,
+				        }).done(function(json) {
+				        
+					        if (json[0]=="Exito") {
+
+					        	if (json[4]['nva_tipo_documento'] == "Factura" || json[4]['nva_tipo_documento'] == "Crédito Fiscal") {
+
+
+									var hora = formateartime(json[4]['dat_fecha_venta']);
+						        	var fecha = formatearDate(json[4]['dat_fecha_venta']);
+						        	var hora_sistema = formateartime(json[4]['dat_fecha_sistema_venta']);
+						        	var fecha_sistema = formatearDate(json[4]['dat_fecha_sistema_venta']);
+
+						        
+
+						        	var num_fact = numerofactura(json[4]['int_num_doc']);
+
+									var apellido_cliente_v = "";
+					        		if (json[4]['nva_ape_cliente'] == null) {
+						        		apellido_cliente_v = "";
+						        	}else{
+										apellido_cliente_v = json[4]['nva_ape_cliente'];
+						        	}
+
+					        		$('#tipo_doc_ver_fact').empty().html(json[4]['nva_tipo_documento']);
+						    		$('#num_doc_ver_fact').empty().html('#'+num_fact);
+						    		$('#fecha_fact').empty().html(fecha);
+						    		$('#hora_fact').empty().html(fecha);
+
+						    		$('#nom_cliente_fact').empty().html(json[4]['nva_nom_cliente']+' '+apellido_cliente_v);
+						    		$('#dui_cliente_fact').empty().html(json[4]['nva_dui_cliente']);
+						    		$('#direc_cliente_fact').empty().html(json[4]['txt_direc_cliente']);
+						    		$('#tel_cliente_fact').empty().html(json[4]['nva_telefono_cliente']);
+						    		
+									$('#vendedor_fact').empty().html(json[4]['nva_nom_empleado']+' '+json[4]['nva_ape_empleado']);
+						    		$('#fecha_fact_sis').empty().html(fecha_sistema);
+						    		$('#hora_fact_sis').empty().html(hora_sistema);
+
+						    		$('#iva_fact').val('$'+json[4]['dou_iva_venta']);
+						    		$('#sub_total_fact').empty().html('$'+json[6]);
+									$('#total_fact').empty().html('$'+json[4]['dou_total_venta']);					
+
+
+						         	$("#tb_Detalle_Derivados_Ver").empty().html(json[2]);
+						         	$('#md_ver_venta_b').modal('show');
+
+					        	}else{
+									var hora_sistema = formateartime(json[4]['dat_fecha_venta']);
+						        	var fecha_sistema = formatearDate(json[4]['dat_fecha_sistema_venta']);
+						        	var num_fact_ticket = numerofactura(json[4]['int_num_doc']);
+									var apellido_cliente_v = "";
+						        	if (json[4]['nva_ape_cliente'] == null) {
+						        		apellido_cliente_v = "";
+						        	}else{
+										apellido_cliente_v = json[4]['nva_ape_cliente'];
+						        	}
+
+						    		$('#tipo_doc_t_v').empty().html(json[4]['nva_tipo_documento']);
+						    		$('#ticket_v').empty().html(json[4]['int_num_doc']);
+
+						    		$('#fecha_v').empty().html('Fecha: '+fecha_sistema);
+						    		$('#hora_v').empty().html('Hora: '+hora_sistema);
+
+						    		$('#cliente_v').empty().html('Cliente: '+json[4]['nva_nom_cliente']+' '+apellido_cliente_v);
+						    		$('#ticket_v').empty().html('Ticket: #'+num_fact_ticket);
+						    		
+						    		
+									$('#total_v').empty().html('Total: $'+json[4]['dou_total_venta']);
+									$('#vendedor_v').empty().html('Vendedor: '+json[4]['nva_nom_empleado']+' '+json[4]['nva_ape_empleado']);
+
+
+						         	$("#tb_Detalle_Derivados_Ver_t").empty().html(json[2]);
+						         	$('#md_ticket_b').modal('show');
+					        	
+					        	}
+					        }   
+				         
+				        });
 					clearTimeout(timer);
 				},3500);
 				
@@ -131,7 +214,7 @@ $(function (){
 			var fila='<tr class="filas" id="fila'+cont+'">'+	        
 	       '<td><input type="hidden" class="form-control" id="idexpediente[]" name="idexpediente[]" value="'+data_idbovino+'">'+data_nombrebovino+'</td>'+
 
-	       	'<td class="text-center"><img alt="img" width="90" height="100" src="../dist/img/'+data_foto+'"></td>'+
+	       	'<td class="text-center"><div class="product-image-thumb active"><img alt="Product Image" style="width: 89px; height: 81px;" src="'+data_foto+'"></div></td>'+
 
 	       	'<td class="text-center"><span id="raza_bovino" name="raza_bovino" >'+data_raza+'</span> </td>'+
 
@@ -167,7 +250,8 @@ $(function (){
     });
 
     $(document).on("click",".btn_limpiar_b",function(e){
-    	limpiar();
+    	var num_fact_nuevo = 0;
+    	limpiar(num_fact_nuevo);
     });
      
 });
@@ -230,8 +314,12 @@ function eliminarDetalle(indice){
 }
 
 //funcion limpiar
-function limpiar(){
-
+function limpiar(num_fact_nuevo){
+	if (num_fact_nuevo != 0) {
+		var numfact = Number(num_fact_nuevo) + 1;
+		$("#num_fact").empty().html(numerofactura(numfact.toString()));
+	}
+	
 	$("#formulario_registro_venta_b").trigger('reset');	
 	$(".filas").remove();
 }
@@ -249,10 +337,63 @@ function cargar_tabla_bovinos(){
     	$("#tb_seleccion_bovinos").empty().html(json[1]);
     	$('#example1').DataTable();
 
+    	var numfact = Number(json[6]) + 1;
+		
+		$("#num_fact").empty().html(numerofactura(numfact.toString()));
+		$("#num_fact_guardar_b").val(numfact);
+
     	$("#cliente_venta_b").empty().html(json[5][0]);     	
     }).fail(function(){
 
     }).always(function(){
     	//Swal.close();
     });
+}
+
+function numerofactura(numero){
+	//divido la feha de la hora
+	var cifras = numero;
+	var numero_factura = "";		
+	if (cifras.length == 1) {
+		return numero_factura = "00000"+""+numero;
+	}else if (cifras.length == 2) {
+		return numero_factura = "0000"+""+numero;
+	}else if (cifras.length == 3) {
+		return numero_factura = "000"+""+numero;
+	}else if (cifras.length == 4){
+		return numero_factura = "00"+""+numero;
+	}else if (cifras.length == 5){
+		return numero_factura = "0"+""+numero;
+	}else{
+		return numero;
+	}
+
+}
+
+function formatearDate(date){
+	//divido la feha de la hora
+	var fecha_string = date;
+	var separacion = fecha_string.split(' ');
+	var fecha = separacion[0];
+	var hora = separacion[1];
+	var fecha_formateada = "";
+
+	//Formteo la fecha
+	var porciones_fecha = fecha.split('-');
+	var fecha1 = porciones_fecha[2]+"-"+porciones_fecha[1]+"-"+porciones_fecha[0];
+
+	//envio la fecha formateada
+	fecha_formateada = fecha1;
+	return fecha_formateada;
+
+}
+function formateartime(datetime){
+	//divido la feha de la hora
+	var fecha_string = datetime;
+	var separacion = fecha_string.split(' ');
+	var fecha = separacion[0];
+	var hora = separacion[1];
+	
+	//envio la hora
+	return hora;
 }

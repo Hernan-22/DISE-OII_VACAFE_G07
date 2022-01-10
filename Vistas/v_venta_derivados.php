@@ -140,7 +140,7 @@
                                                                          <i class="fa fa-file-alt"></i>
                                                                     </span>
                                                                 </div>     
-                                                                <select class="form-control" id="tipo_doc_compra" name="tipo_doc_compra" required>
+                                                                <select class="form-control" id="tipo_doc_venta" name="tipo_doc_venta" required>
                                                                     <option value="Ticket" selected="selected">Ticket</option>
                                                                     <option value="Factura" >Factura</option>
                                                                     <option value="Crédito Fiscal" >Crédito Fiscal</option>
@@ -165,8 +165,8 @@
                                                     </div>
                                                     <div class="col-2">
                                                         <div class="form-group  float-right">
-                                                            <label >No. Factura: </label>
-                                                            <label id="num_fact">#000000</label>
+                                                            <label >No. </label>
+                                                            <label id="num_fact">000000</label>
                                                             <input type="hidden" id="num_fact_guardar" name="num_fact_guardar">
                                                             
                                                         </div>
@@ -267,7 +267,7 @@
                     </form>       
                 </div>
 
-                 <!-- MODAL FACTURA, CRÉDITO-->
+                <!-- MODAL FACTURA, CRÉDITO-->
                 <div class="modal fade" id="md_ver_venta">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -506,7 +506,61 @@
                     </div>
                 </div>
 
-                <!--MODAL FACTURA-CREDITO--> 
+                <!--MODAL SELECCION EXISTENCIAS-->
+                <div class="modal fade" id="md_existencias">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title">
+                            </i>Existencias</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p class="text-center">Exitencia 0</p>
+                          
+                          <p class="text-center">Seleccione un producto diferente.</p>
+                          
+                          <p class="text-center">Para añadir existencias, vaya al Módulo de Producción.</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="far fa-times-circle"></i>Cerrar</button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="fas fa-angle-right"></i>Ir</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+                <!--MODAL SELECCION EXISTENCIAS-->
+                <div class="modal fade" id="md_existencias_actualizar">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title">
+                            </i>Existencias</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p id="msg_adver" class="text-center">Esta cantidad solicitada supera la exixtencia actual.</p>
+                          <p id="exitencia_adver" class="text-center">Existencia : 0</p>
+                          <p id="producto_adver" class="text-center">Producto: ...</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">                          
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            </i>Aceptar</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
                          
             </div>
               

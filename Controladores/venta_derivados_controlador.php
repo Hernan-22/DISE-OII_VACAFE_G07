@@ -22,16 +22,17 @@
 		            "table" => "tb_venta",
 		            "int_idventa"=>$id_insertar,
 		            "dou_total_venta" => $_POST['total_g_venta_d'],
-		            "dou_iva_venta" => $_POST['iva_v_venta_d'],
+		            "dou_iva_venta" => $_POST['iva_g_venta_d'],
 		            "dat_fecha_venta" => $modelo->formatear_fecha_hora($_POST['fecha_venta_d']),		            
 		            "dat_fecha_sistema_venta" => date("Y-m-d G:i:s"),
-		            "nva_tipo_documento" => $_POST['tipo_doc_compra'],
+		            "nva_tipo_documento" => $_POST['tipo_doc_venta'],
 		            "int_idempleado" => $_POST['empleado_venta'],
 		            "int_id_cliente" => $_POST['cliente_venta_d'],
 		            "int_num_doc" => $_POST['num_fact_guardar']
 		        );
 		        $result_venta = $modelo->insertar_generica($array_insertar);
-				$tipo_doc = $_POST['tipo_doc_compra'];
+				$tipo_doc = $_POST['tipo_doc_venta'];
+				$numfact = $_POST['num_fact_guardar'];
 		    if($result_venta[0]=='1'){//EVALUA SI LA VENTA SE RALIAZÓ CORRECTAMENTE
 
 										
@@ -89,7 +90,7 @@
 					}
 					
 		        	
-		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_insertar));
+		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_insertar,$numfact));
 					exit();
 	        }else {
 	        	//ENVIO EL ERROR OBTENIDO EN ESTA POSICIÓN
@@ -115,7 +116,7 @@
 					
 		$htmltr = $html="";
 		$cuantos = 0;
-		$sql ="SELECT int_idproducto, nva_image_producto, nva_nom_producto, dou_precio_venta_producto FROM tb_producto WHERE int_idcategoria = 1";
+		$sql ="SELECT * FROM tb_producto WHERE int_idcategoria = 1";
 
 		$sql_num ="SELECT int_idventa FROM tb_venta ORDER BY int_idventa DESC LIMIT 1;";
 
@@ -128,18 +129,20 @@
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td>'.$row['nva_nom_producto'].'</td>
-	                            <td class="text-center">
+	                            <td>
 	                            	<div class="product-image-thumb active">
-	                            		<img alt="Product Image" style="width: 89px; height: 81px; " src="'.$row['nva_image_producto'].'">
+	                            		<img alt="Product Image" style="width: 89px; height: 81px;" src="'.$row['nva_image_producto'].'">
 	                            	</div>
 	                            </td>
+	                            <td class="text-center">'.$row['int_existencia'].'</td>
 	                            <td class="text-center">'."$".''.$row['dou_precio_venta_producto'].'</td>
 	                            <td class="text-center project-actions">
 			                        <button class="btn btn-info btn-sm btn_item_seleccionado" 
 			                        	data-idproducto_seleccionado="'.$row['int_idproducto'].'" 
 			                        	data-nombre_item_selec="'.$row['nva_nom_producto'].'"	
 			                        	data-precio_item_selec="'.$row['dou_precio_venta_producto'].'"
-			                        	data-image_item_selec="'.$row['nva_image_producto'].'">
+			                        	data-image_item_selec="'.$row['nva_image_producto'].'"
+			                        	data-existencia="'.$row['int_existencia'].'">
 			                            <i class="fas fa-check"></i>
 			                        </button>
 			                    </td>
@@ -149,7 +152,8 @@
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th class="text-center">Imagen</th>
+                            <th>Imagen</th>
+                            <th class="text-center">Existencia</th>
                             <th class="text-center">Precio Unitario $</th>
                             <th class="text-center">Acción</th>
                         </tr>

@@ -2,6 +2,8 @@
 	var cont=0;
 	var detalles=0;
 	var subtotal_todos = 0;
+	var existencia_actual = [];
+	var producto_verficar = [];
 	cargar_tabla_productos();
 $(function (){	
 
@@ -55,17 +57,11 @@ $(function (){
         }).done(function(json) {
         	console.log("EL GUARDAR",json);        	
 	        if (json[0]=="Exito") {
-	        	limpiar();
+	        	limpiar(json[5]);
 				Toast.fire({
 	            	icon: 'success',
 	            	title: 'Venta registrada exitosamente!.'
-       			});
-       			if (json[3]=="Factura" || json[3]=="Crédito Fiscal") {
-	       			var timer = setInterval(function(){
-	       				
-						clearTimeout(timer);
-					},3500);
-				}else{
+       			});       			
 					var timer = setInterval(function(){
 						var datos = {"ver_venta":"si_esta","idventa":json[4]};
 				        console.log("los datos enviados: ",datos);
@@ -154,7 +150,7 @@ $(function (){
 				        });
 						clearTimeout(timer);
 					},3500);
-				}
+				
 
 	    	}else if (json[0]=="Error" && json[1]=="existencias"){
 	    	 	Toast.fire({
@@ -183,8 +179,9 @@ $(function (){
         });
 	});
 
-	//selecionando y añadiento el producto a la lista del detalle
 
+
+	//selecionando y añadiento el producto a la lista del detalle
 
 	$(document).on("click",".btn_item_seleccionado",function(e){ 
         e.preventDefault();
@@ -193,81 +190,126 @@ $(function (){
 		var data_nombreitem = elemento.attr('data-nombre_item_selec');
 		var data_precioitem = elemento.attr('data-precio_item_selec');
 		var data_imgen = elemento.attr('data-image_item_selec');
-		
+		var data_exitencia = elemento.attr('data-existencia');
+
+		existencia_actual.push(data_exitencia);
+		producto_verficar.push(data_nombreitem);
+
         console.log("viene este id: ",data_iditem);
         console.log("producto: ",data_nombreitem);
+        console.log("exitencia: ",existencia_actual);
         console.log("precio: ",data_precioitem);
-         console.log("imagen: ",data_imgen);
+        console.log("imagen: ",data_imgen);
+
         var Toast = Swal.mixin({
 	        toast: true,
 	        position: 'top-end',
 	        showConfirmButton: false,
 	        timer: 5000
     	});
+    	//CONTROL DE EXISTENCIAS
+        if (data_exitencia == 0) {
+        	$('#md_existencias').modal('show');
+        }else{
+        	var cantidad=1;
+			var precio_item_venta=1;
+			var precio_venta=data_precioitem;
+			if (data_iditem) {
+				var subtotal=cantidad*precio_item_venta;
+				var fila='<tr class="filas" id="fila'+cont+'">'+	        
+		        '<td><input type="hidden" class="form-control" id="idproducto_v[]" name="idproducto_v[]" value="'+data_iditem+'">'+data_nombreitem+'</td>'+
+		        
+		        '<td class="text-center">'+'<div class="product-image-thumb active">'+
+		        	'<img alt="Product Image" style="width: 89px; height: 81px;" src="'+data_imgen+'"></td></div>'+
 
-       	var cantidad=1;
-		var precio_item_venta=1;
-		var precio_venta=data_precioitem;
-		if (data_iditem) {
-			var subtotal=cantidad*precio_item_venta;
-			var fila='<tr class="filas" id="fila'+cont+'">'+	        
-	        '<td><input type="hidden" class="form-control" id="idproducto_v[]" name="idproducto_v[]" value="'+data_iditem+'">'+data_nombreitem+'</td>'+
-	        
-	        '<td class="text-center">'+'<div class="product-image-thumb active">'+
-	        	'<img alt="Product Image" style="width: 89px; height: 81px;" src="'+data_imgen+'"></td></div>'+
+		        '<td><input type="number" autocomplete="off" class="form-control" name="precio_item_venta[]" id="precio_item_venta[]" value="'+data_precioitem+'"></td>'+
 
-	        '<td><input type="number" autocomplete="off" class="form-control" name="precio_item_venta[]" id="precio_item_venta[]" value="'+data_precioitem+'"></td>'+
+		        '<td><input type="number" autocomplete="off" class="form-control" name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
 
-	        '<td><input type="number" autocomplete="off" class="form-control" name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
+		        '<td class="text-center"><span id="subtotal'+cont+'" name="subtotal" >'+subtotal+'</span>'+
 
-	        '<td class="text-center"><span id="subtotal'+cont+'" name="subtotal" >'+subtotal+'</span>'+
+		        '<input type="hidden" class="form-control" name="subtotal_guardar[]"  id="subtotal_guardar[]" value="'+subtotal+'">'+'</td>'+
 
-	        '<input type="hidden" class="form-control" name="subtotal_guardar[]"  id="subtotal_guardar[]" value="'+subtotal+'">'+'</td>'+
-
-	        '<td class="text-center project-actions"><button type="button" onclick="modificarSubtotales()" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
-	        
-	        	'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')"><i class="fas fa-trash"></i></button>'+
-	        '</td>'+
-			'</tr>';
-			cont++;
-			subtotal_todos = subtotal_todos + subtotal;
-			detalles++;
-			$("#subtotal_v_venta_d").val("$"+subtotal_todos);
-			$('#tablaDetalleVentaD').append(fila);
-			modificarSubtotales();
-			console.log("vuelve tener est: ",data_iditem);
-			
-		}else{
-			Toast.fire({
-		        icon: 'error',
-		        title: 'El ID no está llegando!'
-		    });
-	    	 	
-		}
+		        '<td class="text-center project-actions"><button type="button" onclick="verificar_exixtencias('+cont+')" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
+		        
+		        	'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')"><i class="fas fa-trash"></i></button>'+
+		        '</td>'+
+				'</tr>';
+				cont++;
+				subtotal_todos = subtotal_todos + subtotal;
+				detalles++;
+				$("#subtotal_v_venta_d").val("$"+subtotal_todos);
+				$('#tablaDetalleVentaD').append(fila);
+				//modificarSubtotales();
+				console.log("vuelve tener est: ",data_iditem);
+				
+			}else{
+				Toast.fire({
+			        icon: 'error',
+			        title: 'El ID no está llegando!'
+			    });
+		    	 	
+			}
+        }
+       	
 		
     });
 
     $(document).on("click",".btn_limpiar",function(e){
-    	limpiar();
+    	var num_fact_nuevo = 0;
+    	limpiar(num_fact_nuevo);
     });
      
 });
+
+function verificar_exixtencias(indice){
+	var cant=document.getElementsByName("cantidad[]");
+	var exis_superada = 0;
+	
+	var fila = $("#fila"+indice);
+	
+	console.log("existencia que agarro del input: ",cant);
+	console.log("existencia que viene: ",existencia_actual);
+	console.log("fila: ",fila);
+
+	if (cant[indice].value <= 0) {
+		$('#md_existencias_actualizar').modal('show');
+		$("#msg_adver").empty().html('No se pueden actualizar existencias iguales o menores que cero');
+		$("#exitencia_adver").empty().html('...');
+		$("#producto_adver").css("display","none");
+
+	}else if (cant[indice].value > existencia_actual[indice]) {
+		
+		$('#md_existencias_actualizar').modal('show');
+		$("#exitencia_adver").empty().html('Existencia: '+cant[indice].value);
+		$("#msg_adver").empty().html('Esta cantidad solicitada supera la exixtencia actual.');
+		$("#producto_adver").css("display","block");
+		$("#producto_adver").empty().html('Producto: '+producto_verficar[indice]);
+		console.log("existencia nueva: ",cant[indice].value);			
+		
+	}else{
+		modificarSubtotales();
+	}	
+	
+
+}
 
 
 function modificarSubtotales(){
 	var cant=document.getElementsByName("cantidad[]");
 	var prec=document.getElementsByName("precio_item_venta[]");
 	var sub=document.getElementsByName("subtotal");
+	
 
 	
 	for (var i = 0; i < cant.length; i++) {
+
 		var inpC=cant[i];
 		var inpP=prec[i];
 		var inpS=sub[i];
-
-
+		
 		inpS.value=inpC.value*inpP.value;
-		document.getElementsByName("subtotal")[i].innerHTML=inpS.value;
+		document.getElementsByName("subtotal")[i].innerHTML=inpS.value;		
 	}
 
 	calcularTotales();
@@ -277,6 +319,8 @@ function calcularTotales(){
 	var sub = document.getElementsByName("subtotal");
 	var subt  = 0.0;
 	var total=0.0;
+	var iva = 0.0;
+	
 
 	for (var i = 0; i < sub.length; i++) {
 		total += document.getElementsByName("subtotal")[i].value;
@@ -285,8 +329,32 @@ function calcularTotales(){
 
 	$("#subtotal_v_venta_d").val("$"+subt);
 	$("#subtotal_g_venta_d").val(subt);
-	$("#total_v_venta_d").val("$"+total);
-	$("#total_g_venta_d").val(total);
+
+	var tipo = $("#tipo_doc_venta").val()
+
+	
+
+		if ($("#tipo_doc_venta").val() == "Crédito Fiscal"){
+ 			iva = subt*0.13;			
+			total = iva + subt;
+			$("#iva_v_venta_d").val("$"+iva);
+			$("#iva_g_venta_d").val(iva);
+
+			$("#total_v_venta_d").val("$"+total);
+			$("#total_g_venta_d").val(total);
+ 		}else{
+ 			$("#total_v_venta_d").val("$"+total);
+			$("#total_g_venta_d").val(total);
+ 		}
+	
+
+	/**/
+	
+	
+	console.log("tipo: ",tipo);
+	/*$("#total_v_venta_d").val("$"+total);
+	$("#total_g_venta_d").val(total);*/
+
 	evaluar();
 }
 
@@ -305,14 +373,18 @@ function evaluar(){
 
 function eliminarDetalle(indice){
 	$("#fila"+indice).remove();
+	cont = cont-1;
 	calcularTotales();
 	detalles=detalles-1;
 
 }
 
 //funcion limpiar
-function limpiar(){
-
+function limpiar(num_fact_nuevo){
+	if (num_fact_nuevo != 0) {
+		var numfact = Number(num_fact_nuevo) + 1;
+		$("#num_fact").empty().html(numerofactura(numfact.toString()));
+	}
 	$("#formulario_registro_venta").trigger('reset');	
 	$(".filas").remove();
 }
