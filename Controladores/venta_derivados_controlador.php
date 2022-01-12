@@ -4,6 +4,7 @@
 	$modelo = new Modelo();	
 	$agregar_pro_seleccionado = [];
 	$tipo_doc = "";
+
 	
 	if (isset($_POST['almacenar_venta']) && $_POST['almacenar_venta']=="nueva_venta") {
 
@@ -33,6 +34,7 @@
 		        $result_venta = $modelo->insertar_generica($array_insertar);
 				$tipo_doc = $_POST['tipo_doc_venta'];
 				$numfact = $_POST['num_fact_guardar'];
+				$id_venta_previo = $id_insertar;
 		    if($result_venta[0]=='1'){//EVALUA SI LA VENTA SE RALIAZÓ CORRECTAMENTE
 
 										
@@ -86,11 +88,11 @@
 						//ENVIO EL ERROR OBTENIDO EN ESTA POSICIÓN
 						$array = array("Error","ultimaventa",$result_existencia);
 						print json_encode($array);
-						exit();
+						exit(); 
 					}
 					
 		        	
-		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_insertar,$numfact));
+		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_venta_previo,$numfact));
 					exit();
 	        }else {
 	        	//ENVIO EL ERROR OBTENIDO EN ESTA POSICIÓN

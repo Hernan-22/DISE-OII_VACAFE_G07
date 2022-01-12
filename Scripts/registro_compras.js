@@ -31,9 +31,9 @@ $(function (){
 	    		$('#descrip').empty().html(json[4]['txt_descrip_compra']);
 	    		$('#fecha_compra').empty().html(fecha_compra);
 	    		$('#fecha_sistema').empty().html(fecha_sistema);
-	    		$('#total_compra').val('$'+json[4]['dou_total_compra']);
-	    		$('#iva_compra').val('$'+json[4]['dou_iva_aplicado']);
-	    		$('#subtotal_compra').val('$'+json[6]);
+	    		$('#total_compra').empty().html('$'+json[4]['dou_total_compra']);
+	    		$('#iva_compra').empty().html('$'+json[4]['dou_iva_aplicado']);
+	    		$('#sub_total_compra').empty().html('$'+json[6].toFixed(2));
 
 
 

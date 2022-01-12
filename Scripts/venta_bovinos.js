@@ -3,6 +3,7 @@
 	var detalles=0;
 	var subtotal_todos = 0;
 	cargar_tabla_bovinos();
+	$('#msg_decimales_b').css("display","none");
 $(function (){	
 
 	var fecha_hoy = new Date();
@@ -49,6 +50,14 @@ $(function (){
 		        icon: 'info',
 		        title: 'Debe elegir un Clinte'
 		    });
+			return;
+ 		}
+ 		if ($("#subtotal_g_venta_b").val() < 0){
+
+ 			$("#msg_adver").empty().html('No se permite guardar totales menores que cero');
+			
+			$('#md_precio_actualizar').modal('show');
+
 			return;
  		} 		
 		console.log("Imprimiendo datos: ",datos);
@@ -218,7 +227,7 @@ $(function (){
 
 	       	'<td class="text-center"><span id="raza_bovino" name="raza_bovino" >'+data_raza+'</span> </td>'+
 
-	        '<td class="text-center" ><input type="number" autocomplete="off" class="form-control" name="precio_bovino_venta[]" id="precio_bovino_venta[]" value="'+precio_bovino_venta+'">'+
+	        '<td class="text-center" ><input type="number" autocomplete="off" min="0" step="00.01" class="form-control" name="precio_bovino_venta[]" id="precio_bovino_venta[]" value="'+precio_bovino_venta+'">'+
 
 	        '<input type="hidden" autocomplete="off" class="form-control" name="cantidad[]" id="cantidad[]" value="'+cantidad+'">'+
 
@@ -226,7 +235,7 @@ $(function (){
 
 	        '<input type="hidden" class="form-control" name="subtotal_guardar[]"  id="subtotal_guardar[]" value="'+subtotal+'">'+'</td>'+
 
-	        '<td class="text-center project-actions"><button type="button" onclick="modificarSubtotales()" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
+	        '<td class="text-center project-actions"><button type="button" onclick="verificar_precios('+cont+')" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
 	        
 	        	'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')"><i class="fas fa-trash"></i></button>'+
 	        '</td>'+
@@ -236,9 +245,9 @@ $(function (){
 			detalles++;
 			$("#subtotal_v_venta_b").val("$"+subtotal_todos);
 			$('#tablaDetalleVentaB').append(fila);
-			modificarSubtotales();
-			console.log("vuelve tener est: ",data_idbovino);
 			
+			console.log("vuelve tener est: ",data_idbovino);
+			$('#msg_decimales_b').css("display","block");
 		}else{
 			Toast.fire({
 		        icon: 'error',
@@ -249,12 +258,36 @@ $(function (){
 		
     });
 
+    
+
     $(document).on("click",".btn_limpiar_b",function(e){
     	var num_fact_nuevo = 0;
     	limpiar(num_fact_nuevo);
     });
      
 });
+
+	function verificar_precios(indice){
+		var precio_v=document.getElementsByName("precio_bovino_venta[]");
+		
+		
+		var fila = $("#fila"+indice);
+		
+		console.log("existencia que agarro del input: ",precio_v);		
+		console.log("fila: ",fila);
+
+		if (precio_v[indice].value < 0) {
+			
+			$("#msg_adver").empty().html('No se permite actualizar precios menores que cero');
+			
+			$('#md_precio_actualizar').modal('show');
+
+		}else{
+			modificarSubtotales();
+		}	
+	
+
+	}
 
 
 function modificarSubtotales(){
@@ -278,18 +311,34 @@ function modificarSubtotales(){
 
 function calcularTotales(){
 	var sub = document.getElementsByName("subtotal");
-	var subt  = 0.0;
+	var subt  = 0.0;	
 	var total=0.0;
+	var iva = 0.0;
 
 	for (var i = 0; i < sub.length; i++) {
 		total += document.getElementsByName("subtotal")[i].value;
 		subt = subt + document.getElementsByName("subtotal")[i].value;
 	}
 
-	$("#subtotal_v_venta_b").val("$"+subt);
-	$("#subtotal_g_venta_b").val(subt);
-	$("#total_v_venta_b").val("$"+total);
-	$("#total_g_venta_b").val(total);
+	if ($("#tipo_doc_venta_b").val() == "Crédito Fiscal"){
+
+ 			
+		total = (parseFloat(subt) + parseFloat(subt*0.13)).toFixed(2);
+		iva = total-subt;	
+
+		$("#iva_v_venta_b").val("$"+iva.toFixed(2));
+		$("#iva_g_venta_b").val(iva);
+
+		$("#total_v_venta_b").val("$"+total);
+		$("#total_g_venta_b").val(total);
+	}else{
+ 		$("#total_v_venta_b").val("$"+total);
+		$("#total_g_venta_b").val(total);
+ 	}
+		$("#subtotal_v_venta_b").val("$"+subt.toFixed(2));
+		$("#subtotal_g_venta_b").val(subt);
+	
+	
 	evaluar();
 }
 
@@ -310,6 +359,13 @@ function eliminarDetalle(indice){
 	$("#fila"+indice).remove();
 	calcularTotales();
 	detalles=detalles-1;
+	cont=cont-1
+
+	if (cont >= 1 ) {
+		$('#msg_decimales_b').css("display","block");
+	}else{
+		$('#msg_decimales_b').css("display","none");
+	}
 
 }
 
@@ -319,9 +375,12 @@ function limpiar(num_fact_nuevo){
 		var numfact = Number(num_fact_nuevo) + 1;
 		$("#num_fact").empty().html(numerofactura(numfact.toString()));
 	}
-	
+	var cont = 0;
+	var detalles = 0;
 	$("#formulario_registro_venta_b").trigger('reset');	
+	$('#msg_decimales_b').css("display","none");
 	$(".filas").remove();
+
 }
 
 function cargar_tabla_bovinos(){

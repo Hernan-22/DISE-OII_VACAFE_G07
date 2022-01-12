@@ -33,6 +33,7 @@
 		        $result_venta = $modelo->insertar_generica($array_insertar);
 				$tipo_doc = $_POST['tipo_doc_venta_b'];
 				$numfact = $_POST['num_fact_guardar_b'];
+				$id_mostrar_v_b = $id_insertar;
 		    if($result_venta[0]=='1'){//EVALUA SI LA VENTA SE RALIAZÓ CORRECTAMENTE
 
 										
@@ -76,7 +77,7 @@
 					}
 					
 		        	
-		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_insertar,$numfact));
+		        	print json_encode(array("Exito",$_POST,$result_venta,$tipo_doc,$id_mostrar_v_b,$numfact));
 					exit();
 	        }else {
 	        	//ENVIO EL ERROR OBTENIDO EN ESTA POSICIÓN

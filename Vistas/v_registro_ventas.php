@@ -197,7 +197,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>Iva 13%:</th>
-                                                    <td><span id="iva_fact">$00.00</span></td>
+                                                    <td><span id="iva_aplicado">$00.00</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Venta Total: </th>
@@ -221,8 +221,6 @@
                                             Listo
                                         </button>
                                     </div>
-                                    
-                                     
                                 </div>
                             </div>
                         </div>    

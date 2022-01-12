@@ -45,7 +45,7 @@
 		
 		if($resultado_compra[0]=='1'){
 
-			if (($resultado_detcompra_insumos[0]=='1' && $resultado_detcompra_insumos[4]==1)) {
+			if (($resultado_detcompra_insumos[0]=='1' && $resultado_detcompra_insumos[4]>=1)) {
 				
 					foreach ($resultado_detcompra_insumos[2] as $row) {
 					$subtotal = $subtotal + $row['dou_subtotal_item_compra'];
@@ -56,7 +56,7 @@
 				                <td class="text-center ">'."$".''.$row['dou_subtotal_item_compra'].'</td>
 				            </tr>';		
 					}
-					$html.='<table class="table table-striped projects" width="100%">
+					$html.='<table class="table" width="100%">
 		                    <thead>
 					            <tr>
 					                <th>Producto</th>
@@ -73,21 +73,19 @@
 				print json_encode($array);
 				exit();
 					
-			}else if ($resultado_detbovino[0]=='1' && $resultado_detbovino[4]==1) {
+			}else if ($resultado_detbovino[0]=='1' && $resultado_detbovino[4]>=1) {
 				foreach ($resultado_detbovino[2] as $row) {
 					$subtotal = $subtotal + $row['dou_subtotal_item_compra'];
 					$htmltr.='<tr>
-					          <td>'.$row['nva_nom_bovino'].'</td>
-						          <td class="text-center "><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'"></td>
-						           <td class="text-center ">'.$row['nva_nom_raza'].'</td>
-						           <td class="text-center ">'."$".''.$row['dou_subtotal_item_compra'].'</td>
+						          <td>'.$row['nva_nom_bovino'].'</td>						          
+							      <td class="text-center ">'.$row['nva_nom_raza'].'</td>
+							      <td class="text-center ">'."$".''.$row['dou_subtotal_item_compra'].'</td>
 					           </tr>';		
 				}
-				$html.='<table class="table table-striped projects" width="100%">
+				$html.='<table class="table" width="100%">
 			                <thead>
 						        <tr>
-						            <th >Bovino</th>
-						            <th class="text-center col-2" >Foto</th>
+						            <th >Bovino</th>						          
                                     <th class="text-center col-2" >Raza</th>
                                     <th class="text-center col-2" >Costo $</th>
 						        </tr>

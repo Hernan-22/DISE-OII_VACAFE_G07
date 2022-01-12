@@ -223,6 +223,7 @@
                                             <br>
                                             <br>
                                             <br>
+                                            <span class="text-danger" id="msg_decimales_b"><i class="icon fas fa-exclamation-triangle"></i> Sólo se permiten 2 decimales como máximo</span>
                                             <div class="form-group float-sm-right">
                                                 <button type="submit" class="btn bg-success">
                                                     <i class="fas fa-check"></i>
@@ -502,7 +503,33 @@
                             </form>
                         </div>
                     </div>
-                </div>              
+                </div>
+
+                <!--MODAL SELECCION EXISTENCIAS-->
+                <div class="modal fade" id="md_precio_actualizar">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title">
+                            </i>Existencias</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p id="msg_adver" class="text-center">Esta cantidad solicitada supera la exixtencia actual.</p>
+                         
+                        </div>
+                        <div class="modal-footer justify-content-between">                          
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            </i>Aceptar</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                              
             </div>
               
             

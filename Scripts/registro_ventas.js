@@ -21,7 +21,8 @@ $(function (){
         
 	        if (json[0]=="Exito") {
 
-	        	console.log("tipo doc: ",json[4]);
+	        	
+	        	console.log("tipo doc: ",json[4]['dou_iva_venta']);
 	        	if (json[4]['nva_tipo_documento'] == "Factura" || json[4]['nva_tipo_documento'] == "Crédito Fiscal") {
 
 
@@ -44,7 +45,7 @@ $(function (){
 	        		$('#tipo_doc_ver_fact').empty().html(json[4]['nva_tipo_documento']);
 		    		$('#num_doc_ver_fact').empty().html('#'+num_fact);
 		    		$('#fecha_fact').empty().html(fecha);
-		    		$('#hora_fact').empty().html(fecha);
+		    		$('#hora_fact').empty().html(hora);
 
 		    		$('#nom_cliente_fact').empty().html(json[4]['nva_nom_cliente']+' '+apellido_cliente_v);
 		    		$('#dui_cliente_fact').empty().html(json[4]['nva_dui_cliente']);
@@ -55,7 +56,7 @@ $(function (){
 		    		$('#fecha_fact_sis').empty().html(fecha_sistema);
 		    		$('#hora_fact_sis').empty().html(hora_sistema);
 
-		    		$('#iva_fact').val('$'+json[4]['dou_iva_venta']);
+		    		$('#iva_aplicado').empty().html('$'+json[4]['dou_iva_venta']);
 		    		$('#sub_total_fact').empty().html('$'+json[6]);
 					$('#total_fact').empty().html('$'+json[4]['dou_total_venta']);					
 

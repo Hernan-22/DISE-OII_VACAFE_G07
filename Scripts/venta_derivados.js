@@ -5,6 +5,7 @@
 	var existencia_actual = [];
 	var producto_verficar = [];
 	cargar_tabla_productos();
+	$('#msg_decimales').css("display","none");
 $(function (){	
 
 	var fecha_hoy = new Date();
@@ -13,6 +14,7 @@ $(function (){
 		endDate: fecha_hoy,
 		todayBtn: true
 	});
+
 	
 	$('#formulario_registro_venta').validate({
 	    rules: {	     
@@ -142,7 +144,7 @@ $(function (){
 
 
 						         	$("#tb_Detalle_Derivados_Ver_t").empty().html(json[2]);
-						         	$('#md_ver_venta_ticket').modal('show');
+						         	$('#md_ticket_previo').modal('show');
 					        	
 					        	}
 					        }   
@@ -222,15 +224,15 @@ $(function (){
 		        '<td class="text-center">'+'<div class="product-image-thumb active">'+
 		        	'<img alt="Product Image" style="width: 89px; height: 81px;" src="'+data_imgen+'"></td></div>'+
 
-		        '<td><input type="number" autocomplete="off" class="form-control" name="precio_item_venta[]" id="precio_item_venta[]" value="'+data_precioitem+'"></td>'+
+		        '<td><input type="number" autocomplete="off" class="form-control" min="0" step="00.01"  name="precio_item_venta[]" id="precio_item_venta[]" value="'+data_precioitem+'"></td>'+
 
-		        '<td><input type="number" autocomplete="off" class="form-control" name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
+		        '<td><input type="number" autocomplete="off" class="form-control" min="0"  name="cantidad[]" id="cantidad[]" value="'+cantidad+'"></td>'+
 
 		        '<td class="text-center"><span id="subtotal'+cont+'" name="subtotal" >'+subtotal+'</span>'+
 
 		        '<input type="hidden" class="form-control" name="subtotal_guardar[]"  id="subtotal_guardar[]" value="'+subtotal+'">'+'</td>'+
 
-		        '<td class="text-center project-actions"><button type="button" onclick="verificar_exixtencias('+cont+')" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
+		        '<td class="text-center project-actions"><button type="button" onclick="verificar_existencias('+cont+')" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
 		        
 		        	'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')"><i class="fas fa-trash"></i></button>'+
 		        '</td>'+
@@ -242,6 +244,7 @@ $(function (){
 				$('#tablaDetalleVentaD').append(fila);
 				//modificarSubtotales();
 				console.log("vuelve tener est: ",data_iditem);
+				$('#msg_decimales').css("display","block");
 				
 			}else{
 				Toast.fire({
@@ -262,8 +265,9 @@ $(function (){
      
 });
 
-function verificar_exixtencias(indice){
+function verificar_existencias(indice){
 	var cant=document.getElementsByName("cantidad[]");
+	var precio_v=document.getElementsByName("precio_item_venta[]");
 	var exis_superada = 0;
 	
 	var fila = $("#fila"+indice);
@@ -287,10 +291,13 @@ function verificar_exixtencias(indice){
 		$("#producto_adver").empty().html('Producto: '+producto_verficar[indice]);
 		console.log("existencia nueva: ",cant[indice].value);			
 		
+	}else if (precio_v[indice].value < 0) {
+		$("#msg_adver_precios").empty().html('No se permite actualizar precios menores que cero');
+			
+		$('#md_precio_actualizar').modal('show');
 	}else{
 		modificarSubtotales();
-	}	
-	
+	}		
 
 }
 
@@ -335,9 +342,10 @@ function calcularTotales(){
 	
 
 		if ($("#tipo_doc_venta").val() == "Crédito Fiscal"){
- 			iva = subt*0.13;			
-			total = iva + subt;
-			$("#iva_v_venta_d").val("$"+iva);
+ 						
+			total = (parseFloat(subt) + parseFloat(subt*0.13)).toFixed(2);
+			iva = total-subt;
+			$("#iva_v_venta_d").val("$"+iva.toFixed(2));
 			$("#iva_g_venta_d").val(iva);
 
 			$("#total_v_venta_d").val("$"+total);
@@ -347,7 +355,8 @@ function calcularTotales(){
 			$("#total_g_venta_d").val(total);
  		}
 	
-
+ 		$("#subtotal_v_venta").val("$"+subt.toFixed(2));
+		$("#subtotal_g_vent").val(subt);
 	/**/
 	
 	
@@ -377,6 +386,12 @@ function eliminarDetalle(indice){
 	calcularTotales();
 	detalles=detalles-1;
 
+	if (cont >= 1 ) {
+		$('#msg_decimales').css("display","block");
+	}else{
+		$('#msg_decimales').css("display","none");
+	}
+
 }
 
 //funcion limpiar
@@ -385,8 +400,12 @@ function limpiar(num_fact_nuevo){
 		var numfact = Number(num_fact_nuevo) + 1;
 		$("#num_fact").empty().html(numerofactura(numfact.toString()));
 	}
-	$("#formulario_registro_venta").trigger('reset');	
+	$("#formulario_registro_venta").trigger('reset');
+	$('#msg_decimales').css("display","none");
+	cont = 0;
+	detalles = 0;	
 	$(".filas").remove();
+
 }
 
 function cargar_tabla_productos(){

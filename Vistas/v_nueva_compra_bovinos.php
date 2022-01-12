@@ -1,6 +1,20 @@
  <?php 
     date_default_timezone_set('America/El_Salvador');
-    @session_start(); 
+    @session_start();
+    if (isset($_SESSION['logueado']) && $_SESSION['logueado']=="si") {
+
+        $_SESSION['compra'] = null;
+        if ($_SESSION['bloquear_pantalla']=="no") {
+            // code...
+            
+        }else{
+             
+            header("Location: ../Vistas/v_bloquear_pantalla.php");
+             
+        }
+    }else{
+          header("Location: ../Vistas/index.php");
+    } 
 ?>  
 <!DOCTYPE html>
 <html lang="en">
@@ -90,10 +104,10 @@
                                                         <div class="form-group">
                                                             <label>Tipo Documento</label>
                                                             <select class="form-control" id="tipo_doc_compra_b" name="tipo_doc_compra_b" required>
-                                                                <option selected="selected">Certificado de Carta de Venta</option>
-                                                                 <option>Factura</option>
-                                                                <option>Ticket</option>
-                                                                <option>Crédito Fiscal</option>
+                                                                <option value="Certificado de Carta de Venta" selected="selected">Certificado de Carta de Venta</option>
+                                                                <option value="Factura">Factura</option>
+                                                                <option value="Ticket">Ticket</option>
+                                                                <option value="Crédito Fiscal">Crédito Fiscal</option>
                                                             </select>
                                                         </div>                                                      
                                                     </div>
@@ -169,24 +183,24 @@
                                                 </div>
                                                     <div class="col-2 float-sm-right">
                                                         <label>Total</label>                            
-                                                         <input id="total_compra_vista" name="total_compra_vista" type="text" class="form-control" placeholder="$00.00" readonly="true">
-                                                         <input type="hidden" name="total_compra_guardar" id="total_compra_guardar">
+                                                         <input id="total_compra_vista_b" name="total_compra_vista_b" type="text" class="form-control" placeholder="$00.00" readonly="true">
+                                                         <input type="hidden" name="total_compra_guardar_b" id="total_compra_guardar_b">
                                                     </div>
                                                     <div class="col-2 float-sm-right">
                                                         <label>Iva</label>
-                                                        <input id="Iva_compra_vista" name="Iva_compra_vista" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                        <input type="hidden" name="iva_guardar" id="iva_guardar">
+                                                        <input id="iva_compra_vista_b" name="iva_compra_vista_b" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
+                                                        <input type="hidden" name="iva_guardar_b" id="iva_guardar_b">
                                                     </div>
                                                     <div class="col-2 float-sm-right">
                                                         <label>SubTotal</label>
-                                                        <input id="Subtotal_compra_vista" name="Subtotal_compra_vista"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                        <input type="hidden" name="subtotal_guardar" id="subtotal_guardar">
+                                                        <input id="subtotal_compra_vista_b" name="subtotal_compra_vista_b"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
+                                                        <input type="hidden" name="subtotal_guardar_b" id="subtotal_guardar_b">
                                                     </div>
                                                 <br>
                                                 <br>
                                                 <br>
                                                 <br>
-
+                                                 <span class="text-danger" id="msg_decimales_compra_b"><i class="icon fas fa-exclamation-triangle"></i> Sólo se permiten 2 decimales como máximo</span>
                                                 <div class="form-group float-sm-right">
                                                     <button class="btn bg-success" type="submit">
                                                         <i class="fas fa-check"></i>
@@ -232,6 +246,30 @@
                             </div>
                         </div>
                     </form>   
+                </div>
+
+                <!--MODAL ADVERTENCIA COSTO-->
+                <div class="modal fade" id="md_costo_b">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title" id="titulo_modal">
+                            Costo del Bovino</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">                         
+                         <p id="msg_adver_costo_b" class="text-center">Digite un costo mayor o igual a cero</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            </i>Aceptar</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
                 </div>               
             </div>
 

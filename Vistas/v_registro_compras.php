@@ -187,34 +187,42 @@
                                         </div>
                                         <!-- /.col -->
                                     </div>
+                                    <div class="dropdown-divider"></div>
                                     <div class="row">
-                                        <div class="col-12 table-responsive">
-                                            <div class="col-12 table-responsive">
-                                                <div id="tablaDetalleDerivados"></div>        
+                                        <div class="col-8">
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="table-responsive">
+                                                <table class="table" width="100%">                             
+                                                    <tr>
+                                                        <th style="width:50%">Sub Total:</th>
+                                                         <td><span id="sub_total_compra">$00.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Iva 13%:</th>
+                                                        <td><span id="iva_compra">$00.00</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Venta Total: </th>
+                                                        <td><span id="total_compra">$00.00</span></td>
+                                                    </tr>
+                                                </table>                             
                                             </div>
-                                                <div class="col-2 float-sm-right">
-                                                    <label>Total</label>
-                                                    <input id="total_compra" name="Total_compra" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                </div>
-                                                <div class="col-2 float-sm-right">
-                                                    <label>Iva</label>
-                                                    <input id="iva_compra" name="Iva_compra" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                </div>
-                                                <div class="col-2 float-sm-right">
-                                                    <label>SubTotal</label>
-                                                    <input id="subtotal_compra" name="Subtotal_compra"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
-                                                </div>
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <br>
-
-                                            <div class="form-group float-sm-right">
-                                                <button class="btn bg-success" type="button" data-dismiss="modal">
-                                                    <i class="fas fa-check"></i>
-                                                    Listo
-                                                </button>
-                                            </div>
+                                        </div>                                    
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button class="btn bg-success" type="button" data-dismiss="modal">
+                                                <i class="fas fa-print"></i>
+                                                Imprimir
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="col-6">
+                                            <button class="btn bg-success float-sm-right" type="button" data-dismiss="modal">
+                                                <i class="fas fa-check"></i>
+                                                Listo
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

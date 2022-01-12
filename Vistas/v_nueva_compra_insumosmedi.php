@@ -17,7 +17,7 @@
     }
 ?>    
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,7 +86,7 @@
                                 <div class="col-12 col-sm-12">
                                     <div class="card">
                                         <div class="card-header bg-success">
-                                            <h3 class="card-title">Compras</h3>
+                                            <h3 class="card-title">Compras | Medicamentos e Imsumos</h3>
                                         </div>
                                         <input type="hidden" id="almacenar_compra" name="almacenar_compra" value="nueva_compra">
                                         <input type="hidden" id="validando_detalle" name="validando_detalle" value="0">
@@ -108,9 +108,9 @@
         		                                        <div class="form-group">
         		                                            <label>Tipo Documento</label>
         		                                            <select class="form-control" id="tipo_doc_compra" name="tipo_doc_compra" required>
-        		                                                <option selected="selected">Factura</option>
-        		                                                <option>Ticket</option>
-        		                                                <option>Crédito Fiscal</option>
+        		                                                <option value="Factura" selected="selected">Factura</option>
+        		                                                <option value="Ticket">Ticket</option>
+        		                                                <option value="Crédito Fiscal">Crédito Fiscal</option>
         		                                            </select>
         		                                        </div>		                                                
         		                                    </div>
@@ -174,6 +174,7 @@
                                                 <table id="tablaDetalleDerivados" class="table table-striped projects" width="100%">
                                                    <thead>
                                                     <th >Producto</th>
+                                                    <th >Imagen</th>
                                                     <th class="text-center col-2" >Costo Unitario $</th>
                                                     <th class="text-center col-2" >Cantidad</th>
                                                     <th class="text-center col-2" >Sub Total $</th>
@@ -186,24 +187,24 @@
                                             </div>
                                                 <div class="col-2 float-sm-right">
                                                     <label>Total</label>                            
-                                                     <input id="total_compra_vista" name="total_compra_vista" type="text" class="form-control" placeholder="$00.00" readonly="true">
+                                                     <input id="total_compra_v_i" name="total_compra_v_i" type="text" class="form-control" placeholder="$00.00" readonly="true">
                                                      <input type="hidden" name="total_compra_guardar" id="total_compra_guardar">
                                                 </div>
                                                 <div class="col-2 float-sm-right">
                                                     <label>Iva</label>
-                                                    <input id="Iva_compra_vista" name="Iva_compra_vista" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
+                                                    <input id="iva_compra_vista" name="iva_compra_vista" type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
                                                     <input type="hidden" name="iva_guardar" id="iva_guardar">
                                                 </div>
                                                 <div class="col-2 float-sm-right">
                                                     <label>SubTotal</label>
-                                                    <input id="Subtotal_compra_vista" name="Subtotal_compra_vista"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
+                                                    <input id="subtotal_compra_vista_i" name="subtotal_compra_vista_i"  type="text" class="form-control" placeholder="$00.00" contenteditable="false" readonly="true">
                                                     <input type="hidden" name="subtotal_guardar" id="subtotal_guardar">
                                                 </div>
                                             <br>
                                             <br>
                                             <br>
                                             <br>
-
+                                            <span class="text-danger" id="msg_decimales_compra"><i class="icon fas fa-exclamation-triangle"></i> Sólo se permiten 2 decimales como máximo</span>
                                             <div class="form-group float-sm-right">
                                                 <button class="btn bg-success" type="submit">
                                                     <i class="fas fa-check"></i>
@@ -245,6 +246,53 @@
                             </div>
                         </div>
                     </form>   
+                </div>
+
+                <!--MODAL SELECCION CANTIDAD COMPRAR-->
+                <div class="modal fade" id="md_costo">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title" id="titulo_modal">
+                            Cantidad de Prductos Ingresados</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">                         
+                         <p id="msg_adver_costo" class="text-center">...</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            </i>Aceptar</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--MODAL SELECCION CANTIDAD COMPRAR-->
+                <div class="modal fade" id="md_cantidad">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">                          
+                          <h4 class="modal-title" id="titulo_modal">
+                            Cantidad de Prductos Ingresados</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                         <p id="msg_adver_cant" class="text-center">...</p>                         
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            </i>Aceptar</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
                 </div>
             </div>
 

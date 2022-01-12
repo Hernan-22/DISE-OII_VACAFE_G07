@@ -48,7 +48,7 @@
 		//=============================================================================================================
 		if($resultado_venta[0]=='1'){
 
-			if (($resultado_detv_derivados[0]=='1' && $resultado_detv_derivados[4]==1)) {
+			if (($resultado_detv_derivados[0]=='1' && $resultado_detv_derivados[4]>=1)) {
 				
 					foreach ($resultado_detv_derivados[2] as $row) {
 					$subtotal = $subtotal + $row['dou_subtotal_item_vender'];
@@ -73,11 +73,11 @@
 		            $html.=$htmltr;
 					$html.='</tbody>
 		                    	</table>';					
-				$array = array("Exito","detalle",$html,$_POST,$resultado_venta[2][0],$resultado_detv_derivados,$subtotal);
+				$array = array("Exito","detalle",$html,$_POST,$resultado_venta[2][0],$resultado_detv_derivados,$subtotal,$resultado_detv_derivados[4]);
 				print json_encode($array);
 				exit();
 					
-			}else if ($resultado_detbovino[0]=='1' && $resultado_detbovino[4]==1) {
+			}else if ($resultado_detbovino[0]=='1' && $resultado_detbovino[4]>=1) {
 				foreach ($resultado_detbovino[2] as $row) {
 					$subtotal = $subtotal + $row['dou_subtotal_item_vender'];
 					$htmltr.='<tr>
@@ -102,7 +102,7 @@
 				print json_encode($array);
 				exit();
 			}else{
-				$array = array("Error","no se pudo mostrar la tabla",$resultado_detv_derivados,$resultado_detbovino);
+				$array = array("Error","no se pudo mostrar la tabla",$resultado_detv_derivados,$resultado_detbovino,$resultado_detv_derivados[4],$resultado_detbovino[4]);
 				print json_encode($array);
 				exit();
 			}
@@ -132,8 +132,10 @@
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {
-			$fecha = datetimeformateado($row['dat_fecha_venta']);	
+			$fecha = datetimeformateado($row['dat_fecha_venta']);
+			$numero_venta = numerofactura($row['int_num_doc']);
 				 $htmltr.='<tr>
+				 				<td class="text-center">'.$numero_venta.'</td>
 	                            <td class="text-center">'.$fecha.'</td>
 	                            <td class="text-center">'.$row['nva_nom_cliente'].' '.$row['nva_ape_cliente'].'</td>
 	                            <td class="text-center">'."$".''.$row['dou_total_venta'].'</td>
@@ -147,6 +149,7 @@
 			$html.='<table id="example1" class="table table-striped projects" width="100%">
                     <thead>
                         <tr>
+                        	<th class="text-center">Venta No.</th>
                         	<th class="text-center">Fecha y Hora</th>
                             <th class="text-center">Cliente</th>
                             <th class="text-center">Total $</th>
@@ -184,6 +187,33 @@
 			//Concateno la fecha formteada con la hora y un espacio
 			$fecha1 = $fecha[2].'-'.$fecha[1].'-'.$dia1.' '.$hora;
 			return $fecha1;
+	}
+
+	function numerofactura($numero){
+		//divido la feha de la hora
+		$cifras = $numero;
+		$numero_factura = "";
+
+
+		if (strlen($cifras) == 1) {
+			return $numero_factura = '00000'.$numero;
+
+		}else if (strlen($cifras) == 2){
+			return $numero_factura = '0000'.$numero;
+
+		}else if (strlen($cifras) == 3){
+			return $numero_factura = '000'.$numero;
+
+		}else if (strlen($cifras) == 4){
+			return $numero_factura = '00'.$numero;
+
+		}else if (strlen($cifras) == 5){
+			return $numero_factura = '0'.$numero;
+
+		}else{
+			return $numero;
+		}
+
 	}
 
 

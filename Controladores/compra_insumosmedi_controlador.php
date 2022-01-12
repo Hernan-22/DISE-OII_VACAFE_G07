@@ -114,18 +114,32 @@
 					
 		$htmltr = $html="";
 		$cuantos = 0;
-		$sql ="SELECT int_idproducto, nva_nom_producto, dou_costo_producto FROM tb_producto WHERE int_idcategoria = 3 AND nva_estado_producto = 'Activo'";
+		$sql ="SELECT
+					* 
+				FROM
+					tb_producto
+					INNER JOIN tb_categoria ON tb_producto.int_idcategoria = tb_categoria.int_idcategoria 
+				WHERE
+					nva_nom_categoria = 'MEDICINA' 
+					OR nva_nom_categoria = 'INSUMOS' 
+					AND nva_estado_producto = 'Activo'";
 		$result = $modelo->get_query($sql);
 		if($result[0]=='1'){
 			
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td class="text-center">'.$row['nva_nom_producto'].'</td>
+	                            <td>
+	                            	<div class="product-image-thumb active">
+	                            		<img alt="Product Image" style="width: 89px; height: 81px;" src="'.$row['nva_image_producto'].'">
+	                            	</div>
+	                            </td>
 	                            <td class="text-center">'."$".''.$row['dou_costo_producto'].'</td>
 	                            <td class="text-center project-actions">
 			                        <button class="btn btn-info btn-sm btn_seleccionado" 
 			                        	data-idproducto_seleccionado="'.$row['int_idproducto'].'"
-			                        	data-nombre_item_selec="'.$row['nva_nom_producto'].'">
+			                        	data-nombre_item_selec="'.$row['nva_nom_producto'].'"
+			                        	data-imagen_item_selec="'.$row['nva_image_producto'].'">
 			                            <i class="fas fa-check"></i>
 			                        </button>
 			                    </td>
@@ -135,6 +149,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">Nombre</th>
+                            <th>Imagen</th>
                             <th class="text-center">Costo</th>
                             <th class="text-center">Acciones</th>
                         </tr>

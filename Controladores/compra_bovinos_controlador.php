@@ -21,8 +21,8 @@
 		            "table" => "tb_compra",
 		            "int_idcompra"=>$id_insertar,
 		            "txt_descrip_compra" => $_POST['descrip_compra_b'],
-		            "dou_total_compra" => $_POST['total_compra_guardar'],
-		            "dou_iva_aplicado" => $_POST['iva_guardar'],
+		            "dou_total_compra" => $_POST['total_compra_guardar_b'],
+		            "dou_iva_aplicado" => $_POST['iva_guardar_b'],
 		            "dat_fecha_compra" => $modelo->formatear_fecha_hora($_POST['fecha_compra_b']),
 		            "dat_fecha_sistema" => date("Y-m-d G:i:s"),
 		            "nva_tipo_documento" => $_POST['tipo_doc_compra_b'],
@@ -119,7 +119,11 @@
 			foreach ($result[2] as $row) {	
 				 $htmltr.='<tr>
 	                            <td class="text-center">'.$row['nva_nom_bovino'].'</td>
-	                            <td class="text-center"><img alt="img" width="90" height="100" src="'.$row['nva_foto_bovino'].'"></td>
+	                            <td>
+	                            	<div class="product-image-thumb active">
+	                            		<img alt="Product Image" style="width: 89px; height: 81px;" src="'.$row['nva_foto_bovino'].'">
+	                            	</div>
+	                            </td>
 	                            <td class="text-center">'.$row['nva_nom_raza'].'</td>
 
 	                            <td class="text-center project-actions">

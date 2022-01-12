@@ -2,6 +2,7 @@
 	var cont=0;
 	var detalles=0;
 	var subtotal_todos = 0;
+	$('#msg_decimales_compra_b').css("display","none");
 $(function (){	
 
 	cargar_tabla_bovinos();
@@ -122,11 +123,11 @@ $(function (){
 			var fila='<tr class="filas" id="fila'+cont+'">'+	        
 	       '<td><input type="hidden" class="form-control" id="idexpediente[]" name="idexpediente[]" value="'+data_idexpe+'">'+data_nombreb+'</td>'+
 
-	       	'<td class="text-center"><img alt="img" width="90" height="100" src="'+data_foto+'"></td>'+
+	       	'<td class="text-center"><div class="product-image-thumb active"><img alt="Product Image" style="width: 89px; height: 81px;" src="'+data_foto+'"></div></td>'+
 
 	       	'<td class="text-center"><span id="raza_bovino" name="raza_bovino" >'+data_raza+'</span> </td>'+
 
-	        '<td><input type="number" autocomplete="off" class="form-control" name="costo_bovino_compra[]" id="costo_bovino_compra[]" value="'+costo_bovino_compra+'">'+
+	        '<td><input type="number" autocomplete="off" class="form-control" min="0" step="00.01" name="costo_bovino_compra[]" id="costo_bovino_compra[]" value="'+costo_bovino_compra+'">'+
 
 	        '<input type="hidden" autocomplete="off" class="form-control" name="cantidad[]" id="cantidad[]" value="'+cantidad+'">'+
 
@@ -134,7 +135,7 @@ $(function (){
 
 	        '<input type="hidden" class="form-control" name="subtotal_guardar[]"  id="subtotal_guardar[]" value="'+subtotal+'">'+'</td>'+
 
-	        '<td class="text-center project-actions"><button type="button" onclick="modificarSubtotales()" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
+	        '<td class="text-center project-actions"><button type="button" onclick="verificar_costo_comprar_b('+cont+')" class="btn btn-info"><i class="fa fa-sync-alt"></i></button>'+
 	        
 	        	'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')"><i class="fas fa-trash"></i></button>'+
 	        '</td>'+
@@ -144,7 +145,8 @@ $(function (){
 			detalles++;
 			$("#Subtotal_compra_vista").val("$"+subtotal_todos);
 			$('#tablaDetalleBovinos').append(fila);
-			modificarSubtotales();
+			//modificarSubtotales();
+			$('#msg_decimales_compra_b').css("display","block");
 			console.log("vuelve tener est: ",data_idexpe);
 			
 		}else{
@@ -171,7 +173,7 @@ $(function (){
         te = String.fromCharCode(tecla);
         return patron.test(te);
   	});
-  	 $('.fecha_compra_val').keypress(function(e) {
+  	$('.fecha_compra_val').keypress(function(e) {
 
         tecla = (document.all) ? e.keyCode : e.which;
         if (tecla==8) return true;
@@ -186,9 +188,25 @@ $(function (){
      
 });
 
-function limpiar(){
+function verificar_costo_comprar_b(indice){	
+	var costo_c_b=document.getElementsByName("costo_bovino_compra[]");
+	
+	var fila = $("#fila"+indice);
+	console.log("fila: ",fila);
 
-	$("#formulario_registro_compra_b").trigger('reset');	
+	if (costo_c_b[indice].value < 0) {
+		$('#md_costo_b').modal('show');
+	}else{
+		modificarSubtotales();
+	}		
+
+}
+
+function limpiar(){
+	$('#msg_decimales_compra_b').css("display","none");
+	$("#formulario_registro_compra_b").trigger('reset');
+	cont = cont-1;
+	detalles=detalles-1;	
 	$(".filas").remove();
 }
 
@@ -222,10 +240,23 @@ function calcularTotales(){
 		subt = subt + document.getElementsByName("subtotal")[i].value;
 	}
 
-	$("#Subtotal_compra_vista").val("$"+subt);
-	$("#subtotal_guardar").val(subt);
-	$("#total_compra_vista").val("$"+total);
-	$("#total_compra_guardar").val(total);
+	if ($("#tipo_doc_compra_b").val() == "Crédito Fiscal"){
+ 							
+			total = (parseFloat(subt) + parseFloat(subt*0.13)).toFixed(2);
+			iva = total-subt;
+			$("#iva_compra_vista_b").val("$"+iva.toFixed(2));
+			$("#iva_guardar_b").val(iva);
+
+			$("#total_compra_vista_b").val("$"+total);
+			$("#total_compra_guardar_b").val(total);
+
+ 		}else{
+ 			$("#total_compra_vista_b").val("$"+total);
+			$("#total_compra_guardar_b").val(total);
+ 		}
+	
+ 		$("#subtotal_compra_vista_b").val("$"+subt.toFixed(2));
+		$("#subtotal_guardar_b").val(subt);
 	evaluar();
 }
 
@@ -243,9 +274,15 @@ function evaluar(){
 }
 
 function eliminarDetalle(indice){
-$("#fila"+indice).remove();
-calcularTotales();
-detalles=detalles-1;
+	$("#fila"+indice).remove();
+	calcularTotales();
+	cont = cont-1;
+	detalles=detalles-1;
+	if (cont >= 1 ) {
+		$('#msg_decimales_compra_b').css("display","block");
+	}else{
+		$('#msg_decimales_compra_b').css("display","none");
+	}
 
 }
 
