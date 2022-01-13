@@ -90,7 +90,7 @@ $(function(){
                         return;
                 }
 
-                        
+                console.log("los datos: ",datos);        
                 mostrar_mensaje("Generando Reporte","Espere un Momento")
                 $.ajax({
                     dataType: "json",
@@ -98,33 +98,26 @@ $(function(){
                     url:'../Controladores/reporte_compras_controlador.php',
                     data : datos,
                 }).done(function(json) {
-                        console.log("EL GUARDAR",json);         
-                        if (json[0]=="Exito") {
+                        console.log("EL GUARDAR",json); 
 
-                        }/*else if (json[0]=="Error" && json[1]=="existencias"){
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: 'No se pudo obtener la exitencia!'
-                                });
-                                
-                        }else if (json[0]=="Error" && json[1]=="ultimacompra"){
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: 'No se pudo obtener la ultima compra!'
-                                });
-                                
-                        }else if (json[0]=="Error" && json[1]=="en la insercion de la compra"){
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: 'No se pudo registrar la compra!'
-                                });
-                                
+
+                        if (json[0]=="Exito") {
+                                console.log("sql",json[2]);
+
+                                var timer = setInterval(function(){
+                                       var win = window.open("http://localhost/poryecto_DISEÑOII/DISEÑOII_VACAFE_G07/reportes/r_reporte_proveedor_compras.php?fei="+json[1]+"&fef="+json[2]+"&idp="+json[3], '_blank');
+                                        // Cambiar el foco al nuevo tab (punto opcional)
+                                        win.focus();
+                                        clearTimeout(timer);
+                                },3500)
+                              console.log("NO entra");
+
                         }else{
                                 Toast.fire({
                                     icon: 'info',
-                                    title: 'No ha seleccionado productos!'
+                                    title: 'Error al cargar el reporte!'
                                 });
-                        }*/
+                        }
         
                 });
         });
