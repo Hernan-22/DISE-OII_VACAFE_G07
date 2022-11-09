@@ -86,7 +86,7 @@ class PDF extends tFPDF{
 
                    // $tipo = ($row['tipo_persona']==2) ? "Empleado": "Administrador"; 
 
-                    $this->Cell($w[0],6,$row['dat_fecha_sistema'],'LR',0,'C',$fill);
+                    $this->Cell($w[0],6,datetimeformateado($row['dat_fecha_sistema']),'LR',0,'C',$fill);
                     $this->Cell($w[1],6,$row['txt_descrip_compra'],'LR',0,'L',$fill);
                     $this->Cell($w[2],6,"$".$row['dou_total_compra'],'LR',0,'C',$fill);
                      $this->Ln();
@@ -120,20 +120,19 @@ class PDF extends tFPDF{
                 AND dat_fecha_sistema <= '$fecha_fin' 
                 AND tb_compra.int_idproveedor = '$idproveedor'";
     $result = $modelo->get_query($sql);
-    $result = $modelo->get_query($sql);
     $pdf->AliasNbPages();
     $pdf->AddPage();
-    $pdf->Cell(30,10,'Proveedor: ',0,0,'C');
+    $pdf->Cell(60,10,"Proveedor: ".$result[2][0]['nva_nom_proveedor'],0,0,'C');
     $pdf->Ln(10);
     $pdf->FancyTable($header,$result);
     $pdf->Ln(5);
-    $pdf->Cell(30,10,utf8_decode('Iversión total: '),0,0,'C');
+    $pdf->Cell(30,10,utf8_decode('Inversión total: '),0,0,'C');
     $pdf->Cell(260,10,utf8_decode("$".$GLOBALS['total_inver']),0,0,'C'); 
     $pdf->Output(); 
 
 
 
-/*function datetimeformateado($fecha3){
+function datetimeformateado($fecha3){
 
             //divido la feha de la hora
             $separacion= explode(" ",$fecha3);
@@ -149,5 +148,5 @@ class PDF extends tFPDF{
             $fecha1 = $fecha[2].'-'.$fecha[1].'-'.$dia1.' '.$hora;
             return $fecha1;
 }  
-   */ 
+
 ?>
