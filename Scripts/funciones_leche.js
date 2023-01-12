@@ -226,8 +226,7 @@ function cargar_datos(){
     	console.log("EL consultar",json);
     	$("#tablaPro").empty().html(json[1]); 
     	$('#mod_add_leche').modal('hide');
-    	$("#botella_Leche").empty().html(json[4][0]); 
-    	
+    	$("#botella_Leche").empty().html(json[4][0]);
     	$('#example1').DataTable(); 
     }).fail(function(){
 

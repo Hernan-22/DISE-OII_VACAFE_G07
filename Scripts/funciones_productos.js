@@ -107,7 +107,6 @@ $('#addProducto').validate({
 
 	//este editar
 	$(document).on("click",".btn_editar",function(e){
-
 		e.preventDefault(); 
 		var id = $(this).attr("data-idproducto");
 		var idCat= $(this).attr("data-nombrecategoria");		
@@ -121,9 +120,7 @@ $('#addProducto').validate({
 	        data : datos,
 	    }).done(function(json) {
 	    	console.log("EL consultar especifico",json);
-	    	if (json[0]=="Exito") {	 
-
-	    		
+	    	if (json[0]=="Exito") {	
 	    		console.log("imagen_productos: ",json[2]['nva_image_producto']);
 	    	   var fecHA_string = json[2]['dat_fecha_vencimiento'];
 				var porciones = fecHA_string.split('-');
